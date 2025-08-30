@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,7 +24,16 @@ void main() async {
   // Initialize other services
   await SupabaseService.initialize();
   await FirebaseService.initialize();
-  await MongoDBService.initialize();
+  
+  // Only initialize MongoDB on mobile/desktop platforms (not web)
+  if (!kIsWeb) {
+    try {
+      await MongoDBService.initialize();
+    } catch (e) {
+      debugPrint('MongoDB initialization failed: $e');
+      // Continue without MongoDB - app will use Supabase only
+    }
+  }
   
   runApp(
     MultiProvider(
