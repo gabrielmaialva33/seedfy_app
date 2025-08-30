@@ -1,71 +1,203 @@
-# Seedfy - App Flutter para Hortas Urbanas
+# CLAUDE.md
 
-## Status Atual ✅
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-O app Seedfy foi **criado com sucesso** e está **rodando no localhost:8080**.
+# Seedfy - Flutter Garden Management App
 
-### Funcionalidades Implementadas
+## Project Overview
 
-1. **✅ Projeto Flutter configurado** com estrutura Clean Architecture
-2. **✅ Dependências principais** (Supabase, Provider, GoRouter, i18n)
-3. **✅ Sistema de roteamento** com autenticação
-4. **✅ Editor de mapa interativo** com:
-   - Grid visual com pan/zoom (InteractiveViewer)
-   - Canteiros coloridos com status semafórico
-   - Sistema de coordenadas em metros
-   - Visualização de culturas e dias para colheita
-5. **✅ Modelos de dados** completos (User, Farm, Plot, Bed, Crop, Planting, Task)
-6. **✅ Estrutura de banco Supabase** (SQL script pronto)
-7. **✅ Internacionalização** configurada (pt-BR/en-US)
+Seedfy is a comprehensive garden management application built with Flutter, featuring AI-powered plant recognition and chat assistance using NVIDIA's NIM APIs, Firebase integration, and Supabase for farm data management.
 
-### Como Usar
+## Architecture
 
-1. **Configure o Supabase**:
-   - Crie projeto em supabase.com
-   - Execute `supabase_setup.sql` no SQL Editor
-   - Atualize `lib/core/app_config.dart` com URL e chave
+### Technology Stack
+- **Frontend**: Flutter 3.x with Material Design 3
+- **State Management**: Provider pattern
+- **Backend Services**: Firebase + Supabase hybrid architecture
+- **AI Services**: NVIDIA NIM APIs (microsoft/phi-3-vision-128k-instruct, meta/llama-3.1-70b-instruct)
+- **Navigation**: GoRouter with authentication guards
+- **Internationalization**: flutter_localizations (pt-BR, en-US)
 
-2. **Execute o app**:
-   ```bash
-   cd seedfy_app
-   flutter pub get
-   flutter run -d chrome  # Para Chrome
-   # ou
-   flutter run -d web-server --web-port=8080  # Para servidor local
-   ```
-
-3. **Acesse**: http://localhost:8080
-
-### Demonstração
-
-O app atualmente mostra:
-- **Tela de login** simples com navegação
-- **Mapa interativo** com canteiros de exemplo:
-  - Alface (verde - saudável, 25 dias)
-  - Tomate (laranja - atenção, 15 dias)
-  - Cenoura (vermelho - crítico, 5 dias)
-- **Pan/zoom** funcional no mapa
-- **Clique nos canteiros** mostra detalhes
-- **Sistema semafórico** de status
-
-### Próximos Passos
-
-Para completar o MVP:
-1. Conectar com Supabase real
-2. Implementar telas de cadastro completas
-3. Onboarding wizard funcional
-4. Sistema de tarefas automáticas
-5. Colaboração e exportação CSV
-
-### Arquitetura
-
+### Project Structure
 ```
 lib/
-├── core/           # Configurações e providers
-├── features/       # Funcionalidades por domínio
-├── models/         # Modelos de dados
-├── services/       # Serviços (Supabase)
-└── l10n/          # Internacionalização
+├── core/                     # Core configuration and providers
+│   ├── app_config.dart      # Supabase URLs and app constants
+│   └── providers/           # State management providers
+├── features/                # Feature-based modules
+│   ├── ai_camera/          # AI plant recognition camera
+│   ├── ai_chat/            # AI garden assistant chat
+│   └── map/                # Interactive garden map editor
+├── models/                 # Data models (Farm, Plot, Bed, Crop, etc.)
+├── services/               # Business logic services
+│   ├── firebase_service.dart    # Firebase integration
+│   ├── supabase_service.dart   # Supabase integration  
+│   └── nvidia_ai_service.dart  # NVIDIA AI integration
+├── l10n/                   # Internationalization files
+└── main.dart              # App entry point with routing
 ```
 
-O app segue padrões Flutter modernos com Material Design 3, Provider para estado e GoRouter para navegação.
+### Key Architecture Patterns
+
+**Hybrid Backend Strategy:**
+- Firebase: User authentication, AI analysis results, chat history
+- Supabase: Farm management, plot data, crop tracking, task management
+- This dual approach leverages Firebase's real-time capabilities for AI features while using Supabase's PostgreSQL for complex relational farm data
+
+**State Management:**
+- Provider pattern with separate providers for authentication and locale
+- Services layer handles business logic and API communication
+- Models use immutable data classes with JSON serialization
+
+**AI Integration:**
+- `NvidiaAIService` encapsulates all NVIDIA NIM API calls
+- Vision model for plant analysis: `microsoft/phi-3-vision-128k-instruct`
+- Chat model for garden assistance: `meta/llama-3.1-70b-instruct`
+- Results stored in Firebase for user history tracking
+
+## Common Development Commands
+
+### Development Workflow
+```bash
+# Install dependencies
+flutter pub get
+
+# Run on web (localhost:8080)
+flutter run -d web-server --web-port=8080
+
+# Run on Chrome
+flutter run -d chrome
+
+# Run on mobile simulator/device
+flutter run
+
+# Hot reload is automatic during development
+```
+
+### Code Quality
+```bash
+# Analyze code for issues
+flutter analyze
+
+# Run linting (uses package:flutter_lints/flutter.yaml)
+dart analyze
+
+# Format code
+dart format lib/
+
+# Check for outdated dependencies
+flutter pub outdated
+```
+
+### Testing
+```bash
+# Run all tests
+flutter test
+
+# Run specific test file
+flutter test test/widget_test.dart
+
+# Run with coverage
+flutter test --coverage
+```
+
+### Build Commands
+```bash
+# Build web release
+flutter build web --release
+
+# Build Android APK
+flutter build apk --release
+
+# Build Android App Bundle
+flutter build appbundle --release
+
+# Build iOS
+flutter build ios --release
+```
+
+## Configuration Setup
+
+### Required Configuration Files
+
+1. **Firebase Configuration** (`lib/firebase_options.dart`):
+   - Generated by `flutterfire configure`
+   - Contains Firebase project credentials
+
+2. **Supabase Configuration** (`lib/core/app_config.dart`):
+   - Update `supabaseUrl` and `supabaseAnonKey` constants
+   - Run `supabase_setup.sql` in Supabase dashboard
+
+3. **NVIDIA AI Configuration**:
+   - API key is hardcoded in `nvidia_ai_service.dart` (should be moved to environment variables in production)
+
+### Database Setup
+```sql
+-- Run this script in Supabase SQL editor
+-- File: supabase_setup.sql
+-- Creates tables: profiles, farms, plots, beds, crops_catalog, plantings, tasks, collaborators
+```
+
+## Key Development Patterns
+
+### Navigation Pattern
+- GoRouter with authentication guards
+- Redirect logic based on auth state
+- Routes: `/login`, `/signup`, `/map`, `/ai-camera`, `/ai-chat`
+
+### Service Integration Pattern
+```dart
+// Always initialize services in main()
+await Firebase.initializeApp();
+await SupabaseService.initialize();
+await FirebaseService.initialize();
+
+// Access services as singletons
+final user = SupabaseService.currentUser;
+final plantAnalysis = await _aiService.analyzePlantImage(imageFile);
+```
+
+### Data Flow Pattern
+1. UI widgets consume Provider state
+2. Providers call service methods  
+3. Services handle API communication
+4. Results flow back through the chain
+5. UI updates automatically via Provider notifications
+
+### AI Feature Integration
+- Camera screen captures images and calls NVIDIA vision API
+- Chat screen handles text + image input with conversation context
+- Results are stored in Firebase for persistence
+- All AI responses include structured data extraction
+
+## Important Implementation Notes
+
+### State Management Guidelines
+- Use `Provider` for app-wide state (auth, locale)
+- Use `StatefulWidget` for component-local state  
+- Service classes are stateless and handle business logic
+
+### Performance Considerations
+- Images are compressed before AI analysis (maxWidth: 800, quality: 80)
+- Chat messages are paginated and cached in Firebase
+- Garden map uses `InteractiveViewer` for smooth pan/zoom
+- Animations use `flutter_animate` for performance
+
+### Error Handling
+- All service methods throw exceptions with descriptive messages
+- UI components show user-friendly error dialogs
+- Network errors are handled gracefully with retry options
+
+### Security Notes
+- Firebase Auth handles user authentication
+- Supabase uses Row Level Security (RLS) policies
+- API keys should be moved to environment variables for production
+- User data is isolated per authenticated user
+
+## Development Tips
+
+- The app supports hot reload - changes to UI code update immediately
+- AI features work in development but require network connectivity
+- Use Chrome DevTools for debugging web version
+- Flutter Inspector available in IDE for widget debugging
+- Check `flutter doctor` if experiencing setup issues

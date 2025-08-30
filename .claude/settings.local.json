@@ -6,7 +6,8 @@
       "Bash(git push:*)",
       "mcp__wcgw__Initialize",
       "mcp__wcgw__ReadFiles",
-      "mcp__wcgw__BashCommand"
+      "mcp__wcgw__BashCommand",
+      "mcp__wcgw__FileWriteOrEdit"
     ],
     "deny": [],
     "ask": []
