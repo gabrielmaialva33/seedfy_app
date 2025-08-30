@@ -40,7 +40,8 @@
       "mcp__playwright__browser_press_key",
       "mcp__playwright__browser_evaluate",
       "mcp__playwright__browser_navigate_back",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "mcp__playwright__browser_console_messages"
     ],
     "deny": [],
     "ask": []
