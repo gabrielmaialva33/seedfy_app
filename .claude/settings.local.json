@@ -28,7 +28,8 @@
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/src/**)",
       "Bash(export PATH=\"$PATH\":\"$HOME/.pub-cache/bin\")",
       "mcp__exa__crawling_exa",
-      "WebFetch(domain:undraw.co)"
+      "WebFetch(domain:undraw.co)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
