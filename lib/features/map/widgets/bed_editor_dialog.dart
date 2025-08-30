@@ -156,7 +156,9 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
         ), planting);
       }
 
-      Navigator.pop(context);
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
     } catch (e) {
       setState(() {
         _error = e.toString();
@@ -281,7 +283,9 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
             .eq('id', widget.bedWithPlanting.bed.id);
         
         widget.onDelete();
-        Navigator.pop(context);
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
       } catch (e) {
         setState(() {
           _error = e.toString();
@@ -459,7 +463,7 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                       const SizedBox(height: 12),
                       
                       DropdownButtonFormField<Crop>(
-                        value: _selectedCrop,
+                        initialValue: _selectedCrop,
                         decoration: InputDecoration(
                           labelText: isPortuguese ? 'Selecione uma cultura' : 'Select a crop',
                           border: const OutlineInputBorder(),
