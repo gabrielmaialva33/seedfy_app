@@ -131,10 +131,60 @@ class AuthProvider extends ChangeNotifier {
   
   Future<void> signOut() async {
     await SupabaseService.client.auth.signOut();
+    _user = null;
+    _profile = null;
     try {
       await FirebaseService.signOut();
     } catch (e) {
       debugPrint('Firebase sign out failed: $e');
+    }
+    notifyListeners();
+  }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await SupabaseService.client.auth.resetPasswordForEmail(email);
+    } catch (e) {
+      throw Exception('Failed to send reset email: ${e.toString()}');
+    }
+  }
+
+  Future<void> updateProfile(UserProfile updatedProfile) async {
+    if (_user == null) return;
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await SupabaseService.client
+          .from('profiles')
+          .update(updatedProfile.toJson())
+          .eq('id', _user!.id);
+
+      _profile = updatedProfile;
+    } catch (e) {
+      throw Exception('Failed to update profile: ${e.toString()}');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<bool> hasCompletedOnboarding() async {
+    if (_profile == null) return false;
+    
+    try {
+      // Check if user has any farms (indicates onboarding completed)
+      final response = await SupabaseService.client
+          .from('farms')
+          .select('id')
+          .eq('owner_id', _profile!.id)
+          .limit(1);
+
+      return response.isNotEmpty;
+    } catch (e) {
+      debugPrint('Error checking onboarding status: $e');
+      return false;
     }
   }
 }
