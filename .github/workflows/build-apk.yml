@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-version: '11'
+        java-version: '17'
 
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
@@ -29,7 +29,7 @@ jobs:
         cache: true
 
     - name: Cache Flutter dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.pub-cache
@@ -42,37 +42,50 @@ jobs:
       run: flutter pub get
 
     - name: Analyze code
-      run: flutter analyze
+      run: flutter analyze --fatal-infos
 
     - name: Run tests
-      run: flutter test
+      run: flutter test --coverage
 
-    - name: Decode Firebase config
+    - name: Setup Firebase config
       env:
-        FIREBASE_CONFIG_BASE64: ${{ secrets.FIREBASE_CONFIG_BASE64 }}
-        GOOGLE_SERVICES_BASE64: ${{ secrets.GOOGLE_SERVICES_BASE64 }}
+        GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
       run: |
-        if [ ! -z "$FIREBASE_CONFIG_BASE64" ]; then
-          echo $FIREBASE_CONFIG_BASE64 | base64 -d > android/app/google-services.json
+        if [ ! -z "$GOOGLE_SERVICES_JSON_BASE64" ]; then
+          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -d > android/app/google-services.json
+        else
+          echo "Warning: GOOGLE_SERVICES_JSON_BASE64 secret not found, using existing file"
         fi
 
-    - name: Build APK (Debug)
-      run: flutter build apk --debug
+    - name: Build Debug APK
+      run: flutter build apk --debug --target-platform android-arm64,android-arm,android-x64
 
-    - name: Build APK (Release)
-      run: flutter build apk --release
+    - name: Build Release APK
+      run: flutter build apk --release --target-platform android-arm64,android-arm,android-x64
+
+    - name: Build App Bundle (AAB)
+      run: flutter build appbundle --release --target-platform android-arm64,android-arm,android-x64
 
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: seedfy-debug-apk
+        name: seedfy-debug-apk-${{ github.run_number }}
         path: build/app/outputs/flutter-apk/app-debug.apk
+        retention-days: 30
 
     - name: Upload Release APK
       uses: actions/upload-artifact@v4
       with:
-        name: seedfy-release-apk
+        name: seedfy-release-apk-${{ github.run_number }}
         path: build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 90
+
+    - name: Upload App Bundle
+      uses: actions/upload-artifact@v4
+      with:
+        name: seedfy-app-bundle-${{ github.run_number }}
+        path: build/app/outputs/bundle/release/app-release.aab
+        retention-days: 90
 
     - name: Get current date
       id: date
@@ -80,23 +93,32 @@ jobs:
 
     - name: Create Release
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: v1.0.0-${{ steps.date.outputs.date }}-${{ github.run_number }}
-        name: Release v1.0.0-${{ steps.date.outputs.date }}-${{ github.run_number }}
+        name: Seedfy Release v1.0.0-${{ steps.date.outputs.date }}-${{ github.run_number }}
         body: |
-          🚀 **Seedfy App Release**
+          🌱 **Seedfy App Release**
           
-          **Changes:**
-          - Built from commit: ${{ github.sha }}
+          **Build Information:**
+          - Commit: ${{ github.sha }}
           - Build date: ${{ steps.date.outputs.date }}
+          - Build number: ${{ github.run_number }}
+          - Branch: ${{ github.ref_name }}
           
           **Downloads:**
-          - Debug APK: For testing and development
-          - Release APK: For production use
+          - **app-debug.apk**: Para testes e desenvolvimento
+          - **app-release.apk**: Para instalação em produção
+          - **app-release.aab**: Para distribuição na Google Play Store (recomendado)
+          
+          **Supported Architectures:**
+          - ARM64 (arm64-v8a)
+          - ARM32 (armeabi-v7a)
+          - x86_64
         files: |
           build/app/outputs/flutter-apk/app-debug.apk
           build/app/outputs/flutter-apk/app-release.apk
+          build/app/outputs/bundle/release/app-release.aab
         draft: false
         prerelease: false
       env:
