@@ -22,7 +22,7 @@ class GardenGrid extends StatefulWidget {
   State<GardenGrid> createState() => _GardenGridState();
 }
 
-class _GardenGridEnhancedState extends State<GardenGridEnhanced> {
+class _GardenGridState extends State<GardenGrid> {
   final TransformationController _transformationController = TransformationController();
   static const double _gridScale = 50.0; // pixels per meter
   
