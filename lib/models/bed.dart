@@ -42,4 +42,24 @@ class Bed {
       'created_at': createdAt.toIso8601String(),
     };
   }
+
+  Bed copyWith({
+    String? id,
+    String? plotId,
+    int? x,
+    int? y,
+    double? widthM,
+    double? heightM,
+    DateTime? createdAt,
+  }) {
+    return Bed(
+      id: id ?? this.id,
+      plotId: plotId ?? this.plotId,
+      x: x ?? this.x,
+      y: y ?? this.y,
+      widthM: widthM ?? this.widthM,
+      heightM: heightM ?? this.heightM,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }
