@@ -20,7 +20,8 @@
       "Bash(firebase --version)",
       "mcp__ref__ref_search_documentation",
       "mcp__ref__ref_read_url",
-      "Bash(firebase init:*)"
+      "Bash(firebase init:*)",
+      "Bash(firebase:*)"
     ],
     "deny": [],
     "ask": []
