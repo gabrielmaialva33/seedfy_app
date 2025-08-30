@@ -11,7 +11,7 @@ class GardenGridEnhanced extends StatefulWidget {
   final Function(Offset) onAddBed;
 
   const GardenGridEnhanced({
-    Key? key,
+    super.key,
     required this.plot,
     required this.beds,
     required this.onBedTapped,
