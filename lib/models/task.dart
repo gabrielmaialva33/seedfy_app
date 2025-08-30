@@ -35,6 +35,24 @@ class GardenTask {
     }
   }
 
+  GardenTask copyWith({
+    String? id,
+    String? plantingId,
+    TaskType? type,
+    DateTime? dueDate,
+    bool? done,
+    DateTime? createdAt,
+  }) {
+    return GardenTask(
+      id: id ?? this.id,
+      plantingId: plantingId ?? this.plantingId,
+      type: type ?? this.type,
+      dueDate: dueDate ?? this.dueDate,
+      done: done ?? this.done,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
   factory GardenTask.fromJson(Map<String, dynamic> json) {
     TaskType type;
     switch (json['type']) {
@@ -64,7 +82,7 @@ class GardenTask {
       type: type,
       dueDate: DateTime.parse(json['due_date']),
       done: json['done'] ?? false,
-      createdAt: DateTime.parse(json['created_at']),
+      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toIso8601String()),
     );
   }
 
