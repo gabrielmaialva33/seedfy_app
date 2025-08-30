@@ -294,7 +294,7 @@ class _AIChatScreenState extends State<AIChatScreen>
               radius: 16,
               backgroundColor: Colors.green,
               child: const Icon(Icons.eco, size: 16, color: Colors.white),
-            ).animate().scaleByDouble(),
+            ).animate().scale(),
             const SizedBox(width: 8),
           ],
           Flexible(
@@ -361,7 +361,7 @@ class _AIChatScreenState extends State<AIChatScreen>
               radius: 16,
               backgroundColor: theme.colorScheme.primary,
               child: const Icon(Icons.person, size: 16, color: Colors.white),
-            ).animate().scaleByDouble(),
+            ).animate().scale(),
           ],
         ],
       ),
@@ -411,7 +411,7 @@ class _AIChatScreenState extends State<AIChatScreen>
       ),
     ).animate(
       controller: _typingAnimationController,
-    ).scaleByDouble(
+    ).scale(
       delay: Duration(milliseconds: index * 200),
       duration: const Duration(milliseconds: 600),
     );
@@ -501,7 +501,7 @@ class _AIChatScreenState extends State<AIChatScreen>
                 icon: const Icon(Icons.send, color: Colors.white),
                 onPressed: _isLoading ? null : () => _sendMessage(),
               ),
-            ).animate().scaleByDouble(),
+            ).animate().scale(),
           ],
         ),
       ),

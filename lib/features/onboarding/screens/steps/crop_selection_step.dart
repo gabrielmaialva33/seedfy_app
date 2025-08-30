@@ -16,7 +16,7 @@ class CropSelectionStep extends StatefulWidget {
     required this.onChanged,
     required this.onNext,
     required this.onPrevious,
-  }) : super(key: key);
+  });
 
   @override
   State<CropSelectionStep> createState() => _CropSelectionStepState();

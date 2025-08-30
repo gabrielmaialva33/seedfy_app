@@ -17,7 +17,7 @@ class CycleCustomizationStep extends StatefulWidget {
     required this.onChanged,
     required this.onNext,
     required this.onPrevious,
-  }) : super(key: key);
+  });
 
   @override
   State<CycleCustomizationStep> createState() => _CycleCustomizationStepState();

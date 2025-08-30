@@ -18,7 +18,7 @@ class PathConfigurationStep extends StatefulWidget {
     required this.onChanged,
     required this.onNext,
     required this.onPrevious,
-  }) : super(key: key);
+  });
 
   @override
   State<PathConfigurationStep> createState() => _PathConfigurationStepState();

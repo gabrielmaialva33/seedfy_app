@@ -14,7 +14,7 @@ class AreaDimensionsStep extends StatefulWidget {
     required this.initialWidth,
     required this.onChanged,
     required this.onNext,
-  }) : super(key: key);
+  });
 
   @override
   State<AreaDimensionsStep> createState() => _AreaDimensionsStepState();

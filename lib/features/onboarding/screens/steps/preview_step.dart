@@ -23,7 +23,7 @@ class PreviewStep extends StatelessWidget {
     required this.onNext,
     required this.onPrevious,
     required this.onEdit,
-  }) : super(key: key);
+  });
 
   int get _estimatedBeds {
     const bedWidth = 1.2;
