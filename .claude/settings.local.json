@@ -24,7 +24,8 @@
       "Bash(firebase:*)",
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
-      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)"
+      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
+      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/src/**)"
     ],
     "deny": [],
     "ask": []
