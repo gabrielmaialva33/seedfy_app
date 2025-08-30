@@ -12,7 +12,7 @@ class ApprovalStep extends StatelessWidget {
     required this.onApprove,
     required this.onPrevious,
     required this.isLoading,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ApprovalStep extends StatelessWidget {
             duration: const Duration(milliseconds: 800),
             curve: Curves.elasticOut,
             builder: (context, value, child) {
-              return Transform.scaleByDouble(
+              return Transform.scale(
                 scale: value,
                 child: Container(
                   width: 120,

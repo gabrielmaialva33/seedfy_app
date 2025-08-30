@@ -40,8 +40,8 @@ class _GardenGridState extends State<GardenGrid> {
     final centerY = (widget.plot.widthM * _gridScale) / 2;
     
     _transformationController.value = Matrix4.identity()
-      ..translateByDouble(-centerX + 200, -centerY + 200)
-      ..scaleByDouble(1.0);
+      ..translateByDouble(-centerX + 200, -centerY + 200, 0.0, 0.0)
+      ..scaleByDouble(1.0, 1.0, 1.0, 0.0);
   }
 
   BedStatus _getBedStatus(BedWithPlanting bedWithPlanting) {
@@ -394,7 +394,7 @@ class GardenBackgroundPainter extends CustomPainter {
 
     // Width measurement
     canvas.save();
-    canvas.translateByDouble(75, 100 + (plot.widthM * scale / 2));
+    canvas.translate(75, 100 + (plot.widthM * scale / 2));
     canvas.rotate(-1.5708); // -90 degrees
     textPainter.text = TextSpan(
       text: '${plot.widthM.toStringAsFixed(1)}m',
