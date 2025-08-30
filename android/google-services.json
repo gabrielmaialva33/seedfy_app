@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "427229818801",
+    "project_id": "seedfyapp",
+    "storage_bucket": "seedfyapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427229818801:android:ccab79882ce9ef0e295790",
+        "android_client_info": {
+          "package_name": "com.seedfy.seedfy_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVxx_9iFqrzvzF2PjYno0M-WzaY2vTI5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
