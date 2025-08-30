@@ -674,39 +674,45 @@ class GardenGridPainter extends CustomPainter {
     }
   }
 
-  void _drawCropIcon(Canvas canvas, Offset center, dynamic crop) {
+  void _drawCropIcon(Canvas canvas, Offset center, dynamic crop, double scale) {
     final iconPaint = Paint()
-      ..color = Colors.green.shade700;
+      ..color = Colors.green.shade700.withOpacity(scale);
     
-    // Simple plant representation
-    canvas.drawCircle(center, 8, iconPaint);
+    // Simple plant representation with scaling
+    canvas.drawCircle(center, 8 * scale, iconPaint);
     
-    // Add leaves
+    // Add leaves with scaling
     final leafPaint = Paint()
-      ..color = Colors.green.shade600;
-    canvas.drawCircle(center.translate(-5, -3), 4, leafPaint);
-    canvas.drawCircle(center.translate(5, -3), 4, leafPaint);
+      ..color = Colors.green.shade600.withOpacity(scale);
+    canvas.drawCircle(center.translate(-5 * scale, -3 * scale), 4 * scale, leafPaint);
+    canvas.drawCircle(center.translate(5 * scale, -3 * scale), 4 * scale, leafPaint);
   }
 
-  void _drawStatusIndicator(Canvas canvas, Rect bedRect, BedStatus status) {
-    if (status == BedStatus.empty) return;
+  void _drawStatusIndicator(Canvas canvas, Rect bedRect, BedStatus status, double scale) {
+    if (status == BedStatus.empty || scale < 0.3) return;
     
     final indicatorRect = Rect.fromLTWH(
-      bedRect.right - 16,
-      bedRect.top + 4,
-      12,
-      12,
+      bedRect.right - 16 * scale,
+      bedRect.top + 4 * scale,
+      12 * scale,
+      12 * scale,
     );
     
     final indicatorPaint = Paint()
-      ..color = getStatusColor(status);
+      ..color = getStatusColor(status).withOpacity(scale);
     
-    canvas.drawCircle(indicatorRect.center, 6, indicatorPaint);
+    // Add pulsing effect for critical status
+    final indicatorScale = status == BedStatus.critical ? scale * pulseValue : scale;
+    canvas.drawCircle(indicatorRect.center, 6 * indicatorScale, indicatorPaint);
   }
 
   @override
   bool shouldRepaint(covariant GardenGridPainter oldDelegate) {
     return oldDelegate.beds != beds ||
-           oldDelegate.isAddingMode != isAddingMode;
+           oldDelegate.isAddingMode != isAddingMode ||
+           oldDelegate.pulseValue != pulseValue ||
+           oldDelegate.hoverValue != hoverValue ||
+           oldDelegate.entryValue != entryValue ||
+           oldDelegate.hoveredBedIndex != hoveredBedIndex;
   }
 }
