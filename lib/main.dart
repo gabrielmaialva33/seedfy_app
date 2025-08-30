@@ -9,11 +9,14 @@ import 'core/theme/app_theme.dart';
 import 'services/supabase_service.dart';
 import 'services/firebase_service.dart';
 import 'firebase_options.dart';
+import 'features/auth/screens/login_screen.dart';
+import 'features/auth/screens/signup_screen.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 import 'features/map/screens/map_screen.dart';
 import 'features/home/screens/home_screen.dart';
 import 'features/profile/screens/profile_screen.dart';
+import 'features/onboarding/screens/onboarding_wizard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +76,7 @@ class SeedfyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/onboarding',
-          builder: (context, state) => const OnboardingScreen(),
+          builder: (context, state) => const OnboardingWizard(),
         ),
         GoRoute(
           path: '/home',
@@ -96,75 +99,6 @@ class SeedfyApp extends StatelessWidget {
           builder: (context, state) => const AIChatScreen(),
         ),
       ],
-    );
-  }
-}
-
-// Placeholder screens
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.eco, size: 80, color: Colors.green),
-            const SizedBox(height: 24),
-            const Text('Seedfy AI', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
-            const Text(
-              '🚀 Powered by NVIDIA AI',
-              style: TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              '🌱 Plant Recognition • 🤖 Garden Assistant • 📊 Smart Analytics',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 48),
-            ElevatedButton(
-              onPressed: () => context.go('/signup'),
-              child: const Text('Criar Conta'),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () => context.go('/map'),
-              child: const Text('Entrar (Demo)'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Criar Conta')),
-      body: const Center(
-        child: Text('Tela de cadastro será implementada'),
-      ),
-    );
-  }
-}
-
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Onboarding')),
-      body: const Center(
-        child: Text('Onboarding será implementado'),
-      ),
     );
   }
 }
