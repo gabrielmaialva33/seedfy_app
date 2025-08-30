@@ -14,7 +14,9 @@
       "Bash(git stash:*)",
       "Bash(git rev-list:*)",
       "Read(/Users/gabrielmaia/.claude/agents/core/**)",
-      "Read(/Users/gabrielmaia/.claude/agents/core/**)"
+      "Read(/Users/gabrielmaia/.claude/agents/core/**)",
+      "mcp__exa__deep_researcher_start",
+      "mcp__exa__deep_researcher_check"
     ],
     "deny": [],
     "ask": []
