@@ -10,8 +10,8 @@ import '../../../models/planting.dart';
 import '../../../models/crop.dart';
 import '../widgets/garden_grid_enhanced.dart';
 import '../widgets/bed_editor_dialog.dart';
-import '../../ai_camera/screens/camera_screen.dart';
-import '../../ai_chat/screens/chat_screen.dart';
+import '../../ai_camera/screens/ai_camera_screen.dart';
+import '../../ai_chat/screens/ai_chat_screen.dart';
 import '../../tasks/screens/tasks_screen.dart';
 
 class MapScreen extends StatefulWidget {
@@ -329,7 +329,7 @@ class _MapScreenState extends State<MapScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CameraScreen()),
+                MaterialPageRoute(builder: (context) => const AICameraScreen()),
               );
             },
             tooltip: isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition',
