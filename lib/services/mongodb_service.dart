@@ -86,7 +86,7 @@ class MongoDBService {
       };
 
       final result = await _usersCollection.insertOne(userData);
-      return result.insertedId as ObjectId;
+      return result.id as ObjectId;
     } catch (e) {
       throw Exception('Failed to create user: $e');
     }
@@ -136,7 +136,7 @@ class MongoDBService {
       };
 
       final result = await _farmsCollection.insertOne(farmData);
-      return result.insertedId as ObjectId;
+      return result.id as ObjectId;
     } catch (e) {
       throw Exception('Failed to create farm: $e');
     }
