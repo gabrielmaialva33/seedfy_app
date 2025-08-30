@@ -15,7 +15,7 @@ import '../../ai_chat/screens/ai_chat_screen.dart';
 import '../../tasks/screens/tasks_screen.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+  const MapScreen({super.key});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
