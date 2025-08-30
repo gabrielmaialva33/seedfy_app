@@ -5,12 +5,15 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'core/providers/locale_provider.dart';
 import 'core/providers/auth_provider.dart';
+import 'core/theme/app_theme.dart';
 import 'services/supabase_service.dart';
 import 'services/firebase_service.dart';
 import 'firebase_options.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 import 'features/map/screens/map_screen.dart';
+import 'features/home/screens/modern_home_screen.dart';
+import 'features/profile/screens/modern_profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,13 +50,7 @@ class SeedfyApp extends StatelessWidget {
           title: 'Seedfy',
           debugShowCheckedModeBanner: false,
           
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF4CAF50),
-              brightness: Brightness.light,
-            ),
-          ),
+          theme: AppTheme.lightTheme,
           
           routerConfig: _createRouter(authProvider),
         );
