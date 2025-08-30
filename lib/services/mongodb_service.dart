@@ -344,7 +344,7 @@ class MongoDBService {
       };
 
       final result = await _plantingsCollection.insertOne(plantingData);
-      return result.insertedId as ObjectId;
+      return result.id as ObjectId;
     } catch (e) {
       throw Exception('Failed to create planting: $e');
     }
@@ -389,7 +389,7 @@ class MongoDBService {
       };
 
       final result = await _tasksCollection.insertOne(taskData);
-      return result.insertedId as ObjectId;
+      return result.id as ObjectId;
     } catch (e) {
       throw Exception('Failed to create task: $e');
     }
@@ -406,7 +406,7 @@ class MongoDBService {
       }
 
       final result = await _tasksCollection.insertMany(tasksData);
-      return result.map((r) => r as ObjectId).toList();
+      return result.inserted.keys.map((k) => k as ObjectId).toList();
     } catch (e) {
       throw Exception('Failed to create tasks: $e');
     }
