@@ -2,21 +2,25 @@ class Crop {
   final String id;
   final String namePt;
   final String nameEn;
+  final String category;
   final String imageUrl;
   final double rowSpacingM;
   final double plantSpacingM;
   final int cycleDays;
   final double? yieldPerM2;
+  final Map<String, dynamic>? metadata;
 
   const Crop({
     required this.id,
     required this.namePt,
     required this.nameEn,
+    required this.category,
     required this.imageUrl,
     required this.rowSpacingM,
     required this.plantSpacingM,
     required this.cycleDays,
     this.yieldPerM2,
+    this.metadata,
   });
 
   String getName(String locale) {
@@ -25,6 +29,7 @@ class Crop {
 
   factory Crop.fromJson(Map<String, dynamic> json) {
     return Crop(
+      id: json['id'],
       id: json['id'],
       namePt: json['name_pt'],
       nameEn: json['name_en'],
