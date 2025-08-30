@@ -2,6 +2,110 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../theme/app_theme.dart';
 
+// Helper functions for plant UI
+List<Color> _getPlantGradient(String title) {
+  switch (title.toLowerCase()) {
+    case 'alface crespa':
+      return [
+        const Color(0xFF4CAF50), // Verde vibrante
+        const Color(0xFF8BC34A),
+        const Color(0xFFCDDC39),
+      ];
+    case 'tomate cereja':
+      return [
+        const Color(0xFFE53935), // Vermelho vibrante
+        const Color(0xFFFF5722),
+        const Color(0xFFFF9800),
+      ];
+    case 'manjericão':
+      return [
+        const Color(0xFF2E7D32), // Verde escuro
+        const Color(0xFF388E3C),
+        const Color(0xFF66BB6A),
+      ];
+    case 'cenoura':
+      return [
+        const Color(0xFFFF9800), // Laranja vibrante
+        const Color(0xFFFFB74D),
+        const Color(0xFFFFC107),
+      ];
+    default:
+      return [
+        const Color(0xFF6A1B9A), // Roxo
+        const Color(0xFF8E24AA),
+        const Color(0xFFAB47BC),
+      ];
+  }
+}
+
+String _getPlantEmoji(String title) {
+  switch (title.toLowerCase()) {
+    case 'alface crespa':
+      return '🥬';
+    case 'tomate cereja':
+      return '🍅';
+    case 'manjericão':
+      return '🌿';
+    case 'cenoura':
+      return '🥕';
+    default:
+      return '🌱';
+  }
+}
+
+String _getPlantSubtitle(String title) {
+  switch (title.toLowerCase()) {
+    case 'alface crespa':
+      return 'FRESH\nLETTUCE';
+    case 'tomate cereja':
+      return 'CHERRY\nTOMATO';
+    case 'manjericão':
+      return 'BASIL\nHERBS';
+    case 'cenoura':
+      return 'ORGANIC\nCARROT';
+    default:
+      return 'GARDEN\nPLANT';
+  }
+}
+
+List<Color> _getStoryGradient(String label) {
+  switch (label.toLowerCase()) {
+    case 'adicionar':
+      return [const Color(0xFF6A1B9A), const Color(0xFF9C27B0)];
+    case 'alfaces':
+      return [const Color(0xFF2E7D32), const Color(0xFF4CAF50)];
+    case 'tomates':
+      return [const Color(0xFFD32F2F), const Color(0xFFFF5722)];
+    case 'cenouras':
+      return [const Color(0xFFFF8F00), const Color(0xFFFFB300)];
+    case 'ervas':
+      return [const Color(0xFF388E3C), const Color(0xFF66BB6A)];
+    case 'flores':
+      return [const Color(0xFFE91E63), const Color(0xFFFF4081)];
+    default:
+      return [const Color(0xFF6A1B9A), const Color(0xFF9C27B0)];
+  }
+}
+
+IconData _getPlantIcon(String label) {
+  switch (label.toLowerCase()) {
+    case 'adicionar':
+      return Icons.add_circle_outline;
+    case 'alfaces':
+      return Icons.grass;
+    case 'tomates':
+      return Icons.circle;
+    case 'cenouras':
+      return Icons.agriculture;
+    case 'ervas':
+      return Icons.local_florist;
+    case 'flores':
+      return Icons.local_florist;
+    default:
+      return Icons.eco;
+  }
+}
+
 class ModernCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -147,63 +251,75 @@ class PlantCard extends StatelessWidget {
               height: 160,
               width: double.infinity,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppTheme.primaryGreen.withValues(alpha: 0.8),
-                    AppTheme.primaryPurple.withValues(alpha: 0.6),
-                    AppTheme.accentOrange.withValues(alpha: 0.4),
-                  ],
-                  stops: const [0.0, 0.6, 1.0],
+                gradient: RadialGradient(
+                  center: Alignment.topLeft,
+                  radius: 1.5,
+                  colors: _getPlantGradient(title),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: _getPlantGradient(title)[0].withValues(alpha: 0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
               ),
               child: Stack(
                 children: [
-                  // Placeholder para imagem com múltiplas plantas
+                  // Placeholder com emoji personalizado
                   Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.local_florist,
-                              size: 20,
-                              color: Colors.white.withValues(alpha: 0.9),
-                            ),
-                            const SizedBox(width: 8),
-                            Icon(
-                              Icons.eco,
-                              size: 28,
-                              color: Colors.white.withValues(alpha: 0.9),
-                            ),
-                            const SizedBox(width: 8),
-                            Icon(
-                              Icons.grass,
-                              size: 20,
-                              color: Colors.white.withValues(alpha: 0.9),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            _getPlantEmoji(title),
+                            style: const TextStyle(fontSize: 48),
                           ),
-                          child: const Text(
-                            '🌱 Garden',
-                            style: TextStyle(
+                          const SizedBox(height: 8),
+                          Text(
+                            _getPlantSubtitle(title),
+                            style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 12,
+                              fontSize: 11,
                               fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Padrão decorativo
+                  Positioned(
+                    top: 20,
+                    right: 20,
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.1),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    left: 20,
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.15),
+                      ),
                     ),
                   ),
                   // Status badge
@@ -364,21 +480,15 @@ class StoryCircle extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      borderColor ?? AppTheme.primaryGreen,
-                      AppTheme.primaryPurple.withValues(alpha: 0.8),
-                      AppTheme.accentOrange.withValues(alpha: 0.6),
-                    ],
+                  gradient: RadialGradient(
+                    colors: _getStoryGradient(label),
                   ),
-                  border: Border.all(color: Colors.white, width: 2),
+                  border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: (borderColor ?? AppTheme.primaryGreen).withValues(alpha: 0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+                      color: _getStoryGradient(label)[0].withValues(alpha: 0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
                     ),
                   ],
                 ),
@@ -413,22 +523,8 @@ class StoryCircle extends StatelessWidget {
     .shimmer(duration: 2000.ms, color: hasNewStory ? Colors.purple.withValues(alpha: 0.4) : Colors.transparent);
   }
 
-  IconData _getPlantIcon(String label) {
-    switch (label.toLowerCase()) {
-      case 'adicionar':
-        return Icons.add_circle_outline;
-      case 'alfaces':
-        return Icons.grass;
-      case 'tomates':
-        return Icons.circle;
-      case 'cenouras':
-        return Icons.agriculture;
-      case 'ervas':
-        return Icons.local_florist;
-      case 'flores':
-        return Icons.local_florist;
-      default:
-        return Icons.eco;
-    }
-  }
+
+
+
+
 }
