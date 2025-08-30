@@ -469,7 +469,7 @@ class MongoDBService {
 
   /// Convert ObjectId to string
   static String objectIdToString(ObjectId objectId) {
-    return objectId.toHexString();
+    return objectId.oid;
   }
 
   /// Convert string to ObjectId
