@@ -94,7 +94,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
   
-  Future<String?> signIn({
+  Future<void> signIn({
     required String email,
     required String password,
   }) async {
@@ -102,11 +102,17 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
       
-      // Sign in with Supabase
-      await SupabaseService.client.auth.signInWithPassword(
+      final response = await SupabaseService.client.auth.signInWithPassword(
         email: email,
         password: password,
       );
+      
+      if (response.user == null) {
+        throw Exception('Login failed');
+      }
+      
+      _user = response.user;
+      await _loadUserProfile();
       
       // Also sign in with Firebase anonymously for data storage
       try {
@@ -115,9 +121,8 @@ class AuthProvider extends ChangeNotifier {
         debugPrint('Firebase anonymous sign in failed: $e');
       }
       
-      return null;
     } catch (e) {
-      return e.toString();
+      throw Exception('Login failed: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
