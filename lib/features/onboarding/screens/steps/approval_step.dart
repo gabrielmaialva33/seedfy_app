@@ -8,7 +8,7 @@ class ApprovalStep extends StatelessWidget {
   final bool isLoading;
 
   const ApprovalStep({
-    Key? key,
+    super.key,
     required this.onApprove,
     required this.onPrevious,
     required this.isLoading,

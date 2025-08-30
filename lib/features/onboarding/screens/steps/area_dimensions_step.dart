@@ -9,7 +9,7 @@ class AreaDimensionsStep extends StatefulWidget {
   final VoidCallback onNext;
 
   const AreaDimensionsStep({
-    Key? key,
+    super.key,
     required this.initialLength,
     required this.initialWidth,
     required this.onChanged,

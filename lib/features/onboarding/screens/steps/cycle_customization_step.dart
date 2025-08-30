@@ -11,7 +11,7 @@ class CycleCustomizationStep extends StatefulWidget {
   final VoidCallback onPrevious;
 
   const CycleCustomizationStep({
-    Key? key,
+    super.key,
     required this.selectedCrops,
     required this.customCycles,
     required this.onChanged,

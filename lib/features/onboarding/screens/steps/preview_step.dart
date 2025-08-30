@@ -14,7 +14,7 @@ class PreviewStep extends StatelessWidget {
   final Function(int) onEdit;
 
   const PreviewStep({
-    Key? key,
+    super.key,
     required this.areaLength,
     required this.areaWidth,
     required this.pathGap,

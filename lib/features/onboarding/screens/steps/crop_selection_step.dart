@@ -11,7 +11,7 @@ class CropSelectionStep extends StatefulWidget {
   final VoidCallback onPrevious;
 
   const CropSelectionStep({
-    Key? key,
+    super.key,
     required this.selectedCrops,
     required this.onChanged,
     required this.onNext,

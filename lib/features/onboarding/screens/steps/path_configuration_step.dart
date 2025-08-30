@@ -11,7 +11,7 @@ class PathConfigurationStep extends StatefulWidget {
   final VoidCallback onPrevious;
 
   const PathConfigurationStep({
-    Key? key,
+    super.key,
     required this.initialPathGap,
     required this.areaLength,
     required this.areaWidth,
