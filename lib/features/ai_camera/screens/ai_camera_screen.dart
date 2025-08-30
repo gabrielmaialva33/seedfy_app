@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:lottie/lottie.dart';
 import '../../../services/nvidia_ai_service.dart';
 
 class AICameraScreen extends StatefulWidget {
@@ -146,7 +145,6 @@ class _AICameraScreenState extends State<AICameraScreen>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     
     return Scaffold(
       backgroundColor: Colors.black,
@@ -185,12 +183,14 @@ class _AICameraScreenState extends State<AICameraScreen>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Lottie.asset(
-                        'assets/animations/scanning.json',
+                      SizedBox(
                         width: 200,
                         height: 200,
-                        controller: _scanAnimationController,
-                      ).animate().scale(),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 6,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                        ),
+                      ),
                       const SizedBox(height: 24),
                       const Text(
                         '🤖 Analisando com IA da NVIDIA...',
@@ -350,8 +350,8 @@ class _AICameraScreenState extends State<AICameraScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: statusColor.withOpacity(0.1),
-        border: Border.all(color: statusColor.withOpacity(0.3)),
+        color: statusColor.withValues(alpha: 0.1),
+        border: Border.all(color: statusColor.withValues(alpha: 0.3)),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -426,7 +426,7 @@ class _AICameraScreenState extends State<AICameraScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -574,7 +574,7 @@ class _AICameraScreenState extends State<AICameraScreen>
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: Colors.white, size: 24),

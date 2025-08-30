@@ -158,7 +158,6 @@ class _AIChatScreenState extends State<AIChatScreen>
           _messageController.text = result.recognizedWords;
         });
       },
-      listenMode: ListenMode.confirmation,
     );
   }
 
@@ -233,7 +232,7 @@ class _AIChatScreenState extends State<AIChatScreen>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              theme.colorScheme.primaryContainer.withOpacity(0.1),
+              theme.colorScheme.primaryContainer.withValues(alpha: 0.1),
               theme.colorScheme.surface,
             ],
           ),
@@ -298,7 +297,7 @@ class _AIChatScreenState extends State<AIChatScreen>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -331,8 +330,8 @@ class _AIChatScreenState extends State<AIChatScreen>
                     _formatTime(message.timestamp),
                     style: TextStyle(
                       color: isUser 
-                          ? Colors.white.withOpacity(0.7)
-                          : theme.colorScheme.onSurface.withOpacity(0.6),
+                          ? Colors.white.withValues(alpha: 0.7)
+                          : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontSize: 11,
                     ),
                   ),
@@ -411,7 +410,7 @@ class _AIChatScreenState extends State<AIChatScreen>
         color: theme.colorScheme.surface,
         border: Border(
           top: BorderSide(
-            color: theme.colorScheme.outline.withOpacity(0.2),
+            color: theme.colorScheme.outline.withValues(alpha: 0.2),
           ),
         ),
       ),
@@ -421,7 +420,7 @@ class _AIChatScreenState extends State<AIChatScreen>
             // Botão de câmera
             Container(
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: IconButton(
@@ -461,8 +460,8 @@ class _AIChatScreenState extends State<AIChatScreen>
             Container(
               decoration: BoxDecoration(
                 color: _isListening 
-                    ? Colors.red.withOpacity(0.1)
-                    : Colors.blue.withOpacity(0.1),
+                    ? Colors.red.withValues(alpha: 0.1)
+                    : Colors.blue.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: IconButton(
