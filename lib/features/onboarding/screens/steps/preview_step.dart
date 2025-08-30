@@ -123,14 +123,17 @@ class PreviewStep extends StatelessWidget {
                   onEdit: () => onEdit(0),
                   children: [
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Comprimento:' : 'Length:',
                       '${areaLength.toStringAsFixed(1)}m',
                     ),
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Largura:' : 'Width:',
                       '${areaWidth.toStringAsFixed(1)}m',
                     ),
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Área total:' : 'Total area:',
                       '${(areaLength * areaWidth).toStringAsFixed(1)} m²',
                       isHighlighted: true,
@@ -148,10 +151,12 @@ class PreviewStep extends StatelessWidget {
                   onEdit: () => onEdit(1),
                   children: [
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Largura dos corredores:' : 'Corridor width:',
                       '${pathGap.toStringAsFixed(1)}m',
                     ),
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Canteiros estimados:' : 'Estimated beds:',
                       '$_estimatedBeds',
                       isHighlighted: true,
@@ -228,14 +233,17 @@ class PreviewStep extends StatelessWidget {
                   onEdit: () => onEdit(3),
                   children: [
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Primeira colheita:' : 'First harvest:',
                       _formatDate(_getEarliestHarvest(), isPortuguese),
                     ),
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Última colheita:' : 'Last harvest:',
                       _formatDate(_getLatestHarvest(), isPortuguese),
                     ),
                     _buildInfoRow(
+                      context,
                       isPortuguese ? 'Plantas estimadas:' : 'Estimated plants:',
                       '${_getTotalPlants()} ${isPortuguese ? "mudas" : "seedlings"}',
                       isHighlighted: true,
@@ -447,7 +455,7 @@ class PreviewStep extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, {bool isHighlighted = false}) {
+  Widget _buildInfoRow(BuildContext context, String label, String value, {bool isHighlighted = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
