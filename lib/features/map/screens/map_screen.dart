@@ -339,7 +339,7 @@ class _MapScreenState extends State<MapScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ChatScreen()),
+                MaterialPageRoute(builder: (context) => const AIChatScreen()),
               );
             },
             tooltip: isPortuguese ? 'Assistente IA' : 'AI Assistant',
