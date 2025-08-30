@@ -481,62 +481,54 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     );
   }
 
-  IconData _getTaskIcon(String type) {
+  IconData _getTaskIcon(TaskType type) {
     switch (type) {
-      case 'water':
+      case TaskType.water:
         return Icons.water_drop;
-      case 'fertilize':
+      case TaskType.fertilize:
         return Icons.scatter_plot;
-      case 'transplant':
+      case TaskType.transplant:
         return Icons.transfer_within_a_station;
-      case 'harvest':
+      case TaskType.harvest:
         return Icons.agriculture;
-      default:
-        return Icons.task;
     }
   }
 
-  Color _getTaskColor(String type) {
+  Color _getTaskColor(TaskType type) {
     switch (type) {
-      case 'water':
+      case TaskType.water:
         return Colors.blue;
-      case 'fertilize':
+      case TaskType.fertilize:
         return Colors.brown;
-      case 'transplant':
+      case TaskType.transplant:
         return Colors.orange;
-      case 'harvest':
+      case TaskType.harvest:
         return Colors.green;
-      default:
-        return Colors.grey;
     }
   }
 
-  String _getTaskTitle(String type, bool isPortuguese) {
+  String _getTaskTitle(TaskType type, bool isPortuguese) {
     if (isPortuguese) {
       switch (type) {
-        case 'water':
+        case TaskType.water:
           return 'Regar plantas';
-        case 'fertilize':
+        case TaskType.fertilize:
           return 'Adubar';
-        case 'transplant':
+        case TaskType.transplant:
           return 'Transplantar';
-        case 'harvest':
+        case TaskType.harvest:
           return 'Colher';
-        default:
-          return 'Tarefa';
       }
     } else {
       switch (type) {
-        case 'water':
+        case TaskType.water:
           return 'Water plants';
-        case 'fertilize':
+        case TaskType.fertilize:
           return 'Fertilize';
-        case 'transplant':
+        case TaskType.transplant:
           return 'Transplant';
-        case 'harvest':
+        case TaskType.harvest:
           return 'Harvest';
-        default:
-          return 'Task';
       }
     }
   }
