@@ -8,7 +8,7 @@ import '../../../models/plot.dart';
 import '../../../models/bed.dart';
 import '../../../models/planting.dart';
 import '../../../models/crop.dart';
-import '../widgets/garden_grid_enhanced.dart';
+import '../widgets/garden_grid.dart';
 import '../widgets/bed_editor_dialog.dart';
 import '../../ai_camera/screens/ai_camera_screen.dart';
 import '../../ai_chat/screens/ai_chat_screen.dart';
@@ -447,7 +447,7 @@ class _MapScreenState extends State<MapScreen> {
                     isPortuguese ? 'Nenhum canteiro encontrado' : 'No beds found',
                   ),
                 )
-              : GardenGridEnhanced(
+              : GardenGrid(
                   plot: _currentPlot!,
                   beds: _beds,
                   onBedTapped: _handleBedTapped,
