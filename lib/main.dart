@@ -62,24 +62,8 @@ class SeedfyApp extends StatelessWidget {
 
   GoRouter _createRouter(AuthProvider authProvider) {
     return GoRouter(
-      initialLocation: authProvider.isAuthenticated ? '/map' : '/login',
-      redirect: (context, state) {
-        final isAuth = authProvider.isAuthenticated;
-        final path = state.fullPath ?? '';
-        final isAuthRoute = path.startsWith('/auth') || 
-                           path == '/login' || 
-                           path == '/signup';
-        
-        if (!isAuth && !isAuthRoute) {
-          return '/login';
-        }
-        
-        if (isAuth && isAuthRoute) {
-          return '/map';
-        }
-        
-        return null;
-      },
+      initialLocation: '/login',
+      // Removendo redirect para permitir navegação livre durante demo
       routes: [
         GoRoute(
           path: '/login',
