@@ -246,8 +246,8 @@ class MongoDBService {
         bedData['updatedAt'] = now;
       }
 
-      final result = await _bedsCollection.insertMany(bedsData);
-      return result.writeResult?.upsertedIds.values.cast<ObjectId>().toList() ?? [];
+      await _bedsCollection.insertMany(bedsData);
+      return [];
     } catch (e) {
       throw Exception('Failed to create beds: $e');
     }
