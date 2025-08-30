@@ -10,7 +10,8 @@
       "mcp__wcgw__FileWriteOrEdit",
       "Bash(FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch seedfyapp-firebase-adminsdk-fbsvc-621dfe20ea.json' --prune-empty --tag-name-filter cat -- --all)",
       "Bash(find:*)",
-      "Bash(flutter:*)"
+      "Bash(flutter:*)",
+      "Bash(git stash:*)"
     ],
     "deny": [],
     "ask": []
