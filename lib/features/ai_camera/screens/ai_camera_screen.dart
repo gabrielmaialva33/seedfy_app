@@ -413,7 +413,7 @@ class _AICameraScreenState extends State<AICameraScreen>
           ),
         ],
       ),
-    ).animate().fadeIn().scale();
+    ).animate().fadeIn().scaleByDouble();
   }
 
   Widget _buildQuickInfo() {
@@ -476,7 +476,7 @@ class _AICameraScreenState extends State<AICameraScreen>
           ),
         ],
       ),
-    ).animate().fadeIn().scale();
+    ).animate().fadeIn().scaleByDouble();
   }
 
   Widget _buildCareTips() {
