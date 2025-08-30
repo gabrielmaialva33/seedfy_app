@@ -195,23 +195,26 @@ class _GardenGridProState extends State<GardenGridPro>
     }
     
     // Check if there's already a bed at this position
-    final existingBed = widget.beds.firstWhere(
+    final existingBedIndex = widget.beds.indexWhere(
       (bed) => bed.bed.x == gridX && bed.bed.y == gridY,
-      orElse: () => BedWithPlanting(
-        bed: widget.beds.first.bed, // dummy
-        planting: null,
-        crop: null,
-      ),
     );
     
-    if (widget.beds.any((bed) => bed.bed.x == gridX && bed.bed.y == gridY)) {
-      // Tap on existing bed
-      widget.onBedTapped(existingBed);
+    if (existingBedIndex != -1) {
+      // Tap on existing bed - add bounce animation
+      _triggerBedBounce(existingBedIndex);
+      widget.onBedTapped(widget.beds[existingBedIndex]);
     } else if (_isAddingMode) {
-      // Add new bed
+      // Add new bed with entry animation
+      final newBedIndex = widget.beds.length;
+      _newBedIndices.add(newBedIndex);
       widget.onAddBed(Offset(gridX.toDouble(), gridY.toDouble()));
       setState(() {
         _isAddingMode = false;
+      });
+      
+      // Trigger add bed animation
+      Future.delayed(const Duration(milliseconds: 100), () {
+        _triggerNewBedAnimation();
       });
     }
   }
