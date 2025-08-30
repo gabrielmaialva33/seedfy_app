@@ -575,10 +575,36 @@ class GardenGridPainter extends CustomPainter {
       }
     }
 
-    // Draw beds
-    for (final bedWithPlanting in beds) {
+    // Draw beds with animations
+    for (int i = 0; i < beds.length; i++) {
+      final bedWithPlanting = beds[i];
       final bed = bedWithPlanting.bed;
       final status = getBedStatus(bedWithPlanting);
+      
+      // Calculate animation values for this bed
+      double scaleValue = 1.0;
+      double opacityValue = 1.0;
+      
+      // Entry animation (cascading effect)
+      final entryDelay = i * 0.1;
+      final adjustedEntryValue = (entryValue - entryDelay).clamp(0.0, 1.0);
+      scaleValue *= (0.5 + 0.5 * adjustedEntryValue);
+      opacityValue *= adjustedEntryValue;
+      
+      // Hover effect
+      if (hoveredBedIndex == i) {
+        scaleValue *= hoverValue;
+      }
+      
+      // Pulsing effect for critical beds
+      if (status == BedStatus.critical) {
+        scaleValue *= pulseValue;
+      }
+      
+      // New bed animation
+      if (newBedIndices.contains(i)) {
+        scaleValue *= (0.8 + 0.4 * entryValue);
+      }
       
       final bedRect = Rect.fromLTWH(
         bed.x * gridScale + 5,
@@ -587,42 +613,64 @@ class GardenGridPainter extends CustomPainter {
         bed.heightM * gridScale - 10,
       );
       
-      // Bed shadow
+      // Apply scaling from center
+      final center = bedRect.center;
+      final scaledRect = Rect.fromCenter(
+        center: center,
+        width: bedRect.width * scaleValue,
+        height: bedRect.height * scaleValue,
+      );
+      
+      // Enhanced shadow with scaling
+      final shadowOpacity = (0.1 * opacityValue * scaleValue).clamp(0.0, 0.3);
       final shadowPaint = Paint()
-        ..color = Colors.black.withOpacity(0.1);
+        ..color = Colors.black.withOpacity(shadowOpacity);
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          bedRect.translate(2, 2),
-          const Radius.circular(8),
+          scaledRect.translate(3 * scaleValue, 3 * scaleValue),
+          Radius.circular(8 * scaleValue),
         ),
         shadowPaint,
       );
       
-      // Bed background
+      // Bed background with glow effect
+      final bedColor = getStatusColor(status);
       final bedPaint = Paint()
-        ..color = getStatusColor(status).withOpacity(0.8);
+        ..color = bedColor.withOpacity(0.8 * opacityValue);
+        
+      // Add glow for hovered or critical beds
+      if (hoveredBedIndex == i || status == BedStatus.critical) {
+        final glowPaint = Paint()
+          ..color = bedColor.withOpacity(0.3)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(scaledRect, Radius.circular(8 * scaleValue)),
+          glowPaint,
+        );
+      }
+      
       canvas.drawRRect(
-        RRect.fromRectAndRadius(bedRect, const Radius.circular(8)),
+        RRect.fromRectAndRadius(scaledRect, Radius.circular(8 * scaleValue)),
         bedPaint,
       );
       
-      // Bed border
+      // Enhanced border with animation
       final borderPaint = Paint()
-        ..color = getStatusColor(status)
+        ..color = bedColor.withOpacity(opacityValue)
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 2 * scaleValue;
       canvas.drawRRect(
-        RRect.fromRectAndRadius(bedRect, const Radius.circular(8)),
+        RRect.fromRectAndRadius(scaledRect, Radius.circular(8 * scaleValue)),
         borderPaint,
       );
       
-      // Draw crop icon if planted
-      if (bedWithPlanting.crop != null) {
-        _drawCropIcon(canvas, bedRect.center, bedWithPlanting.crop!);
+      // Draw crop icon if planted (scaled)
+      if (bedWithPlanting.crop != null && opacityValue > 0.5) {
+        _drawCropIcon(canvas, scaledRect.center, bedWithPlanting.crop!, scaleValue * opacityValue);
       }
       
-      // Draw status indicator
-      _drawStatusIndicator(canvas, bedRect, status);
+      // Draw status indicator (scaled)
+      _drawStatusIndicator(canvas, scaledRect, status, scaleValue * opacityValue);
     }
   }
 
