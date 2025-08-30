@@ -394,7 +394,7 @@ class GardenBackgroundPainter extends CustomPainter {
 
     // Width measurement
     canvas.save();
-    canvas.translateByDouble(75, 100 + (plot.widthM * scale / 2));
+    canvas.translate(75, 100 + (plot.widthM * scale / 2));
     canvas.rotate(-1.5708); // -90 degrees
     textPainter.text = TextSpan(
       text: '${plot.widthM.toStringAsFixed(1)}m',

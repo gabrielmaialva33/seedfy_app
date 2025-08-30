@@ -68,7 +68,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translateByDouble(
+                child: Transform.translate(
                   offset: Offset(0, 20 * (1 - value)),
                   child: Text(
                     isPortuguese ? 'Tudo Pronto!' : 'All Set!',
@@ -93,7 +93,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translateByDouble(
+                child: Transform.translate(
                   offset: Offset(0, 20 * (1 - value)),
                   child: Text(
                     isPortuguese 
@@ -119,7 +119,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translateByDouble(
+                child: Transform.translate(
                   offset: Offset(0, 30 * (1 - value)),
                   child: Column(
                     children: [
@@ -181,7 +181,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translateByDouble(
+                child: Transform.translate(
                   offset: Offset(0, 30 * (1 - value)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
