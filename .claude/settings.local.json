@@ -17,7 +17,9 @@
       "Read(/Users/gabrielmaia/.claude/agents/core/**)",
       "mcp__exa__deep_researcher_start",
       "mcp__exa__deep_researcher_check",
-      "Bash(firebase --version)"
+      "Bash(firebase --version)",
+      "mcp__ref__ref_search_documentation",
+      "mcp__ref__ref_read_url"
     ],
     "deny": [],
     "ask": []
