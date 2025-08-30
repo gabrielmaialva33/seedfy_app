@@ -1,0 +1,37 @@
+{
+  "@@locale": "pt",
+  "appName": "Seedfy",
+  
+  "common_save": "Salvar",
+  "common_cancel": "Cancelar",
+  "common_edit": "Editar",
+  "common_delete": "Excluir",
+  "common_back": "Voltar",
+  "common_approve": "Aprovar",
+  "common_exportCsv": "Exportar CSV",
+  
+  "auth_login": "Entrar",
+  "auth_signup": "Criar conta",
+  "auth_name": "Nome",
+  "auth_email": "Email",
+  "auth_phone": "Telefone",
+  "auth_password": "Senha",
+  "auth_location": "Localização",
+  "auth_city": "Cidade",
+  "auth_state": "Estado",
+  
+  "onboarding_welcome": "Bem-vindo ao Seedfy",
+  "onboarding_dimensions": "Dimensões da Área",
+  "onboarding_length": "Comprimento (m)",
+  "onboarding_width": "Largura (m)",
+  "onboarding_pathGap": "Caminho entre canteiros (m)",
+  "onboarding_selectCrops": "Selecionar Culturas",
+  "onboarding_preview": "Visualizar",
+  
+  "map_title": "Mapa da Horta",
+  "map_addBed": "Adicionar Canteiro",
+  
+  "status_healthy": "Saudável",
+  "status_warning": "Atenção",
+  "status_critical": "Crítico"
+}

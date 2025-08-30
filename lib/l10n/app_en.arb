@@ -1,0 +1,124 @@
+{
+  "@@locale": "en",
+  "appName": "Seedfy",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  
+  "common_save": "Save",
+  "@common_save": {
+    "description": "Common save button text"
+  },
+  "common_cancel": "Cancel",
+  "@common_cancel": {
+    "description": "Common cancel button text"
+  },
+  "common_edit": "Edit",
+  "@common_edit": {
+    "description": "Common edit button text"
+  },
+  "common_delete": "Delete",
+  "@common_delete": {
+    "description": "Common delete button text"
+  },
+  "common_back": "Back",
+  "@common_back": {
+    "description": "Common back button text"
+  },
+  "common_approve": "Approve",
+  "@common_approve": {
+    "description": "Common approve button text"
+  },
+  "common_exportCsv": "Export CSV",
+  "@common_exportCsv": {
+    "description": "Common export CSV button text"
+  },
+  
+  "auth_login": "Login",
+  "@auth_login": {
+    "description": "Login button text"
+  },
+  "auth_signup": "Sign Up",
+  "@auth_signup": {
+    "description": "Sign up button text"
+  },
+  "auth_name": "Name",
+  "@auth_name": {
+    "description": "Name field label"
+  },
+  "auth_email": "Email",
+  "@auth_email": {
+    "description": "Email field label"
+  },
+  "auth_phone": "Phone",
+  "@auth_phone": {
+    "description": "Phone field label"
+  },
+  "auth_password": "Password",
+  "@auth_password": {
+    "description": "Password field label"
+  },
+  "auth_location": "Location",
+  "@auth_location": {
+    "description": "Location field label"
+  },
+  "auth_city": "City",
+  "@auth_city": {
+    "description": "City field label"
+  },
+  "auth_state": "State",
+  "@auth_state": {
+    "description": "State field label"
+  },
+  
+  "onboarding_welcome": "Welcome to Seedfy",
+  "@onboarding_welcome": {
+    "description": "Welcome message in onboarding"
+  },
+  "onboarding_dimensions": "Area Dimensions",
+  "@onboarding_dimensions": {
+    "description": "Area dimensions step title"
+  },
+  "onboarding_length": "Length (m)",
+  "@onboarding_length": {
+    "description": "Length field label"
+  },
+  "onboarding_width": "Width (m)",
+  "@onboarding_width": {
+    "description": "Width field label"
+  },
+  "onboarding_pathGap": "Path between beds (m)",
+  "@onboarding_pathGap": {
+    "description": "Path gap field label"
+  },
+  "onboarding_selectCrops": "Select Crops",
+  "@onboarding_selectCrops": {
+    "description": "Select crops step title"
+  },
+  "onboarding_preview": "Preview",
+  "@onboarding_preview": {
+    "description": "Preview step title"
+  },
+  
+  "map_title": "Garden Map",
+  "@map_title": {
+    "description": "Map screen title"
+  },
+  "map_addBed": "Add Bed",
+  "@map_addBed": {
+    "description": "Add bed button text"
+  },
+  
+  "status_healthy": "Healthy",
+  "@status_healthy": {
+    "description": "Healthy status text"
+  },
+  "status_warning": "Warning",
+  "@status_warning": {
+    "description": "Warning status text"
+  },
+  "status_critical": "Critical",
+  "@status_critical": {
+    "description": "Critical status text"
+  }
+}
