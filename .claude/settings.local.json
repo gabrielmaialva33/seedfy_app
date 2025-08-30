@@ -32,7 +32,9 @@
       "Bash(curl:*)",
       "mcp__exa__web_search_exa",
       "mcp__memory__create_entities",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_click"
     ],
     "deny": [],
     "ask": []
