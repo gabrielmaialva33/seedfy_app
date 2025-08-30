@@ -30,7 +30,6 @@ class Crop {
   factory Crop.fromJson(Map<String, dynamic> json) {
     return Crop(
       id: json['id'],
-      id: json['id'],
       namePt: json['name_pt'],
       nameEn: json['name_en'],
       imageUrl: json['image_url'],
