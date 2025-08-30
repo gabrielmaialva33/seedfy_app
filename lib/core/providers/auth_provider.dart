@@ -53,7 +53,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
   
-  Future<String?> signUp({
+  Future<void> signUp({
     required String email,
     required String password,
     required String name,
@@ -69,23 +69,25 @@ class AuthProvider extends ChangeNotifier {
       final response = await SupabaseService.client.auth.signUp(
         email: email,
         password: password,
-      );
-      
-      if (response.user != null) {
-        await SupabaseService.client.from('profiles').insert({
-          'id': response.user!.id,
+        data: {
           'name': name,
-          'email': email,
           'phone': phone,
           'city': city,
           'state': state,
           'locale': locale ?? 'pt-BR',
-        });
+        },
+      );
+      
+      if (response.user == null) {
+        throw Exception('Failed to create account');
       }
       
-      return null;
+      _user = response.user;
+      await Future.delayed(const Duration(milliseconds: 500)); // Wait for trigger
+      await _loadUserProfile();
+      
     } catch (e) {
-      return e.toString();
+      throw Exception('Registration failed: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
