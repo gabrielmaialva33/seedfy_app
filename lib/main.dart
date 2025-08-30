@@ -76,6 +76,14 @@ class SeedfyApp extends StatelessWidget {
           builder: (context, state) => const OnboardingScreen(),
         ),
         GoRoute(
+          path: '/home',
+          builder: (context, state) => const ModernHomeScreen(),
+        ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => const ModernProfileScreen(),
+        ),
+        GoRoute(
           path: '/map',
           builder: (context, state) => const MapScreen(),
         ),
