@@ -31,7 +31,8 @@
       "WebFetch(domain:undraw.co)",
       "Bash(curl:*)",
       "mcp__exa__web_search_exa",
-      "mcp__memory__create_entities"
+      "mcp__memory__create_entities",
+      "Bash(sed:*)"
     ],
     "deny": [],
     "ask": []
