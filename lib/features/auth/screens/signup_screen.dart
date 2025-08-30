@@ -226,7 +226,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 // State Field - Dropdown for BR, Text field for others
                 isPortuguese
                   ? DropdownButtonFormField<String>(
-                      value: _selectedState,
+                      initialValue: _selectedState,
                       decoration: InputDecoration(
                         labelText: 'Estado (UF)',
                         prefixIcon: const Icon(Icons.map_outlined),

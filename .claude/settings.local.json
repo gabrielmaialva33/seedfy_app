@@ -26,7 +26,8 @@
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/src/**)",
-      "Bash(export PATH=\"$PATH\":\"$HOME/.pub-cache/bin\")"
+      "Bash(export PATH=\"$PATH\":\"$HOME/.pub-cache/bin\")",
+      "mcp__exa__crawling_exa"
     ],
     "deny": [],
     "ask": []
