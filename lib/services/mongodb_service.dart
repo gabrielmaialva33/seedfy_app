@@ -188,7 +188,7 @@ class MongoDBService {
       };
 
       final result = await _plotsCollection.insertOne(plotData);
-      return result.insertedId as ObjectId;
+      return result.id as ObjectId;
     } catch (e) {
       throw Exception('Failed to create plot: $e');
     }
