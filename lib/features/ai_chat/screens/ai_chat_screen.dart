@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import '../../../services/nvidia_ai_service.dart';
+import '../../../services/firebase_service.dart';
 
 class AIChatScreen extends StatefulWidget {
   const AIChatScreen({super.key});
@@ -115,6 +116,21 @@ class _AIChatScreenState extends State<AIChatScreen>
         messageText,
         imageBase64: imageBase64,
       );
+
+      // Salvar mensagens no Firebase
+      try {
+        await FirebaseService.saveChatMessage(
+          message: messageText,
+          isFromUser: true,
+          imageBase64: imageBase64,
+        );
+        await FirebaseService.saveChatMessage(
+          message: response,
+          isFromUser: false,
+        );
+      } catch (e) {
+        debugPrint('Failed to save chat to Firebase: $e');
+      }
 
       _addMessage(ChatMessage(
         text: response,

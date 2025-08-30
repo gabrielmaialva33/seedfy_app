@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../services/nvidia_ai_service.dart';
+import '../../../services/firebase_service.dart';
 
 class AICameraScreen extends StatefulWidget {
   const AICameraScreen({super.key});
@@ -79,6 +80,29 @@ class _AICameraScreenState extends State<AICameraScreen>
 
       // Análise com NVIDIA AI
       final result = await _aiService.analyzePlantImage(imageFile);
+
+      // Salvar no Firebase
+      try {
+        await FirebaseService.savePlantAnalysis(
+          analysisData: {
+            'plantName': result.plantName,
+            'scientificName': result.scientificName,
+            'healthStatus': result.healthStatus,
+            'healthScore': result.healthScore,
+            'diseases': result.diseases,
+            'pests': result.pests,
+            'careTips': result.careTips,
+            'wateringNeeds': result.wateringNeeds,
+            'sunlightNeeds': result.sunlightNeeds,
+            'soilType': result.soilType,
+            'growthStage': result.growthStage,
+            'confidence': result.confidence,
+          },
+          imagePath: picture.path,
+        );
+      } catch (e) {
+        debugPrint('Failed to save to Firebase: $e');
+      }
 
       _scanAnimationController.stop();
       _resultAnimationController.forward();

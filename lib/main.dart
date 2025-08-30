@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'core/providers/locale_provider.dart';
 import 'core/providers/auth_provider.dart';
 import 'services/supabase_service.dart';
+import 'services/firebase_service.dart';
+import 'firebase_options.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
+  // Initialize other services
   await SupabaseService.initialize();
+  await FirebaseService.initialize();
   
   runApp(
     MultiProvider(
