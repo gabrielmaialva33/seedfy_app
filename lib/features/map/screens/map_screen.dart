@@ -22,7 +22,6 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  List<Farm> _farms = [];
   Farm? _currentFarm;
   Plot? _currentPlot;
   List<BedWithPlanting> _beds = [];
@@ -108,7 +107,6 @@ class _MapScreenState extends State<MapScreen> {
       }).toList();
 
       setState(() {
-        _farms = farms;
         _currentFarm = currentFarm;
         _currentPlot = currentPlot;
         _beds = beds;
