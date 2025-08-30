@@ -247,7 +247,7 @@ class MongoDBService {
       }
 
       final result = await _bedsCollection.insertMany(bedsData);
-      return result.map((r) => r as ObjectId).toList();
+      return result.inserted.keys.map((k) => k as ObjectId).toList();
     } catch (e) {
       throw Exception('Failed to create beds: $e');
     }
