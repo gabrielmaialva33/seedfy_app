@@ -394,6 +394,105 @@ class _GardenGridProState extends State<GardenGridPro>
       ),
     );
   }
+  
+  void _triggerBedBounce(int bedIndex) {
+    // Create a quick bounce effect for tapped beds
+    _hoverController.forward().then((_) {
+      _hoverController.reverse();
+    });
+  }
+  
+  void _triggerNewBedAnimation() {
+    // Reset and replay entry animation for new beds
+    _bedEntryController.reset();
+    _bedEntryController.forward();
+  }
+  
+  void _handleHover(int? bedIndex) {
+    if (_hoveredBedIndex != bedIndex) {
+      setState(() {
+        _hoveredBedIndex = bedIndex;
+      });
+      
+      if (bedIndex != null) {
+        _hoverController.forward();
+      } else {
+        _hoverController.reverse();
+      }
+    }
+  }
+  
+  void _detectHoveredBed(Offset localPosition) {
+    final transform = _transformationController.value;
+    final invertedTransform = Matrix4.inverted(transform);
+    final transformedPosition = MatrixUtils.transformPoint(invertedTransform, localPosition);
+    
+    int? hoveredIndex;
+    for (int i = 0; i < widget.beds.length; i++) {
+      final bed = widget.beds[i].bed;
+      final bedRect = Rect.fromLTWH(
+        bed.x * _gridScale,
+        bed.y * _gridScale,
+        bed.widthM * _gridScale,
+        bed.heightM * _gridScale,
+      );
+      
+      if (bedRect.contains(transformedPosition)) {
+        hoveredIndex = i;
+        break;
+      }
+    }
+    
+    _handleHover(hoveredIndex);
+  }
+  
+  void _startDemoMode() {
+    // Showcase demo with automatic animations
+    _showDemoDialog();
+  }
+  
+  void _showDemoDialog() {
+    final localeProvider = context.read<LocaleProvider>();
+    final isPortuguese = localeProvider.locale.languageCode == 'pt';
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(isPortuguese ? '🚀 Demo Interativo' : '🚀 Interactive Demo'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              isPortuguese 
+                ? '✨ Recursos demonstrados:'
+                : '✨ Demonstrated features:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(isPortuguese ? '🎯 Animações 3D suaves' : '🎯 Smooth 3D animations'),
+            Text(isPortuguese ? '💡 Efeitos de hover interativos' : '💡 Interactive hover effects'),
+            Text(isPortuguese ? '⚡ Transições fluidas' : '⚡ Fluid transitions'),
+            Text(isPortuguese ? '🌱 Status pulsante para plantas críticas' : '🌱 Pulsing status for critical plants'),
+            Text(isPortuguese ? '🎨 Gradientes modernos' : '🎨 Modern gradients'),
+            const SizedBox(height: 12),
+            Text(
+              isPortuguese 
+                ? 'Mova o mouse sobre os canteiros para ver os efeitos!'
+                : 'Hover over garden beds to see the effects!',
+              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(isPortuguese ? 'Começar Demo' : 'Start Demo'),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class GardenGridPainter extends CustomPainter {
@@ -404,6 +503,11 @@ class GardenGridPainter extends CustomPainter {
   final Color Function(BedStatus) getStatusColor;
   final bool isPortuguese;
   final bool isAddingMode;
+  final double pulseValue;
+  final double hoverValue;
+  final double entryValue;
+  final int? hoveredBedIndex;
+  final Set<int> newBedIndices;
 
   GardenGridPainter({
     required this.plot,
@@ -413,6 +517,11 @@ class GardenGridPainter extends CustomPainter {
     required this.getStatusColor,
     required this.isPortuguese,
     required this.isAddingMode,
+    required this.pulseValue,
+    required this.hoverValue,
+    required this.entryValue,
+    required this.hoveredBedIndex,
+    required this.newBedIndices,
   });
 
   @override
