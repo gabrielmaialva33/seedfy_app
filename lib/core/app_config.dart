@@ -1,6 +1,6 @@
 class AppConfig {
-  static const String supabaseUrl = 'YOUR_SUPABASE_URL';
-  static const String supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+  static const String supabaseUrl = 'https://zyltwdnzyoagnhjdashj.supabase.co';
+  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHR3ZG56eW9hZ25oamRhc2hqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY1ODcyMzcsImV4cCI6MjA3MjE2MzIzN30.NOEzoBeP1dZL89_BmSBA_U7uui479PaYsNAKug2sY94';
   
   // MongoDB Configuration
   static const String mongoDbUser = 'marlonbarreto2378_db_user';
