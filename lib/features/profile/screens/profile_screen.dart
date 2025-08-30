@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/modern_card.dart';
 
-class ModernProfileScreen extends StatefulWidget {
-  const ModernProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<ModernProfileScreen> createState() => _ModernProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ModernProfileScreenState extends State<ModernProfileScreen>
+class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
