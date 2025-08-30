@@ -12,8 +12,8 @@ import 'firebase_options.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 import 'features/map/screens/map_screen.dart';
-import 'features/home/screens/modern_home_screen.dart';
-import 'features/profile/screens/modern_profile_screen.dart';
+import 'features/home/screens/home_screen.dart';
+import 'features/profile/screens/profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,11 +77,11 @@ class SeedfyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/home',
-          builder: (context, state) => const ModernHomeScreen(),
+          builder: (context, state) => const HomeScreen(),
         ),
         GoRoute(
           path: '/profile',
-          builder: (context, state) => const ModernProfileScreen(),
+          builder: (context, state) => const ProfileScreen(),
         ),
         GoRoute(
           path: '/map',
