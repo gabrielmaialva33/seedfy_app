@@ -29,7 +29,8 @@
       "Bash(export PATH=\"$PATH\":\"$HOME/.pub-cache/bin\")",
       "mcp__exa__crawling_exa",
       "WebFetch(domain:undraw.co)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "mcp__exa__web_search_exa"
     ],
     "deny": [],
     "ask": []

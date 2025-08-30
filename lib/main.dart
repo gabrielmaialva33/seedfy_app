@@ -8,7 +8,6 @@ import 'core/providers/locale_provider.dart';
 import 'core/providers/auth_provider.dart';
 import 'services/supabase_service.dart';
 import 'services/firebase_service.dart';
-import 'services/mongodb_service.dart';
 import 'firebase_options.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
@@ -25,15 +24,6 @@ void main() async {
   await SupabaseService.initialize();
   await FirebaseService.initialize();
   
-  // Only initialize MongoDB on mobile/desktop platforms (not web)
-  if (!kIsWeb) {
-    try {
-      await MongoDBService.initialize();
-    } catch (e) {
-      debugPrint('MongoDB initialization failed: $e');
-      // Continue without MongoDB - app will use Supabase only
-    }
-  }
   
   runApp(
     MultiProvider(
