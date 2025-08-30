@@ -405,8 +405,8 @@ class MongoDBService {
         taskData['updatedAt'] = now;
       }
 
-      final result = await _tasksCollection.insertMany(tasksData);
-      return result.writeResult?.upsertedIds.values.cast<ObjectId>().toList() ?? [];
+      await _tasksCollection.insertMany(tasksData);
+      return [];
     } catch (e) {
       throw Exception('Failed to create tasks: $e');
     }
