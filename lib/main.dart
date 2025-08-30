@@ -121,18 +121,12 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 48),
             ElevatedButton(
-              onPressed: () {
-                print('Navegando para signup');
-                context.go('/signup');
-              },
+              onPressed: () => context.go('/signup'),
               child: const Text('Criar Conta'),
             ),
             const SizedBox(height: 16),
             TextButton(
-              onPressed: () {
-                print('Navegando para map');
-                context.go('/map');
-              },
+              onPressed: () => context.go('/map'),
               child: const Text('Entrar (Demo)'),
             ),
           ],
