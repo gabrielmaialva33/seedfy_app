@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:mongo_dart/mongo_dart.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../models/crop.dart';
