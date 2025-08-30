@@ -35,7 +35,6 @@ class _GardenGridProState extends State<GardenGridPro>
   static const double _maxScale = 3.0;
   
   bool _isAddingMode = false;
-  Offset? _newBedPosition;
 
   @override
   void initState() {
@@ -133,7 +132,6 @@ class _GardenGridProState extends State<GardenGridPro>
   void _toggleAddingMode() {
     setState(() {
       _isAddingMode = !_isAddingMode;
-      _newBedPosition = null;
     });
   }
 
