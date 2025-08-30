@@ -624,7 +624,7 @@ class GardenGridPainter extends CustomPainter {
       // Enhanced shadow with scaling
       final shadowOpacity = (0.1 * opacityValue * scaleValue).clamp(0.0, 0.3);
       final shadowPaint = Paint()
-        ..color = Colors.black.withOpacity(shadowOpacity);
+        ..color = Colors.black.withValues(alpha: shadowOpacity);
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           scaledRect.translate(3 * scaleValue, 3 * scaleValue),
