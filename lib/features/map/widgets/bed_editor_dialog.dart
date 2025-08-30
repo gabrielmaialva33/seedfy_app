@@ -12,11 +12,11 @@ class BedEditorDialog extends StatefulWidget {
   final VoidCallback onDelete;
 
   const BedEditorDialog({
-    Key? key,
+    super.key,
     required this.bedWithPlanting,
     required this.onSave,
     required this.onDelete,
-  }) : super(key: key);
+  });
 
   @override
   State<BedEditorDialog> createState() => _BedEditorDialogState();
