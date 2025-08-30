@@ -25,7 +25,8 @@
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
       "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
-      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/src/**)"
+      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/src/**)",
+      "Bash(export PATH=\"$PATH\":\"$HOME/.pub-cache/bin\")"
     ],
     "deny": [],
     "ask": []
