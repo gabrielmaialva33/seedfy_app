@@ -1,0 +1,84 @@
+name: Build Signed APK
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.0.1)'
+        required: true
+        default: '1.0.1'
+
+jobs:
+  build-signed-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '11'
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.3'
+        channel: 'stable'
+        cache: true
+
+    - name: Get Flutter dependencies
+      run: flutter pub get
+
+    - name: Decode Firebase config
+      env:
+        FIREBASE_CONFIG_BASE64: ${{ secrets.FIREBASE_CONFIG_BASE64 }}
+        GOOGLE_SERVICES_BASE64: ${{ secrets.GOOGLE_SERVICES_BASE64 }}
+      run: |
+        if [ ! -z "$FIREBASE_CONFIG_BASE64" ]; then
+          echo $FIREBASE_CONFIG_BASE64 | base64 -d > android/app/google-services.json
+        fi
+
+    - name: Decode Keystore
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      run: |
+        if [ ! -z "$KEYSTORE_BASE64" ]; then
+          echo $KEYSTORE_BASE64 | base64 -d > android/app/keystore.jks
+        fi
+
+    - name: Create key.properties
+      env:
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      run: |
+        if [ ! -z "$STORE_PASSWORD" ]; then
+          echo "storePassword=$STORE_PASSWORD" >> android/key.properties
+          echo "keyPassword=$KEY_PASSWORD" >> android/key.properties
+          echo "keyAlias=$KEY_ALIAS" >> android/key.properties
+          echo "storeFile=keystore.jks" >> android/key.properties
+        fi
+
+    - name: Update version
+      if: github.event.inputs.version != ''
+      run: |
+        sed -i "s/version: .*/version: ${{ github.event.inputs.version }}+${{ github.run_number }}/" pubspec.yaml
+
+    - name: Build signed APK
+      run: flutter build apk --release
+
+    - name: Build App Bundle
+      run: flutter build appbundle --release
+
+    - name: Upload Signed APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: seedfy-signed-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+
+    - name: Upload App Bundle
