@@ -44,4 +44,17 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Firebase and sensitive files
 seedfyapp-firebase-adminsdk-fbsvc-6002a267a3.json
+
+# CI/CD and security related
+android/key.properties
+android/app/keystore.jks
+*.keystore
+*.jks
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
