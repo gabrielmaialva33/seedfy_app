@@ -7,6 +7,7 @@ import 'core/providers/locale_provider.dart';
 import 'core/providers/auth_provider.dart';
 import 'services/supabase_service.dart';
 import 'services/firebase_service.dart';
+import 'services/mongodb_service.dart';
 import 'firebase_options.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
@@ -22,6 +23,7 @@ void main() async {
   // Initialize other services
   await SupabaseService.initialize();
   await FirebaseService.initialize();
+  await MongoDBService.initialize();
   
   runApp(
     MultiProvider(
