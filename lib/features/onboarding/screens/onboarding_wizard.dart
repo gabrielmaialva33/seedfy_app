@@ -12,7 +12,7 @@ import 'steps/preview_step.dart';
 import 'steps/approval_step.dart';
 
 class OnboardingWizard extends StatefulWidget {
-  const OnboardingWizard({Key? key}) : super(key: key);
+  const OnboardingWizard({super.key});
 
   @override
   State<OnboardingWizard> createState() => _OnboardingWizardState();
