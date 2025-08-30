@@ -111,11 +111,9 @@ class AppTheme {
         primary: primaryPurple,
         secondary: primaryGreen,
         surface: cardWhite,
-        background: backgroundLight,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         onSurface: textDark,
-        onBackground: textDark,
       ),
       scaffoldBackgroundColor: backgroundLight,
       appBarTheme: const AppBarTheme(
