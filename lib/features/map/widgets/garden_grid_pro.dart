@@ -116,18 +116,6 @@ class _GardenGridProState extends State<GardenGridPro>
     }
   }
 
-  IconData _getStatusIcon(BedStatus status) {
-    switch (status) {
-      case BedStatus.healthy:
-        return Icons.eco;
-      case BedStatus.warning:
-        return Icons.schedule;
-      case BedStatus.critical:
-        return Icons.warning;
-      case BedStatus.empty:
-        return Icons.add;
-    }
-  }
 
   void _toggleAddingMode() {
     setState(() {
