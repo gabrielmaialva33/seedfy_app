@@ -7,6 +7,18 @@ import '../../../models/task.dart';
 import '../../../models/planting.dart';
 import '../../../models/crop.dart';
 
+class TaskWithDetails {
+  final GardenTask task;
+  final Planting? planting;
+  final Crop? crop;
+
+  TaskWithDetails({
+    required this.task,
+    this.planting,
+    this.crop,
+  });
+}
+
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
@@ -57,7 +69,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
           .order('due_date');
 
       final tasks = (tasksResponse as List).map((taskJson) {
-        final task = Task.fromJson(taskJson);
+        final task = GardenTask.fromJson(taskJson);
         Planting? planting;
         Crop? crop;
         
@@ -534,16 +546,4 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
       ? '${date.day}/${date.month}/${date.year}'
       : '${date.month}/${date.day}/${date.year}';
   }
-}
-
-class TaskWithDetails {
-  final Task task;
-  final Planting? planting;
-  final Crop? crop;
-
-  TaskWithDetails({
-    required this.task,
-    this.planting,
-    this.crop,
-  });
 }
