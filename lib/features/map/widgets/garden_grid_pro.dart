@@ -129,7 +129,7 @@ class _GardenGridProState extends State<GardenGridPro>
     final centerY = (screenSize.height - plotHeight) / 2;
     
     _transformationController.value = Matrix4.identity()
-      ..translateByDouble(centerX, centerY)
+      ..translate(centerX, centerY)
       ..scaleByDouble(1.0);
   }
 
@@ -341,7 +341,7 @@ class _GardenGridProState extends State<GardenGridPro>
       floatingActionButton: AnimatedBuilder(
         animation: _fabAnimation,
         builder: (context, child) {
-          return Transform.scaleByDouble(
+          return Transform.scale(
             scale: _fabAnimation.value,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -627,7 +627,7 @@ class GardenGridPainter extends CustomPainter {
         ..color = Colors.black.withValues(alpha: shadowOpacity);
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          scaledRect.translateByDouble(3 * scaleValue, 3 * scaleValue),
+          scaledRect.translate(3 * scaleValue, 3 * scaleValue),
           Radius.circular(8 * scaleValue),
         ),
         shadowPaint,
@@ -684,8 +684,8 @@ class GardenGridPainter extends CustomPainter {
     // Add leaves with scaling
     final leafPaint = Paint()
       ..color = Colors.green.shade600.withValues(alpha: scale);
-    canvas.drawCircle(center.translateByDouble(-5 * scale, -3 * scale), 4 * scale, leafPaint);
-    canvas.drawCircle(center.translateByDouble(5 * scale, -3 * scale), 4 * scale, leafPaint);
+    canvas.drawCircle(center.translate(-5 * scale, -3 * scale), 4 * scale, leafPaint);
+    canvas.drawCircle(center.translate(5 * scale, -3 * scale), 4 * scale, leafPaint);
   }
 
   void _drawStatusIndicator(Canvas canvas, Rect bedRect, BedStatus status, double scale) {
