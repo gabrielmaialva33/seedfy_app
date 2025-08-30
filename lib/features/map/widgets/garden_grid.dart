@@ -24,7 +24,6 @@ class GardenGrid extends StatefulWidget {
 
 class _GardenGridState extends State<GardenGrid> {
   final TransformationController _transformationController = TransformationController();
-  static const double _bedMinSize = 50.0;
   static const double _gridScale = 50.0; // pixels per meter
 
   @override

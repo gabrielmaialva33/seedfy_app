@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import '../../services/supabase_service.dart';
 import '../../services/firebase_service.dart';
 import '../../models/user_profile.dart';
