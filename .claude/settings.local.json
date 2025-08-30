@@ -21,7 +21,10 @@
       "mcp__ref__ref_search_documentation",
       "mcp__ref__ref_read_url",
       "Bash(firebase init:*)",
-      "Bash(firebase:*)"
+      "Bash(firebase:*)",
+      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
+      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)",
+      "Read(/Users/gabrielmaia/Documents/projects/seedfy-web/**)"
     ],
     "deny": [],
     "ask": []
