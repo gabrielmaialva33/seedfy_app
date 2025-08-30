@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import '../../services/supabase_service.dart';
+import '../../services/firebase_service.dart';
 import '../../models/user_profile.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -98,10 +100,18 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
       
+      // Sign in with Supabase
       await SupabaseService.client.auth.signInWithPassword(
         email: email,
         password: password,
       );
+      
+      // Also sign in with Firebase anonymously for data storage
+      try {
+        await FirebaseService.signInAnonymously();
+      } catch (e) {
+        debugPrint('Firebase anonymous sign in failed: $e');
+      }
       
       return null;
     } catch (e) {
@@ -114,5 +124,10 @@ class AuthProvider extends ChangeNotifier {
   
   Future<void> signOut() async {
     await SupabaseService.client.auth.signOut();
+    try {
+      await FirebaseService.signOut();
+    } catch (e) {
+      debugPrint('Firebase sign out failed: $e');
+    }
   }
 }
