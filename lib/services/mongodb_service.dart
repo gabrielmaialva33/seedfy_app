@@ -247,7 +247,7 @@ class MongoDBService {
       }
 
       final result = await _bedsCollection.insertMany(bedsData);
-      return result.inserted.keys.map((k) => k as ObjectId).toList();
+      return result.insertedIds?.values.cast<ObjectId>().toList() ?? [];
     } catch (e) {
       throw Exception('Failed to create beds: $e');
     }
@@ -406,7 +406,7 @@ class MongoDBService {
       }
 
       final result = await _tasksCollection.insertMany(tasksData);
-      return result.inserted.keys.map((k) => k as ObjectId).toList();
+      return result.insertedIds?.values.cast<ObjectId>().toList() ?? [];
     } catch (e) {
       throw Exception('Failed to create tasks: $e');
     }
