@@ -54,6 +54,25 @@ dependencies:
   # Utils
   uuid: ^4.5.1
   shared_preferences: ^2.3.2
+  
+  # 🚀 AI & Camera Features for Hackathon
+  # HTTP & API for NVIDIA NIM
+  http: ^1.2.2
+  dio: ^5.7.0
+  
+  # Camera & Image Processing
+  camera: ^0.11.0+2
+  image_picker: ^1.1.2
+  image: ^4.2.0
+  
+  # Audio & Speech for Voice Commands
+  speech_to_text: ^7.0.0
+  flutter_tts: ^4.1.0
+  
+  # Cool UI Animations
+  lottie: ^3.1.3
+  shimmer: ^3.0.0
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:
