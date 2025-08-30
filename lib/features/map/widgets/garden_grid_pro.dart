@@ -171,41 +171,62 @@ class _GardenGridProState extends State<GardenGridPro>
     return Scaffold(
       body: Stack(
         children: [
-          // Grid background
+          // Enhanced gradient background
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
+                stops: const [0.0, 0.4, 0.8, 1.0],
                 colors: [
                   Colors.green.shade50,
                   Colors.blue.shade50,
+                  Colors.purple.shade50,
+                  Colors.orange.shade50,
                 ],
               ),
             ),
           ),
           
-          // Interactive grid
+          // Interactive grid with hover detection
           GestureDetector(
             onTapUp: _handleTapOnGrid,
-            child: InteractiveViewer(
-              transformationController: _transformationController,
-              minScale: _minScale,
-              maxScale: _maxScale,
-              boundaryMargin: const EdgeInsets.all(100),
-              child: CustomPaint(
-                size: Size(
-                  widget.plot.lengthM * _gridScale,
-                  widget.plot.widthM * _gridScale,
-                ),
-                painter: GardenGridPainter(
-                  plot: widget.plot,
-                  beds: widget.beds,
-                  gridScale: _gridScale,
-                  getBedStatus: _getBedStatus,
-                  getStatusColor: _getStatusColor,
-                  isPortuguese: isPortuguese,
-                  isAddingMode: _isAddingMode,
+            child: MouseRegion(
+              onHover: (event) => _detectHoveredBed(event.localPosition),
+              onExit: (_) => _handleHover(null),
+              child: InteractiveViewer(
+                transformationController: _transformationController,
+                minScale: _minScale,
+                maxScale: _maxScale,
+                boundaryMargin: const EdgeInsets.all(100),
+                child: AnimatedBuilder(
+                  animation: Listenable.merge([
+                    _pulseAnimation,
+                    _hoverAnimation,
+                    _bedEntryAnimation,
+                  ]),
+                  builder: (context, child) {
+                    return CustomPaint(
+                      size: Size(
+                        widget.plot.lengthM * _gridScale,
+                        widget.plot.widthM * _gridScale,
+                      ),
+                      painter: GardenGridPainter(
+                        plot: widget.plot,
+                        beds: widget.beds,
+                        gridScale: _gridScale,
+                        getBedStatus: _getBedStatus,
+                        getStatusColor: _getStatusColor,
+                        isPortuguese: isPortuguese,
+                        isAddingMode: _isAddingMode,
+                        pulseValue: _pulseAnimation.value,
+                        hoverValue: _hoverAnimation.value,
+                        entryValue: _bedEntryAnimation.value,
+                        hoveredBedIndex: _hoveredBedIndex,
+                        newBedIndices: _newBedIndices,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
