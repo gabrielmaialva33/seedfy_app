@@ -136,7 +136,7 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -272,7 +272,7 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                                           vertical: 2,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: _getCycleStatusColor(crop).withOpacity(0.2),
+                                          color: _getCycleStatusColor(crop).withValues(alpha: 0.2),
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Text(

@@ -40,8 +40,8 @@ class _GardenGridEnhancedState extends State<GardenGridEnhanced> {
     final centerY = (widget.plot.widthM * _gridScale) / 2;
     
     _transformationController.value = Matrix4.identity()
-      ..translate(-centerX + 200, -centerY + 200)
-      ..scale(1.0);
+      ..translateByDouble(-centerX + 200, -centerY + 200)
+      ..scaleByDouble(1.0);
   }
 
   BedStatus _getBedStatus(BedWithPlanting bedWithPlanting) {
@@ -215,7 +215,7 @@ class _GardenGridEnhancedState extends State<GardenGridEnhanced> {
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),
@@ -394,7 +394,7 @@ class GardenBackgroundPainter extends CustomPainter {
 
     // Width measurement
     canvas.save();
-    canvas.translate(75, 100 + (plot.widthM * scale / 2));
+    canvas.translateByDouble(75, 100 + (plot.widthM * scale / 2));
     canvas.rotate(-1.5708); // -90 degrees
     textPainter.text = TextSpan(
       text: '${plot.widthM.toStringAsFixed(1)}m',

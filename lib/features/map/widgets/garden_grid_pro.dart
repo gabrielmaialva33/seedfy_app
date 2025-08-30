@@ -129,8 +129,8 @@ class _GardenGridProState extends State<GardenGridPro>
     final centerY = (screenSize.height - plotHeight) / 2;
     
     _transformationController.value = Matrix4.identity()
-      ..translate(centerX, centerY)
-      ..scale(1.0);
+      ..translateByDouble(centerX, centerY)
+      ..scaleByDouble(1.0);
   }
 
   BedStatus _getBedStatus(BedWithPlanting bedWithPlanting) {
@@ -302,7 +302,7 @@ class _GardenGridProState extends State<GardenGridPro>
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -341,7 +341,7 @@ class _GardenGridProState extends State<GardenGridPro>
       floatingActionButton: AnimatedBuilder(
         animation: _fabAnimation,
         builder: (context, child) {
-          return Transform.scale(
+          return Transform.scaleByDouble(
             scale: _fabAnimation.value,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -527,7 +527,7 @@ class GardenGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final gridPaint = Paint()
-      ..color = Colors.grey.withOpacity(0.3)
+      ..color = Colors.grey.withValues(alpha: 0.3)
       ..strokeWidth = 1;
     
     final pathPaint = Paint()
@@ -627,7 +627,7 @@ class GardenGridPainter extends CustomPainter {
         ..color = Colors.black.withValues(alpha: shadowOpacity);
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          scaledRect.translate(3 * scaleValue, 3 * scaleValue),
+          scaledRect.translateByDouble(3 * scaleValue, 3 * scaleValue),
           Radius.circular(8 * scaleValue),
         ),
         shadowPaint,
@@ -636,12 +636,12 @@ class GardenGridPainter extends CustomPainter {
       // Bed background with glow effect
       final bedColor = getStatusColor(status);
       final bedPaint = Paint()
-        ..color = bedColor.withOpacity(0.8 * opacityValue);
+        ..color = bedColor.withValues(alpha: 0.8 * opacityValue);
         
       // Add glow for hovered or critical beds
       if (hoveredBedIndex == i || status == BedStatus.critical) {
         final glowPaint = Paint()
-          ..color = bedColor.withOpacity(0.3)
+          ..color = bedColor.withValues(alpha: 0.3)
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
         canvas.drawRRect(
           RRect.fromRectAndRadius(scaledRect, Radius.circular(8 * scaleValue)),
@@ -656,7 +656,7 @@ class GardenGridPainter extends CustomPainter {
       
       // Enhanced border with animation
       final borderPaint = Paint()
-        ..color = bedColor.withOpacity(opacityValue)
+        ..color = bedColor.withValues(alpha: opacityValue)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2 * scaleValue;
       canvas.drawRRect(
@@ -676,16 +676,16 @@ class GardenGridPainter extends CustomPainter {
 
   void _drawCropIcon(Canvas canvas, Offset center, dynamic crop, double scale) {
     final iconPaint = Paint()
-      ..color = Colors.green.shade700.withOpacity(scale);
+      ..color = Colors.green.shade700.withValues(alpha: scale);
     
     // Simple plant representation with scaling
     canvas.drawCircle(center, 8 * scale, iconPaint);
     
     // Add leaves with scaling
     final leafPaint = Paint()
-      ..color = Colors.green.shade600.withOpacity(scale);
-    canvas.drawCircle(center.translate(-5 * scale, -3 * scale), 4 * scale, leafPaint);
-    canvas.drawCircle(center.translate(5 * scale, -3 * scale), 4 * scale, leafPaint);
+      ..color = Colors.green.shade600.withValues(alpha: scale);
+    canvas.drawCircle(center.translateByDouble(-5 * scale, -3 * scale), 4 * scale, leafPaint);
+    canvas.drawCircle(center.translateByDouble(5 * scale, -3 * scale), 4 * scale, leafPaint);
   }
 
   void _drawStatusIndicator(Canvas canvas, Rect bedRect, BedStatus status, double scale) {
@@ -699,7 +699,7 @@ class GardenGridPainter extends CustomPainter {
     );
     
     final indicatorPaint = Paint()
-      ..color = getStatusColor(status).withOpacity(scale);
+      ..color = getStatusColor(status).withValues(alpha: scale);
     
     // Add pulsing effect for critical status
     final indicatorScale = status == BedStatus.critical ? scale * pulseValue : scale;

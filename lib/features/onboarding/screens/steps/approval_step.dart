@@ -32,7 +32,7 @@ class ApprovalStep extends StatelessWidget {
             duration: const Duration(milliseconds: 800),
             curve: Curves.elasticOut,
             builder: (context, value, child) {
-              return Transform.scale(
+              return Transform.scaleByDouble(
                 scale: value,
                 child: Container(
                   width: 120,
@@ -42,7 +42,7 @@ class ApprovalStep extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).primaryColor.withOpacity(0.3),
+                        color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -68,7 +68,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translate(
+                child: Transform.translateByDouble(
                   offset: Offset(0, 20 * (1 - value)),
                   child: Text(
                     isPortuguese ? 'Tudo Pronto!' : 'All Set!',
@@ -93,7 +93,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translate(
+                child: Transform.translateByDouble(
                   offset: Offset(0, 20 * (1 - value)),
                   child: Text(
                     isPortuguese 
@@ -119,7 +119,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translate(
+                child: Transform.translateByDouble(
                   offset: Offset(0, 30 * (1 - value)),
                   child: Column(
                     children: [
@@ -181,7 +181,7 @@ class ApprovalStep extends StatelessWidget {
             builder: (context, value, child) {
               return Opacity(
                 opacity: value,
-                child: Transform.translate(
+                child: Transform.translateByDouble(
                   offset: Offset(0, 30 * (1 - value)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -196,7 +196,7 @@ class ApprovalStep extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16),
                             ),
                             elevation: 8,
-                            shadowColor: Theme.of(context).primaryColor.withOpacity(0.3),
+                            shadowColor: Theme.of(context).primaryColor.withValues(alpha: 0.3),
                           ),
                           child: isLoading
                             ? Row(
@@ -329,7 +329,7 @@ class ApprovalStep extends StatelessWidget {
         border: Border.all(color: Colors.grey[200]!),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -341,7 +341,7 @@ class ApprovalStep extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
