@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../theme/app_theme.dart';
 
 class ModernCard extends StatelessWidget {
@@ -103,7 +104,11 @@ class GradientCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    )
+    .animate()
+    .fadeIn(duration: 400.ms)
+    .scale(begin: const Offset(0.9, 0.9))
+    .shimmer(duration: 1500.ms, color: Colors.white.withValues(alpha: 0.2));
   }
 }
 
@@ -143,22 +148,62 @@ class PlantCard extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                   colors: [
-                    AppTheme.primaryGreen.withValues(alpha: 0.1),
-                    AppTheme.primaryPurple.withValues(alpha: 0.1),
+                    AppTheme.primaryGreen.withValues(alpha: 0.8),
+                    AppTheme.primaryPurple.withValues(alpha: 0.6),
+                    AppTheme.accentOrange.withValues(alpha: 0.4),
                   ],
+                  stops: const [0.0, 0.6, 1.0],
                 ),
               ),
               child: Stack(
                 children: [
-                  // Placeholder para imagem
+                  // Placeholder para imagem com múltiplas plantas
                   Center(
-                    child: Icon(
-                      Icons.eco,
-                      size: 48,
-                      color: AppTheme.primaryGreen.withValues(alpha: 0.7),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.local_florist,
+                              size: 20,
+                              color: Colors.white.withValues(alpha: 0.9),
+                            ),
+                            const SizedBox(width: 8),
+                            Icon(
+                              Icons.eco,
+                              size: 28,
+                              color: Colors.white.withValues(alpha: 0.9),
+                            ),
+                            const SizedBox(width: 8),
+                            Icon(
+                              Icons.grass,
+                              size: 20,
+                              color: Colors.white.withValues(alpha: 0.9),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Text(
+                            '🌱 Garden',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   // Status badge
@@ -240,7 +285,11 @@ class PlantCard extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
+    .animate()
+    .fadeIn(duration: 600.ms, delay: 200.ms)
+    .scale(begin: const Offset(0.8, 0.8), end: const Offset(1.0, 1.0))
+    .shimmer(duration: 1200.ms, color: Colors.white.withValues(alpha: 0.3));
   }
 
   Widget _buildProgressIndicator() {
@@ -260,6 +309,17 @@ class PlantCard extends StatelessWidget {
           ),
         ),
       ),
+    )
+    .animate()
+    .scaleX(
+      duration: 1500.ms,
+      delay: 800.ms,
+      curve: Curves.elasticOut,
+    )
+    .shimmer(
+      duration: 2000.ms,
+      delay: 1000.ms,
+      color: Colors.white.withValues(alpha: 0.5),
     );
   }
 }
@@ -304,13 +364,28 @@ class StoryCircle extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: borderColor ?? AppTheme.primaryGreen.withValues(alpha: 0.1),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      borderColor ?? AppTheme.primaryGreen,
+                      AppTheme.primaryPurple.withValues(alpha: 0.8),
+                      AppTheme.accentOrange.withValues(alpha: 0.6),
+                    ],
+                  ),
                   border: Border.all(color: Colors.white, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: (borderColor ?? AppTheme.primaryGreen).withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Center(
                   child: Icon(
-                    Icons.eco,
-                    color: borderColor ?? AppTheme.primaryGreen,
+                    _getPlantIcon(label),
+                    color: Colors.white,
                     size: 32,
                   ),
                 ),
@@ -330,6 +405,30 @@ class StoryCircle extends StatelessWidget {
           ],
         ),
       ),
-    );
+    )
+    .animate(delay: (200 * 1).ms)
+    .fadeIn(duration: 500.ms)
+    .scale(begin: const Offset(0.5, 0.5))
+    .then()
+    .shimmer(duration: 2000.ms, color: hasNewStory ? Colors.purple.withValues(alpha: 0.4) : Colors.transparent);
+  }
+
+  IconData _getPlantIcon(String label) {
+    switch (label.toLowerCase()) {
+      case 'adicionar':
+        return Icons.add_circle_outline;
+      case 'alfaces':
+        return Icons.grass;
+      case 'tomates':
+        return Icons.circle;
+      case 'cenouras':
+        return Icons.agriculture;
+      case 'ervas':
+        return Icons.local_florist;
+      case 'flores':
+        return Icons.local_florist;
+      default:
+        return Icons.eco;
+    }
   }
 }
