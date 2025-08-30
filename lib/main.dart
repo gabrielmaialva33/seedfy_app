@@ -63,7 +63,7 @@ class SeedfyApp extends StatelessWidget {
   GoRouter _createRouter(AuthProvider authProvider) {
     return GoRouter(
       initialLocation: '/login',
-      // Removendo redirect para permitir navegação livre durante demo
+      debugLogDiagnostics: true,
       routes: [
         GoRoute(
           path: '/login',
@@ -120,12 +120,18 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 48),
             ElevatedButton(
-              onPressed: () => context.go('/signup'),
+              onPressed: () {
+                print('Navegando para signup');
+                context.go('/signup');
+              },
               child: const Text('Criar Conta'),
             ),
             const SizedBox(height: 16),
             TextButton(
-              onPressed: () => context.go('/map'),
+              onPressed: () {
+                print('Navegando para map');
+                context.go('/map');
+              },
               child: const Text('Entrar (Demo)'),
             ),
           ],
