@@ -346,14 +346,32 @@ class _GardenGridProState extends State<GardenGridPro>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Add bed button
-                FloatingActionButton(
-                  heroTag: "add_bed",
-                  onPressed: _toggleAddingMode,
-                  backgroundColor: _isAddingMode ? Colors.red : Colors.green,
-                  child: Icon(
-                    _isAddingMode ? Icons.close : Icons.add,
+                // Demo mode button (new)
+                FloatingActionButton.small(
+                  heroTag: "demo_mode",
+                  onPressed: _startDemoMode,
+                  backgroundColor: Colors.purple,
+                  child: const Icon(
+                    Icons.play_arrow,
                     color: Colors.white,
+                  ),
+                ),
+                
+                const SizedBox(height: 12),
+                
+                // Add bed button with rotation animation
+                AnimatedRotation(
+                  turns: _isAddingMode ? 0.125 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: FloatingActionButton(
+                    heroTag: "add_bed",
+                    onPressed: _toggleAddingMode,
+                    backgroundColor: _isAddingMode ? Colors.red : Colors.green,
+                    elevation: _isAddingMode ? 8 : 4,
+                    child: Icon(
+                      _isAddingMode ? Icons.close : Icons.add,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 
