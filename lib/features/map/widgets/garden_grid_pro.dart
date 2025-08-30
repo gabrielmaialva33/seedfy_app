@@ -28,41 +28,94 @@ class _GardenGridProState extends State<GardenGridPro>
       TransformationController();
   
   late AnimationController _fabAnimationController;
+  late AnimationController _pulseBedController;
+  late AnimationController _hoverController;
+  late AnimationController _bedEntryController;
+  
   late Animation<double> _fabAnimation;
+  late Animation<double> _pulseAnimation;
+  late Animation<double> _hoverAnimation;
+  late Animation<double> _bedEntryAnimation;
   
   static const double _gridScale = 60.0; // pixels per meter
   static const double _minScale = 0.5;
   static const double _maxScale = 3.0;
   
   bool _isAddingMode = false;
+  int? _hoveredBedIndex;
+  final Set<int> _newBedIndices = <int>{};
 
   @override
   void initState() {
     super.initState();
     
+    // FAB Animation
     _fabAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    
     _fabAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _fabAnimationController,
+      curve: Curves.elasticOut,
+    ));
+    
+    // Pulsing bed animation for critical status
+    _pulseBedController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _pulseAnimation = Tween<double>(
+      begin: 0.8,
+      end: 1.2,
+    ).animate(CurvedAnimation(
+      parent: _pulseBedController,
+      curve: Curves.easeInOut,
+    ));
+    
+    // Hover effect animation
+    _hoverController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _hoverAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.05,
+    ).animate(CurvedAnimation(
+      parent: _hoverController,
       curve: Curves.easeOut,
     ));
     
-    // Center the view on the garden
+    // Bed entry animation (cascading effect)
+    _bedEntryController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    );
+    _bedEntryAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _bedEntryController,
+      curve: Curves.elasticOut,
+    ));
+    
+    // Start animations
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _centerView();
       _fabAnimationController.forward();
+      _bedEntryController.forward();
+      _pulseBedController.repeat(reverse: true);
     });
   }
 
   @override
   void dispose() {
     _fabAnimationController.dispose();
+    _pulseBedController.dispose();
+    _hoverController.dispose();
+    _bedEntryController.dispose();
     _transformationController.dispose();
     super.dispose();
   }
