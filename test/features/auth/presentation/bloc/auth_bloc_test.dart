@@ -176,7 +176,7 @@ void main() {
         'emits [loading, unauthenticated] when logout is successful',
         build: () {
           when(() => mockAuthRepository.logout())
-              .thenAnswer((_) async => const Right(unit));
+              .thenAnswer((_) async => Right(unit));
           return authBloc;
         },
         act: (bloc) => bloc.add(const AuthEvent.logoutRequested()),
@@ -239,7 +239,7 @@ void main() {
         'emits [loading, passwordResetSent] when reset is successful',
         build: () {
           when(() => mockAuthRepository.resetPassword(any()))
-              .thenAnswer((_) async => const Right(unit));
+              .thenAnswer((_) async => Right(unit));
           return authBloc;
         },
         act: (bloc) => bloc.add(const AuthEvent.resetPasswordRequested(
