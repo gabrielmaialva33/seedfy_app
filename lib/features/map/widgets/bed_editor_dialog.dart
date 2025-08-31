@@ -504,7 +504,6 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                           const SizedBox(height: 12),
 
                           DropdownButtonFormField<Crop>(
-                            value: _selectedCrop,
                             decoration: InputDecoration(
                               labelText: isPortuguese
                                   ? 'Selecione uma cultura'
@@ -530,6 +529,13 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                                 _customCycleDays =
                                     null; // Reset custom cycle when crop changes
                               });
+                            },
+                            onSaved: (crop) {
+                              _selectedCrop = crop;
+                            },
+                            validator: (value) {
+                              // Optional validation if needed
+                              return null;
                             },
                           ),
 
