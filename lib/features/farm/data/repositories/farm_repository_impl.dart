@@ -26,9 +26,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final farms = await remoteDataSource.getUserFarms();
         return Right(farms);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -44,9 +44,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final farm = await remoteDataSource.getFarm(farmId);
         return Right(farm);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -62,9 +62,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final createdFarm = await remoteDataSource.createFarm(farm);
         return Right(createdFarm);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -80,9 +80,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final updatedFarm = await remoteDataSource.updateFarm(farm);
         return Right(updatedFarm);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -98,9 +98,9 @@ class FarmRepositoryImpl implements FarmRepository {
         await remoteDataSource.deleteFarm(farmId);
         return const Right(null);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -116,9 +116,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final plots = await remoteDataSource.getFarmPlots(farmId);
         return Right(plots);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -134,9 +134,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final beds = await remoteDataSource.getFarmBeds(farmId);
         return Right(beds);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -153,9 +153,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final plantings = await remoteDataSource.getFarmPlantings(farmId);
         return Right(plantings);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -172,9 +172,9 @@ class FarmRepositoryImpl implements FarmRepository {
         final stats = await remoteDataSource.getFarmStats(farmId);
         return Right(stats);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
