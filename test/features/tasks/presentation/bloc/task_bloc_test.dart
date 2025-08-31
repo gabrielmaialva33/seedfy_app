@@ -282,11 +282,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, error] when completeTask fails',
         build: () {
-          when(() => mockCompleteTask(const CompleteTaskParams(
-                    taskId: taskId,
-                    notes: notes,
-                    actualMinutes: actualMinutes,
-                  )))
+          when(() => mockCompleteTask(any()))
               .thenAnswer(
                   (_) async => const Left(ValidationFailure('Task not found')));
           return taskBloc;
