@@ -65,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             backgroundColor: AppTheme.primaryPurple,
             child: Text(
               (profile?.name?.isNotEmpty ?? false)
-                  ? profile!.name!.substring(0, 1).toUpperCase() 
+                  ? profile.name!.substring(0, 1).toUpperCase() 
                   : 'U',
               style: const TextStyle(
                 color: Colors.white,
