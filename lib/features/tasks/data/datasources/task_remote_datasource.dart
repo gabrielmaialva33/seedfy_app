@@ -481,12 +481,12 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .count(CountOption.exact);
 
       return {
-        'total_tasks': totalTasks.count ?? 0,
-        'completed_tasks': completedTasks.count ?? 0,
-        'pending_tasks': pendingTasks.count ?? 0,
-        'overdue_tasks': overdueTasks.count ?? 0,
-        'completion_rate': (totalTasks.count ?? 0) > 0
-            ? ((completedTasks.count ?? 0) / (totalTasks.count ?? 0) * 100)
+        'total_tasks': totalTasks.count,
+        'completed_tasks': completedTasks.count,
+        'pending_tasks': pendingTasks.count,
+        'overdue_tasks': overdueTasks.count,
+        'completion_rate': totalTasks.count > 0
+            ? (completedTasks.count / totalTasks.count * 100)
                 .round()
             : 0,
       };
