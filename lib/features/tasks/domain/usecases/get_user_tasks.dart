@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../../shared/domain/entities/task.dart';
+import '../../../../shared/domain/entities/task.dart' as entities;
 import '../repositories/task_repository.dart';
 
 class GetUserTasks implements UseCase<List<Task>, NoParams> {
