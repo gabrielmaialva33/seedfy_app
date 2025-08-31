@@ -130,7 +130,7 @@ class _GardenGridProState extends State<GardenGridPro>
     final centerY = (screenSize.height - plotHeight) / 2;
 
     _transformationController.value = Matrix4.identity()
-      ..translate(centerX, centerY, 0.0)
+      ..translate(centerX, centerY)
       ..scale(1.0);
   }
 
