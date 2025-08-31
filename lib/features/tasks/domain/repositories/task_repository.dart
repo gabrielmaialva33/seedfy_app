@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
+import '../../../../shared/domain/entities/task.dart' as entities;
 
 abstract class TaskRepository {
   /// Get all tasks for the current user
