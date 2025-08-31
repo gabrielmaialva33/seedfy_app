@@ -56,7 +56,7 @@ class TaskRepositoryImpl implements TaskRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -74,7 +74,7 @@ class TaskRepositoryImpl implements TaskRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -97,7 +97,7 @@ class TaskRepositoryImpl implements TaskRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -115,7 +115,7 @@ class TaskRepositoryImpl implements TaskRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -133,7 +133,7 @@ class TaskRepositoryImpl implements TaskRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -152,7 +152,7 @@ class TaskRepositoryImpl implements TaskRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
