@@ -58,3 +58,4 @@ android/app/keystore.jks
 
 # Logs
 logs/
+.playwright-mcp

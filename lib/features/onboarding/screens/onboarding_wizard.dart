@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/providers/locale_provider.dart';
+
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/locale_provider.dart';
 import '../../../models/crop.dart';
 import '../../../services/supabase_service.dart';
+import 'steps/approval_step.dart';
 import 'steps/area_dimensions_step.dart';
-import 'steps/path_configuration_step.dart';
 import 'steps/crop_selection_step.dart';
 import 'steps/cycle_customization_step.dart';
+import 'steps/path_configuration_step.dart';
 import 'steps/preview_step.dart';
-import 'steps/approval_step.dart';
 
 class OnboardingWizard extends StatefulWidget {
   const OnboardingWizard({super.key});
@@ -21,14 +22,14 @@ class OnboardingWizard extends StatefulWidget {
 class _OnboardingWizardState extends State<OnboardingWizard> {
   final PageController _pageController = PageController();
   int _currentStep = 0;
-  
+
   // Onboarding data
   double _areaLength = 5.0;
   double _areaWidth = 3.0;
   double _pathGap = 0.4;
   List<Crop> _selectedCrops = [];
   Map<String, int> _customCycles = {};
-  
+
   bool _isLoading = false;
 
   @override
@@ -72,33 +73,41 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
     try {
       final authProvider = context.read<AuthProvider>();
       final userId = authProvider.profile?.id;
-      
+
       if (userId == null) {
         throw Exception('User not authenticated');
       }
 
       // Create farm
-      final farmResponse = await SupabaseService.client.from('farms').insert({
-        'owner_id': userId,
-        'name': 'Minha Horta', // Default farm name
-      }).select().single();
+      final farmResponse = await SupabaseService.client
+          .from('farms')
+          .insert({
+            'owner_id': userId,
+            'name': 'Minha Horta', // Default farm name
+          })
+          .select()
+          .single();
 
       final farmId = farmResponse['id'];
 
       // Create plot
-      final plotResponse = await SupabaseService.client.from('plots').insert({
-        'farm_id': farmId,
-        'label': 'Área Principal',
-        'length_m': _areaLength,
-        'width_m': _areaWidth,
-        'path_gap_m': _pathGap,
-      }).select().single();
+      final plotResponse = await SupabaseService.client
+          .from('plots')
+          .insert({
+            'farm_id': farmId,
+            'label': 'Área Principal',
+            'length_m': _areaLength,
+            'width_m': _areaWidth,
+            'path_gap_m': _pathGap,
+          })
+          .select()
+          .single();
 
       final plotId = plotResponse['id'];
 
       // Calculate bed layout
       final beds = _calculateBedLayout(plotId);
-      
+
       // Create beds
       for (final bed in beds) {
         await SupabaseService.client.from('beds').insert(bed);
@@ -111,7 +120,6 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/map');
       }
-
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -132,12 +140,12 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
     // Calculate number of beds that fit
     final bedWidth = 1.2; // Standard bed width
     final bedLength = 2.0; // Standard bed length
-    
+
     final bedsPerRow = (_areaWidth / (bedWidth + _pathGap)).floor();
     final bedsPerColumn = (_areaLength / (bedLength + _pathGap)).floor();
-    
+
     final beds = <Map<String, dynamic>>[];
-    
+
     for (int row = 0; row < bedsPerColumn; row++) {
       for (int col = 0; col < bedsPerRow; col++) {
         beds.add({
@@ -149,7 +157,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
         });
       }
     }
-    
+
     return beds;
   }
 
@@ -158,26 +166,31 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
     if (_selectedCrops.isEmpty || beds.isEmpty) return;
 
     final now = DateTime.now();
-    
+
     for (int i = 0; i < beds.length && i < _selectedCrops.length; i++) {
       final bedId = beds[i]['id'];
       final crop = _selectedCrops[i % _selectedCrops.length];
       final customCycle = _customCycles[crop.id] ?? crop.cycleDays;
-      
+
       final harvestDate = now.add(Duration(days: customCycle));
-      
+
       // Create planting
-      final plantingResponse = await SupabaseService.client.from('plantings').insert({
-        'bed_id': bedId,
-        'crop_id': crop.id,
-        'custom_cycle_days': customCycle != crop.cycleDays ? customCycle : null,
-        'sowing_date': now.toIso8601String().split('T')[0],
-        'harvest_estimate': harvestDate.toIso8601String().split('T')[0],
-        'quantity': _calculateQuantity(crop, beds[i]),
-      }).select().single();
-      
+      final plantingResponse = await SupabaseService.client
+          .from('plantings')
+          .insert({
+            'bed_id': bedId,
+            'crop_id': crop.id,
+            'custom_cycle_days':
+                customCycle != crop.cycleDays ? customCycle : null,
+            'sowing_date': now.toIso8601String().split('T')[0],
+            'harvest_estimate': harvestDate.toIso8601String().split('T')[0],
+            'quantity': _calculateQuantity(crop, beds[i]),
+          })
+          .select()
+          .single();
+
       final plantingId = plantingResponse['id'];
-      
+
       // Create tasks
       await _createTasksForPlanting(plantingId, now, customCycle);
     }
@@ -214,7 +227,8 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
       await SupabaseService.client.from('tasks').insert({
         'planting_id': plantingId,
         'type': task['type'],
-        'due_date': (task['due_date'] as DateTime).toIso8601String().split('T')[0],
+        'due_date':
+            (task['due_date'] as DateTime).toIso8601String().split('T')[0],
       });
     }
   }
@@ -275,7 +289,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
               ],
             ),
           ),
-          
+
           // Steps content
           Expanded(
             child: PageView(
@@ -294,7 +308,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
                   },
                   onNext: _nextStep,
                 ),
-                
+
                 // Step 2: Path configuration
                 PathConfigurationStep(
                   initialPathGap: _pathGap,
@@ -308,7 +322,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
                   onNext: _nextStep,
                   onPrevious: _previousStep,
                 ),
-                
+
                 // Step 3: Crop selection
                 CropSelectionStep(
                   selectedCrops: _selectedCrops,
@@ -320,7 +334,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
                   onNext: _nextStep,
                   onPrevious: _previousStep,
                 ),
-                
+
                 // Step 4: Cycle customization
                 CycleCustomizationStep(
                   selectedCrops: _selectedCrops,
@@ -333,7 +347,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
                   onNext: _nextStep,
                   onPrevious: _previousStep,
                 ),
-                
+
                 // Step 5: Preview
                 PreviewStep(
                   areaLength: _areaLength,
@@ -345,7 +359,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
                   onPrevious: _previousStep,
                   onEdit: _goToStep,
                 ),
-                
+
                 // Step 6: Approval
                 ApprovalStep(
                   onApprove: _completeOnboarding,

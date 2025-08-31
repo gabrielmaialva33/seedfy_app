@@ -4,13 +4,13 @@ import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../tasks/screens/tasks_screen.dart';
 import '../../analytics/screens/analytics_screen.dart';
 import '../../settings/screens/settings_screen.dart';
+import '../../tasks/screens/tasks_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   final int initialIndex;
-  
+
   const MainNavigation({
     super.key,
     this.initialIndex = 0,
@@ -22,7 +22,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   late int _currentIndex;
-  
+
   final List<Widget> _screens = [
     const HomeScreenContent(),
     const TasksScreen(),
@@ -95,7 +95,8 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
         ),
       ),
-      floatingActionButton: _currentIndex == 0 ? _buildFloatingActionButton() : null,
+      floatingActionButton:
+          _currentIndex == 0 ? _buildFloatingActionButton() : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -107,7 +108,7 @@ class _MainNavigationState extends State<MainNavigation> {
     required int index,
   }) {
     final isSelected = _currentIndex == index;
-    
+
     return Expanded(
       child: GestureDetector(
         onTap: () => _onTabTapped(index),
@@ -125,7 +126,8 @@ class _MainNavigationState extends State<MainNavigation> {
               Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? AppTheme.primaryPurple : AppTheme.textGray,
+                  color:
+                      isSelected ? AppTheme.primaryPurple : AppTheme.textGray,
                   fontSize: 11,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                 ),
@@ -163,7 +165,7 @@ class _MainNavigationState extends State<MainNavigation> {
   String _getLocalizedString(String key) {
     final localeProvider = context.read<LocaleProvider>();
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
-    
+
     // This is a simplified approach. In a real app, you'd use the generated
     // AppLocalizations class to access localized strings
     switch (key) {
@@ -544,7 +546,6 @@ class _HomeScreenContentState extends State<HomeScreenContent>
       ),
     );
   }
-
 }
 
 // Simplified versions of the UI components used in HomeScreen
@@ -579,9 +580,12 @@ class _StoryCircle extends StatelessWidget {
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: hasNewStory 
-                  ? AppTheme.primaryGradient 
-                  : LinearGradient(colors: [borderColor ?? Colors.grey, borderColor ?? Colors.grey]),
+                gradient: hasNewStory
+                    ? AppTheme.primaryGradient
+                    : LinearGradient(colors: [
+                        borderColor ?? Colors.grey,
+                        borderColor ?? Colors.grey
+                      ]),
               ),
               child: Container(
                 decoration: const BoxDecoration(
@@ -590,12 +594,12 @@ class _StoryCircle extends StatelessWidget {
                 ),
                 child: Center(
                   child: imageUrl.isEmpty
-                    ? Icon(
-                        Icons.add,
-                        color: borderColor ?? AppTheme.primaryPurple,
-                        size: 24,
-                      )
-                    : Container(), // Placeholder for image
+                      ? Icon(
+                          Icons.add,
+                          color: borderColor ?? AppTheme.primaryPurple,
+                          size: 24,
+                        )
+                      : Container(), // Placeholder for image
                 ),
               ),
             ),
@@ -740,7 +744,8 @@ class _PlantCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: statusColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),

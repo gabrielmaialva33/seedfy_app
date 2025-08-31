@@ -1,10 +1,12 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:camera/camera.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../services/nvidia_ai_service.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../../../services/firebase_service.dart';
+import '../../../services/nvidia_ai_service.dart';
 
 class AICameraScreen extends StatefulWidget {
   const AICameraScreen({super.key});
@@ -20,10 +22,10 @@ class _AICameraScreenState extends State<AICameraScreen>
   bool _isInitialized = false;
   bool _isAnalyzing = false;
   PlantAnalysisResult? _analysisResult;
-  
+
   final NvidiaAIService _aiService = NvidiaAIService();
   final ImagePicker _imagePicker = ImagePicker();
-  
+
   late AnimationController _scanAnimationController;
   late AnimationController _resultAnimationController;
 
@@ -124,7 +126,7 @@ class _AICameraScreenState extends State<AICameraScreen>
       final XFile? image = await _imagePicker.pickImage(
         source: ImageSource.gallery,
       );
-      
+
       if (image != null) {
         setState(() {
           _isAnalyzing = true;
@@ -169,7 +171,6 @@ class _AICameraScreenState extends State<AICameraScreen>
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -212,7 +213,8 @@ class _AICameraScreenState extends State<AICameraScreen>
                         height: 200,
                         child: CircularProgressIndicator(
                           strokeWidth: 6,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.green),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -303,7 +305,7 @@ class _AICameraScreenState extends State<AICameraScreen>
             ),
           ),
           const SizedBox(height: 24),
-          
+
           // Plant Name
           Text(
             _analysisResult!.plantName,
@@ -313,7 +315,7 @@ class _AICameraScreenState extends State<AICameraScreen>
               fontWeight: FontWeight.bold,
             ),
           ).animate().fadeIn().slideX(),
-          
+
           if (_analysisResult!.scientificName.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(
@@ -325,22 +327,21 @@ class _AICameraScreenState extends State<AICameraScreen>
               ),
             ),
           ],
-          
+
           const SizedBox(height: 24),
-          
+
           // Health Status
           _buildHealthStatus(),
-          
+
           const SizedBox(height: 24),
-          
+
           // Quick Info
           _buildQuickInfo(),
-          
+
           const SizedBox(height: 24),
-          
+
           // Care Tips
-          if (_analysisResult!.careTips.isNotEmpty)
-            _buildCareTips(),
+          if (_analysisResult!.careTips.isNotEmpty) _buildCareTips(),
         ],
       ),
     );
@@ -349,10 +350,10 @@ class _AICameraScreenState extends State<AICameraScreen>
   Widget _buildHealthStatus() {
     final status = _analysisResult!.healthStatus;
     final score = _analysisResult!.healthScore;
-    
+
     Color statusColor;
     IconData statusIcon;
-    
+
     switch (status.toLowerCase()) {
       case 'healthy':
         statusColor = Colors.green;
@@ -492,31 +493,34 @@ class _AICameraScreenState extends State<AICameraScreen>
           ),
         ),
         const SizedBox(height: 16),
-        ...(_analysisResult!.careTips.take(3).map((tip) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '• ',
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      tip,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
+        ...(_analysisResult!.careTips
+            .take(3)
+            .map((tip) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '• ',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: Text(
+                          tip,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )).toList()),
+                ))
+            .toList()),
       ],
     ).animate().fadeIn().slideY();
   }

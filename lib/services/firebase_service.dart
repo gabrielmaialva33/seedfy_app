@@ -1,13 +1,17 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import '../firebase_options.dart';
 
 class FirebaseService {
   static FirebaseAuth get _auth => FirebaseAuth.instance;
+
   static FirebaseFirestore get _firestore => FirebaseFirestore.instance;
+
   static FirebaseStorage get _storage => FirebaseStorage.instance;
 
   /// Initialize Firebase
@@ -19,6 +23,7 @@ class FirebaseService {
 
   /// Authentication Methods
   static User? get currentUser => _auth.currentUser;
+
   static bool get isAuthenticated => currentUser != null;
 
   static Stream<User?> get authStateChanges => _auth.authStateChanges();
@@ -32,7 +37,7 @@ class FirebaseService {
   }
 
   static Future<UserCredential?> signInWithEmailPassword(
-    String email, 
+    String email,
     String password,
   ) async {
     try {
@@ -46,7 +51,7 @@ class FirebaseService {
   }
 
   static Future<UserCredential?> signUpWithEmailPassword(
-    String email, 
+    String email,
     String password,
   ) async {
     try {
@@ -65,10 +70,16 @@ class FirebaseService {
 
   /// Firestore Methods
   static CollectionReference get users => _firestore.collection('users');
+
   static CollectionReference get gardens => _firestore.collection('gardens');
+
   static CollectionReference get plants => _firestore.collection('plants');
-  static CollectionReference get analysis => _firestore.collection('plant_analysis');
-  static CollectionReference get chatHistory => _firestore.collection('chat_history');
+
+  static CollectionReference get analysis =>
+      _firestore.collection('plant_analysis');
+
+  static CollectionReference get chatHistory =>
+      _firestore.collection('chat_history');
 
   /// Save plant analysis result
   static Future<DocumentReference> savePlantAnalysis({

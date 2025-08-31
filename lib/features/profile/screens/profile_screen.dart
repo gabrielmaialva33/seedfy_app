@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/cards.dart';
 
@@ -190,7 +191,8 @@ class _ProfileScreenState extends State<ProfileScreen>
     );
   }
 
-  Widget _buildStatCard(String value, String label, List<Color> colors, IconData icon) {
+  Widget _buildStatCard(
+      String value, String label, List<Color> colors, IconData icon) {
     return GradientCard(
       colors: colors,
       height: 100,
@@ -284,7 +286,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppTheme.successGreen.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
@@ -392,7 +395,8 @@ class _ProfileScreenState extends State<ProfileScreen>
     bool isDestructive = false,
   }) {
     final color = isDestructive ? AppTheme.errorRed : AppTheme.textDark;
-    final iconColor = isDestructive ? AppTheme.errorRed : AppTheme.primaryPurple;
+    final iconColor =
+        isDestructive ? AppTheme.errorRed : AppTheme.primaryPurple;
 
     return InkWell(
       onTap: onTap,

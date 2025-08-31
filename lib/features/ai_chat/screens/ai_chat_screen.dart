@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import '../../../services/nvidia_ai_service.dart';
+
 import '../../../services/firebase_service.dart';
+import '../../../services/nvidia_ai_service.dart';
 
 class AIChatScreen extends StatefulWidget {
   const AIChatScreen({super.key});
@@ -39,17 +41,17 @@ class _AIChatScreenState extends State<AIChatScreen>
       duration: const Duration(seconds: 1),
       vsync: this,
     );
-    
+
     // Mensagem de boas-vindas
     _addMessage(ChatMessage(
       text: "🌱 Olá! Sou seu assistente de jardinagem com IA da NVIDIA!\n\n"
-            "Posso ajudar com:\n"
-            "• 📸 Análise de plantas por foto\n"
-            "• 🌿 Identificação de doenças\n"
-            "• 💡 Dicas de cuidado\n"
-            "• 🗓️ Planejamento de plantio\n"
-            "• 🎤 Comandos de voz\n\n"
-            "Como posso ajudar hoje?",
+          "Posso ajudar com:\n"
+          "• 📸 Análise de plantas por foto\n"
+          "• 🌿 Identificação de doenças\n"
+          "• 💡 Dicas de cuidado\n"
+          "• 🗓️ Planejamento de plantio\n"
+          "• 🎤 Comandos de voz\n\n"
+          "Como posso ajudar hoje?",
       isFromUser: false,
       timestamp: DateTime.now(),
     ));
@@ -140,12 +142,11 @@ class _AIChatScreenState extends State<AIChatScreen>
 
       // Falar resposta (apenas primeiras 200 caracteres)
       if (response.length > 10) {
-        final shortResponse = response.length > 200 
+        final shortResponse = response.length > 200
             ? '${response.substring(0, 200)}...'
             : response;
         await _flutterTts.speak(shortResponse);
       }
-
     } catch (e) {
       _addMessage(ChatMessage(
         text: "Desculpe, ocorreu um erro: $e\n\nTente novamente!",
@@ -337,7 +338,8 @@ class _AIChatScreenState extends State<AIChatScreen>
                   Text(
                     message.text,
                     style: TextStyle(
-                      color: isUser ? Colors.white : theme.colorScheme.onSurface,
+                      color:
+                          isUser ? Colors.white : theme.colorScheme.onSurface,
                       fontSize: 15,
                     ),
                   ),
@@ -345,7 +347,7 @@ class _AIChatScreenState extends State<AIChatScreen>
                   Text(
                     _formatTime(message.timestamp),
                     style: TextStyle(
-                      color: isUser 
+                      color: isUser
                           ? Colors.white.withValues(alpha: 0.7)
                           : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontSize: 11,
@@ -409,12 +411,14 @@ class _AIChatScreenState extends State<AIChatScreen>
         color: Colors.grey,
         shape: BoxShape.circle,
       ),
-    ).animate(
-      controller: _typingAnimationController,
-    ).scale(
-      delay: Duration(milliseconds: index * 200),
-      duration: const Duration(milliseconds: 600),
-    );
+    )
+        .animate(
+          controller: _typingAnimationController,
+        )
+        .scale(
+          delay: Duration(milliseconds: index * 200),
+          duration: const Duration(milliseconds: 600),
+        );
   }
 
   Widget _buildInputBar() {
@@ -475,7 +479,7 @@ class _AIChatScreenState extends State<AIChatScreen>
             // Botão de voz
             Container(
               decoration: BoxDecoration(
-                color: _isListening 
+                color: _isListening
                     ? Colors.red.withValues(alpha: 0.1)
                     : Colors.blue.withValues(alpha: 0.1),
                 shape: BoxShape.circle,

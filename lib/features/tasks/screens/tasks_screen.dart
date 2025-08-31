@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/locale_provider.dart';
-import '../../../services/supabase_service.dart';
-import '../../../models/task.dart';
-import '../../../models/planting.dart';
 import '../../../models/crop.dart';
+import '../../../models/planting.dart';
+import '../../../models/task.dart';
+import '../../../services/supabase_service.dart';
 
 class TaskWithDetails {
   final GardenTask task;
@@ -26,7 +27,8 @@ class TasksScreen extends StatefulWidget {
   State<TasksScreen> createState() => _TasksScreenState();
 }
 
-class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin {
+class _TasksScreenState extends State<TasksScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   List<TaskWithDetails> _allTasks = [];
   bool _isLoading = true;
@@ -49,7 +51,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     try {
       final authProvider = context.read<AuthProvider>();
       final userId = authProvider.profile?.id;
-      
+
       if (userId == null) {
         throw Exception('User not authenticated');
       }
@@ -72,16 +74,16 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
         final task = GardenTask.fromJson(taskJson);
         Planting? planting;
         Crop? crop;
-        
+
         if (taskJson['plantings'] != null) {
           final plantingJson = taskJson['plantings'];
           planting = Planting.fromJson(plantingJson);
-          
+
           if (plantingJson['crops_catalog'] != null) {
             crop = Crop.fromJson(plantingJson['crops_catalog']);
           }
         }
-        
+
         return TaskWithDetails(
           task: task,
           planting: planting,
@@ -93,7 +95,6 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
         _allTasks = tasks;
         _isLoading = false;
       });
-
     } catch (e) {
       setState(() {
         _error = e.toString();
@@ -106,11 +107,10 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     try {
       final task = taskWithDetails.task;
       final newDoneStatus = !task.done;
-      
+
       await SupabaseService.client
           .from('tasks')
-          .update({'done': newDoneStatus})
-          .eq('id', task.id);
+          .update({'done': newDoneStatus}).eq('id', task.id);
 
       setState(() {
         final index = _allTasks.indexWhere((t) => t.task.id == task.id);
@@ -122,7 +122,6 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
           );
         }
       });
-
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -138,7 +137,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
   Future<void> _rescheduleTask(TaskWithDetails taskWithDetails) async {
     final localeProvider = context.read<LocaleProvider>();
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
-    
+
     final newDate = await showDatePicker(
       context: context,
       initialDate: taskWithDetails.task.dueDate,
@@ -152,11 +151,12 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     try {
       await SupabaseService.client
           .from('tasks')
-          .update({'due_date': newDate.toIso8601String().split('T')[0]})
-          .eq('id', taskWithDetails.task.id);
+          .update({'due_date': newDate.toIso8601String().split('T')[0]}).eq(
+              'id', taskWithDetails.task.id);
 
       setState(() {
-        final index = _allTasks.indexWhere((t) => t.task.id == taskWithDetails.task.id);
+        final index =
+            _allTasks.indexWhere((t) => t.task.id == taskWithDetails.task.id);
         if (index != -1) {
           _allTasks[index] = TaskWithDetails(
             task: taskWithDetails.task.copyWith(dueDate: newDate),
@@ -165,7 +165,6 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
           );
         }
       });
-
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -180,16 +179,20 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
 
   List<TaskWithDetails> get _pendingTasks {
     final now = DateTime.now();
-    return _allTasks.where((t) => 
-      !t.task.done && t.task.dueDate.isAfter(now.subtract(const Duration(days: 1)))
-    ).toList();
+    return _allTasks
+        .where((t) =>
+            !t.task.done &&
+            t.task.dueDate.isAfter(now.subtract(const Duration(days: 1))))
+        .toList();
   }
 
   List<TaskWithDetails> get _overdueTasks {
     final now = DateTime.now();
-    return _allTasks.where((t) => 
-      !t.task.done && t.task.dueDate.isBefore(now.subtract(const Duration(days: 1)))
-    ).toList();
+    return _allTasks
+        .where((t) =>
+            !t.task.done &&
+            t.task.dueDate.isBefore(now.subtract(const Duration(days: 1))))
+        .toList();
   }
 
   List<TaskWithDetails> get _completedTasks {
@@ -203,7 +206,8 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
 
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: Text(isPortuguese ? 'Carregando...' : 'Loading...')),
+        appBar:
+            AppBar(title: Text(isPortuguese ? 'Carregando...' : 'Loading...')),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -218,8 +222,11 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
               Icon(Icons.error_outline, size: 64, color: Colors.red[400]),
               const SizedBox(height: 16),
               Text(
-                isPortuguese ? 'Erro ao carregar tarefas' : 'Error loading tasks',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                isPortuguese
+                    ? 'Erro ao carregar tarefas'
+                    : 'Error loading tasks',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
@@ -253,15 +260,21 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
           tabs: [
             Tab(
               icon: const Icon(Icons.pending_actions),
-              text: isPortuguese ? 'Pendentes (${_pendingTasks.length})' : 'Pending (${_pendingTasks.length})',
+              text: isPortuguese
+                  ? 'Pendentes (${_pendingTasks.length})'
+                  : 'Pending (${_pendingTasks.length})',
             ),
             Tab(
               icon: const Icon(Icons.warning),
-              text: isPortuguese ? 'Atrasadas (${_overdueTasks.length})' : 'Overdue (${_overdueTasks.length})',
+              text: isPortuguese
+                  ? 'Atrasadas (${_overdueTasks.length})'
+                  : 'Overdue (${_overdueTasks.length})',
             ),
             Tab(
               icon: const Icon(Icons.check_circle),
-              text: isPortuguese ? 'Concluídas (${_completedTasks.length})' : 'Completed (${_completedTasks.length})',
+              text: isPortuguese
+                  ? 'Concluídas (${_completedTasks.length})'
+                  : 'Completed (${_completedTasks.length})',
             ),
           ],
         ),
@@ -286,7 +299,8 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     );
   }
 
-  Widget _buildTasksList(List<TaskWithDetails> tasks, bool isPortuguese, {bool isOverdue = false, bool isCompleted = false}) {
+  Widget _buildTasksList(List<TaskWithDetails> tasks, bool isPortuguese,
+      {bool isOverdue = false, bool isCompleted = false}) {
     if (tasks.isEmpty) {
       return Center(
         child: Column(
@@ -300,10 +314,16 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
             const SizedBox(height: 16),
             Text(
               isCompleted
-                ? (isPortuguese ? 'Nenhuma tarefa concluída' : 'No completed tasks')
-                : isOverdue
-                  ? (isPortuguese ? 'Nenhuma tarefa atrasada' : 'No overdue tasks')
-                  : (isPortuguese ? 'Nenhuma tarefa pendente' : 'No pending tasks'),
+                  ? (isPortuguese
+                      ? 'Nenhuma tarefa concluída'
+                      : 'No completed tasks')
+                  : isOverdue
+                      ? (isPortuguese
+                          ? 'Nenhuma tarefa atrasada'
+                          : 'No overdue tasks')
+                      : (isPortuguese
+                          ? 'Nenhuma tarefa pendente'
+                          : 'No pending tasks'),
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[600],
@@ -321,22 +341,24 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           final taskWithDetails = tasks[index];
-          return _buildTaskCard(taskWithDetails, isPortuguese, isOverdue: isOverdue, isCompleted: isCompleted);
+          return _buildTaskCard(taskWithDetails, isPortuguese,
+              isOverdue: isOverdue, isCompleted: isCompleted);
         },
       ),
     );
   }
 
-  Widget _buildTaskCard(TaskWithDetails taskWithDetails, bool isPortuguese, {bool isOverdue = false, bool isCompleted = false}) {
+  Widget _buildTaskCard(TaskWithDetails taskWithDetails, bool isPortuguese,
+      {bool isOverdue = false, bool isCompleted = false}) {
     final task = taskWithDetails.task;
     final crop = taskWithDetails.crop;
-    
+
     final now = DateTime.now();
     final daysDifference = task.dueDate.difference(now).inDays;
-    
+
     Color cardColor = Colors.white;
     Color borderColor = Colors.grey[300]!;
-    
+
     if (isOverdue) {
       cardColor = Colors.red[50]!;
       borderColor = Colors.red[300]!;
@@ -385,7 +407,8 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          decoration: isCompleted ? TextDecoration.lineThrough : null,
+                          decoration:
+                              isCompleted ? TextDecoration.lineThrough : null,
                         ),
                       ),
                       if (crop != null)
@@ -409,9 +432,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
                   ),
               ],
             ),
-            
             const SizedBox(height: 12),
-            
             Row(
               children: [
                 Icon(
@@ -427,38 +448,41 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
                     fontSize: 14,
                   ),
                 ),
-                
                 if (!isCompleted && daysDifference <= 1) ...[
                   const SizedBox(width: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: daysDifference == 0
-                        ? Colors.red[100]
-                        : Colors.orange[100],
+                          ? Colors.red[100]
+                          : Colors.orange[100],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       daysDifference == 0
-                        ? (isPortuguese ? 'Hoje' : 'Today')
-                        : daysDifference == 1
-                          ? (isPortuguese ? 'Amanhã' : 'Tomorrow')
-                          : daysDifference < 0
-                            ? (isPortuguese ? '${-daysDifference} dias atrás' : '${-daysDifference} days ago')
-                            : (isPortuguese ? 'Em $daysDifference dias' : 'In $daysDifference days'),
+                          ? (isPortuguese ? 'Hoje' : 'Today')
+                          : daysDifference == 1
+                              ? (isPortuguese ? 'Amanhã' : 'Tomorrow')
+                              : daysDifference < 0
+                                  ? (isPortuguese
+                                      ? '${-daysDifference} dias atrás'
+                                      : '${-daysDifference} days ago')
+                                  : (isPortuguese
+                                      ? 'Em $daysDifference dias'
+                                      : 'In $daysDifference days'),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: daysDifference == 0
-                          ? Colors.red[700]
-                          : Colors.orange[700],
+                            ? Colors.red[700]
+                            : Colors.orange[700],
                       ),
                     ),
                   ),
                 ],
               ],
             ),
-            
             if (!isCompleted) ...[
               const SizedBox(height: 12),
               Row(
@@ -534,8 +558,8 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
   }
 
   String _formatDate(DateTime date, bool isPortuguese) {
-    return isPortuguese 
-      ? '${date.day}/${date.month}/${date.year}'
-      : '${date.month}/${date.day}/${date.year}';
+    return isPortuguese
+        ? '${date.day}/${date.month}/${date.year}'
+        : '${date.month}/${date.day}/${date.year}';
   }
 }

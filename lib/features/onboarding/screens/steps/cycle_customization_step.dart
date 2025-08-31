@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../models/crop.dart';
 
@@ -71,7 +72,7 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
   String _getCycleStatus(Crop crop) {
     final currentCycle = _getCycleDays(crop);
     final defaultCycle = crop.cycleDays;
-    
+
     if (currentCycle == defaultCycle) {
       return 'Padrão';
     } else if (currentCycle < defaultCycle) {
@@ -84,7 +85,7 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
   Color _getCycleStatusColor(Crop crop) {
     final currentCycle = _getCycleDays(crop);
     final defaultCycle = crop.cycleDays;
-    
+
     if (currentCycle == defaultCycle) {
       return Colors.blue;
     } else if (currentCycle < defaultCycle) {
@@ -113,25 +114,25 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
           Text(
             isPortuguese ? 'Ciclos de Cultivo' : 'Growing Cycles',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+                  fontWeight: FontWeight.bold,
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           Text(
-            isPortuguese 
-              ? 'Personalize os ciclos de cultivo de acordo com suas condições locais (opcional)'
-              : 'Customize growing cycles according to your local conditions (optional)',
+            isPortuguese
+                ? 'Personalize os ciclos de cultivo de acordo com suas condições locais (opcional)'
+                : 'Customize growing cycles according to your local conditions (optional)',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.grey[600],
-            ),
+                  color: Colors.grey[600],
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Toggle customization
           Container(
             padding: const EdgeInsets.all(16),
@@ -146,9 +147,9 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                   children: [
                     Expanded(
                       child: Text(
-                        isPortuguese 
-                          ? 'Personalizar ciclos de cultivo'
-                          : 'Customize growing cycles',
+                        isPortuguese
+                            ? 'Personalizar ciclos de cultivo'
+                            : 'Customize growing cycles',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -174,13 +175,12 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                     ),
                   ],
                 ),
-                
                 if (!_useCustomCycles) ...[
                   const SizedBox(height: 12),
                   Text(
-                    isPortuguese 
-                      ? 'Usando ciclos padrão recomendados'
-                      : 'Using recommended standard cycles',
+                    isPortuguese
+                        ? 'Usando ciclos padrão recomendados'
+                        : 'Using recommended standard cycles',
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 14,
@@ -217,9 +217,9 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Crop cycle list
           Expanded(
             child: ListView.builder(
@@ -228,7 +228,7 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                 final crop = widget.selectedCrops[index];
                 final currentCycle = _getCycleDays(crop);
                 final harvestDate = _getEstimatedHarvestDate(crop);
-                
+
                 return Card(
                   margin: const EdgeInsets.only(bottom: 16),
                   child: Padding(
@@ -257,7 +257,8 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    crop.getName(localeProvider.locale.languageCode),
+                                    crop.getName(
+                                        localeProvider.locale.languageCode),
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -272,13 +273,16 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                                           vertical: 2,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: _getCycleStatusColor(crop).withValues(alpha: 0.2),
-                                          borderRadius: BorderRadius.circular(12),
+                                          color: _getCycleStatusColor(crop)
+                                              .withValues(alpha: 0.2),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: Text(
-                                          isPortuguese 
-                                            ? _getCycleStatus(crop)
-                                            : _getCycleStatus(crop), // Translate if needed
+                                          isPortuguese
+                                              ? _getCycleStatus(crop)
+                                              : _getCycleStatus(crop),
+                                          // Translate if needed
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: _getCycleStatusColor(crop),
@@ -288,9 +292,9 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        isPortuguese 
-                                          ? 'Padrão: ${crop.cycleDays} dias'
-                                          : 'Default: ${crop.cycleDays} days',
+                                        isPortuguese
+                                            ? 'Padrão: ${crop.cycleDays} dias'
+                                            : 'Default: ${crop.cycleDays} days',
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Colors.grey[600],
@@ -303,16 +307,17 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                             ),
                           ],
                         ),
-                        
+
                         if (_useCustomCycles) ...[
                           const SizedBox(height: 16),
-                          
+
                           // Cycle slider
                           Row(
                             children: [
                               Text(
                                 isPortuguese ? 'Ciclo:' : 'Cycle:',
-                                style: const TextStyle(fontWeight: FontWeight.w500),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -320,7 +325,9 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                                   value: currentCycle.toDouble(),
                                   min: (crop.cycleDays * 0.5).roundToDouble(),
                                   max: (crop.cycleDays * 1.5).roundToDouble(),
-                                  divisions: ((crop.cycleDays * 1.5) - (crop.cycleDays * 0.5)).round(),
+                                  divisions: ((crop.cycleDays * 1.5) -
+                                          (crop.cycleDays * 0.5))
+                                      .round(),
                                   onChanged: (value) {
                                     _updateCycle(crop.id, value.round());
                                   },
@@ -348,10 +355,10 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                               ),
                             ],
                           ),
-                          
+
                           const SizedBox(height: 12),
                         ],
-                        
+
                         // Harvest date estimate
                         Container(
                           padding: const EdgeInsets.all(12),
@@ -368,9 +375,9 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                isPortuguese 
-                                  ? 'Colheita prevista: ${harvestDate.day}/${harvestDate.month}/${harvestDate.year}'
-                                  : 'Expected harvest: ${harvestDate.month}/${harvestDate.day}/${harvestDate.year}',
+                                isPortuguese
+                                    ? 'Colheita prevista: ${harvestDate.day}/${harvestDate.month}/${harvestDate.year}'
+                                    : 'Expected harvest: ${harvestDate.month}/${harvestDate.day}/${harvestDate.year}',
                                 style: TextStyle(
                                   color: Colors.green[700],
                                   fontWeight: FontWeight.w500,
@@ -386,9 +393,9 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
               },
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Navigation buttons
           Row(
             children: [
@@ -409,7 +416,8 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                         const SizedBox(width: 8),
                         Text(
                           isPortuguese ? 'Anterior' : 'Previous',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -432,7 +440,8 @@ class _CycleCustomizationStepState extends State<CycleCustomizationStep> {
                       children: [
                         Text(
                           isPortuguese ? 'Próximo' : 'Next',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(width: 8),
                         const Icon(Icons.arrow_forward),

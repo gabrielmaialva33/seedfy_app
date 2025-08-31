@@ -1,14 +1,14 @@
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:csv/csv.dart';
 
-import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/locale_provider.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../services/supabase_service.dart';
 import '../../../models/planting.dart';
 import '../../../models/task.dart';
+import '../../../services/supabase_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -56,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildProfileSection(AuthProvider authProvider, bool isPortuguese) {
     final profile = authProvider.profile;
-    
+
     return _buildSection(
       title: isPortuguese ? 'Perfil' : 'Profile',
       children: [
@@ -65,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             backgroundColor: AppTheme.primaryPurple,
             child: Text(
               profile != null && profile.name.isNotEmpty
-                  ? profile.name.substring(0, 1).toUpperCase() 
+                  ? profile.name.substring(0, 1).toUpperCase()
                   : 'U',
               style: const TextStyle(
                 color: Colors.white,
@@ -84,7 +84,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildLanguageSection(LocaleProvider localeProvider, bool isPortuguese) {
+  Widget _buildLanguageSection(
+      LocaleProvider localeProvider, bool isPortuguese) {
     return _buildSection(
       title: isPortuguese ? 'Idioma' : 'Language',
       children: [
@@ -92,11 +93,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           leading: const Icon(Icons.language, color: AppTheme.primaryPurple),
           title: Text(isPortuguese ? 'Português' : 'Portuguese'),
           trailing: Icon(
-            localeProvider.locale.languageCode == 'pt' 
-                ? Icons.radio_button_checked 
+            localeProvider.locale.languageCode == 'pt'
+                ? Icons.radio_button_checked
                 : Icons.radio_button_off,
-            color: localeProvider.locale.languageCode == 'pt' 
-                ? AppTheme.primaryPurple 
+            color: localeProvider.locale.languageCode == 'pt'
+                ? AppTheme.primaryPurple
                 : Colors.grey,
           ),
           onTap: () => localeProvider.setLocale(const Locale('pt')),
@@ -105,11 +106,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           leading: const Icon(Icons.language, color: AppTheme.primaryPurple),
           title: Text(isPortuguese ? 'Inglês' : 'English'),
           trailing: Icon(
-            localeProvider.locale.languageCode == 'en' 
-                ? Icons.radio_button_checked 
+            localeProvider.locale.languageCode == 'en'
+                ? Icons.radio_button_checked
                 : Icons.radio_button_off,
-            color: localeProvider.locale.languageCode == 'en' 
-                ? AppTheme.primaryPurple 
+            color: localeProvider.locale.languageCode == 'en'
+                ? AppTheme.primaryPurple
                 : Colors.grey,
           ),
           onTap: () => localeProvider.setLocale(const Locale('en')),
@@ -124,8 +125,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       children: [
         ListTile(
           leading: const Icon(Icons.group_add, color: AppTheme.primaryPurple),
-          title: Text(isPortuguese ? 'Convidar colaborador' : 'Invite collaborator'),
-          subtitle: Text(isPortuguese ? 'Compartilhe sua horta com outros' : 'Share your garden with others'),
+          title: Text(
+              isPortuguese ? 'Convidar colaborador' : 'Invite collaborator'),
+          subtitle: Text(isPortuguese
+              ? 'Compartilhe sua horta com outros'
+              : 'Share your garden with others'),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: () {
             _showInviteDialog(isPortuguese);
@@ -133,8 +137,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         ListTile(
           leading: const Icon(Icons.people, color: AppTheme.primaryPurple),
-          title: Text(isPortuguese ? 'Gerenciar colaboradores' : 'Manage collaborators'),
-          subtitle: Text(isPortuguese ? 'Ver e editar permissões' : 'View and edit permissions'),
+          title: Text(isPortuguese
+              ? 'Gerenciar colaboradores'
+              : 'Manage collaborators'),
+          subtitle: Text(isPortuguese
+              ? 'Ver e editar permissões'
+              : 'View and edit permissions'),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: () {
             // Navigate to collaborators management
@@ -157,14 +165,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 )
               : const Icon(Icons.file_download, color: AppTheme.primaryPurple),
           title: Text(isPortuguese ? 'Exportar dados' : 'Export data'),
-          subtitle: Text(isPortuguese ? 'Baixar seus dados em CSV' : 'Download your data as CSV'),
+          subtitle: Text(isPortuguese
+              ? 'Baixar seus dados em CSV'
+              : 'Download your data as CSV'),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: _isExporting ? null : () => _exportData(isPortuguese),
         ),
         ListTile(
           leading: const Icon(Icons.backup, color: AppTheme.primaryPurple),
           title: Text(isPortuguese ? 'Backup automático' : 'Auto backup'),
-          subtitle: Text(isPortuguese ? 'Seus dados são salvos automaticamente' : 'Your data is automatically saved'),
+          subtitle: Text(isPortuguese
+              ? 'Seus dados são salvos automaticamente'
+              : 'Your data is automatically saved'),
           trailing: Switch(
             value: true,
             onChanged: null, // Disabled for now
@@ -180,16 +192,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
       title: isPortuguese ? 'Suporte' : 'Support',
       children: [
         ListTile(
-          leading: const Icon(Icons.help_outline, color: AppTheme.primaryPurple),
+          leading:
+              const Icon(Icons.help_outline, color: AppTheme.primaryPurple),
           title: Text(isPortuguese ? 'Ajuda' : 'Help'),
-          subtitle: Text(isPortuguese ? 'Perguntas frequentes e tutoriais' : 'FAQ and tutorials'),
+          subtitle: Text(isPortuguese
+              ? 'Perguntas frequentes e tutoriais'
+              : 'FAQ and tutorials'),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: () {
             _showHelpDialog(isPortuguese);
           },
         ),
         ListTile(
-          leading: const Icon(Icons.info_outline, color: AppTheme.primaryPurple),
+          leading:
+              const Icon(Icons.info_outline, color: AppTheme.primaryPurple),
           title: Text(isPortuguese ? 'Sobre' : 'About'),
           subtitle: const Text('Seedfy v1.0.0'),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
@@ -198,9 +214,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.star_outline, color: AppTheme.primaryPurple),
+          leading:
+              const Icon(Icons.star_outline, color: AppTheme.primaryPurple),
           title: Text(isPortuguese ? 'Avaliar app' : 'Rate app'),
-          subtitle: Text(isPortuguese ? 'Deixe sua avaliação na loja' : 'Leave a review in the store'),
+          subtitle: Text(isPortuguese
+              ? 'Deixe sua avaliação na loja'
+              : 'Leave a review in the store'),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: () {
             // Open app store
@@ -249,29 +268,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       final authProvider = context.read<AuthProvider>();
       final userId = authProvider.profile?.id;
-      
+
       if (userId == null) {
         throw Exception('User not authenticated');
       }
 
       // Load plantings data
-      final plantingsResponse = await SupabaseService.client
-          .from('plantings')
-          .select('''
+      final plantingsResponse =
+          await SupabaseService.client.from('plantings').select('''
             *,
             crops_catalog(*),
             beds(name, plots(farms!inner(owner_id)))
-          ''')
-          .eq('beds.plots.farms.owner_id', userId);
+          ''').eq('beds.plots.farms.owner_id', userId);
 
       // Load tasks data
-      final tasksResponse = await SupabaseService.client
-          .from('tasks')
-          .select('''
+      final tasksResponse =
+          await SupabaseService.client.from('tasks').select('''
             *,
             plantings(crops_catalog(*))
-          ''')
-          .eq('plantings.beds.plots.farms.owner_id', userId);
+          ''').eq('plantings.beds.plots.farms.owner_id', userId);
 
       // Convert to CSV
       final List<List<dynamic>> plantingsRows = [
@@ -312,7 +327,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         tasksRows.add([
           task.type.toString().split('.').last,
           task.dueDate.toIso8601String().split('T')[0],
-          task.done ? (isPortuguese ? 'Sim' : 'Yes') : (isPortuguese ? 'Não' : 'No'),
+          task.done
+              ? (isPortuguese ? 'Sim' : 'Yes')
+              : (isPortuguese ? 'Não' : 'No'),
           taskJson['plantings']?['crops_catalog']?['name_pt'] ?? 'N/A',
         ]);
       }
@@ -341,19 +358,22 @@ $tasksCsv
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isPortuguese ? 'Dados exportados com sucesso!' : 'Data exported successfully!',
+              isPortuguese
+                  ? 'Dados exportados com sucesso!'
+                  : 'Data exported successfully!',
             ),
             backgroundColor: AppTheme.successGreen,
           ),
         );
       }
-
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isPortuguese ? 'Erro ao exportar dados: $e' : 'Error exporting data: $e',
+              isPortuguese
+                  ? 'Erro ao exportar dados: $e'
+                  : 'Error exporting data: $e',
             ),
             backgroundColor: AppTheme.errorRed,
           ),
@@ -370,7 +390,8 @@ $tasksCsv
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(isPortuguese ? 'Convidar Colaborador' : 'Invite Collaborator'),
+        title:
+            Text(isPortuguese ? 'Convidar Colaborador' : 'Invite Collaborator'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -445,7 +466,9 @@ $tasksCsv
                     : 'Tap on beds to edit them or add new ones by dragging from the sidebar.',
               ),
               _buildHelpItem(
-                isPortuguese ? 'Como funcionam as tarefas?' : 'How do tasks work?',
+                isPortuguese
+                    ? 'Como funcionam as tarefas?'
+                    : 'How do tasks work?',
                 isPortuguese
                     ? 'O app gera automaticamente tarefas baseadas no ciclo de crescimento das plantas.'
                     : 'The app automatically generates tasks based on plant growth cycles.',
@@ -526,5 +549,4 @@ $tasksCsv
       ],
     );
   }
-
 }

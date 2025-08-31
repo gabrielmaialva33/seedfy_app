@@ -1,13 +1,13 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fl_chart/fl_chart.dart';
 
-import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/locale_provider.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../services/supabase_service.dart';
 import '../../../models/planting.dart';
 import '../../../models/task.dart';
+import '../../../services/supabase_service.dart';
 
 class AnalyticsData {
   final int totalPlants;
@@ -73,20 +73,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
       final authProvider = context.read<AuthProvider>();
       final userId = authProvider.profile?.id;
-      
+
       if (userId == null) {
         throw Exception('User not authenticated');
       }
 
       // Load plantings data
-      final plantingsResponse = await SupabaseService.client
-          .from('plantings')
-          .select('''
+      final plantingsResponse =
+          await SupabaseService.client.from('plantings').select('''
             *,
             crops_catalog(*),
             beds(plots(farms!inner(owner_id)))
-          ''')
-          .eq('beds.plots.farms.owner_id', userId);
+          ''').eq('beds.plots.farms.owner_id', userId);
 
       // Load tasks data
       final tasksResponse = await SupabaseService.client
@@ -109,15 +107,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
       // Calculate analytics
       final totalPlants = plantings.length;
       final readyToHarvest = plantings.where((p) {
-        final daysSincePlanting = DateTime.now().difference(p.sowingDate).inDays;
+        final daysSincePlanting =
+            DateTime.now().difference(p.sowingDate).inDays;
         return daysSincePlanting >= 60; // Simplified logic
       }).length;
 
       final activeTasks = tasks.length;
 
       final averageGrowthDays = plantings.isNotEmpty
-          ? plantings.map((p) => DateTime.now().difference(p.sowingDate).inDays)
-              .reduce((a, b) => a + b) / plantings.length
+          ? plantings
+                  .map((p) => DateTime.now().difference(p.sowingDate).inDays)
+                  .reduce((a, b) => a + b) /
+              plantings.length
           : 0.0;
 
       // Generate mock growth data for chart
@@ -135,7 +136,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         );
         _isLoading = false;
       });
-
     } catch (e) {
       setState(() {
         _error = e.toString();
@@ -147,7 +147,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   List<PlantGrowthData> _generateGrowthData(List<Planting> plantings) {
     final Map<int, int> monthlyData = {};
     final now = DateTime.now();
-    
+
     for (int i = 5; i >= 0; i--) {
       final month = DateTime(now.year, now.month - i);
       monthlyData[month.month] = 0;
@@ -161,8 +161,20 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     }
 
     return monthlyData.entries.map((entry) {
-      final monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                          'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      final monthNames = [
+        'Jan',
+        'Fev',
+        'Mar',
+        'Abr',
+        'Mai',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez'
+      ];
       return PlantGrowthData(
         month: monthNames[entry.key - 1],
         plantCount: entry.value,
@@ -170,11 +182,13 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     }).toList();
   }
 
-  List<HarvestPrediction> _generateHarvestPredictions(List<Planting> plantings) {
+  List<HarvestPrediction> _generateHarvestPredictions(
+      List<Planting> plantings) {
     return plantings.take(5).map((planting) {
-      final daysSincePlanting = DateTime.now().difference(planting.sowingDate).inDays;
+      final daysSincePlanting =
+          DateTime.now().difference(planting.sowingDate).inDays;
       final daysToHarvest = (75 - daysSincePlanting).clamp(0, 75);
-      
+
       return HarvestPrediction(
         cropName: 'Planta ${planting.id.substring(0, 6)}',
         daysToHarvest: daysToHarvest,
@@ -218,7 +232,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           Icon(Icons.error_outline, size: 64, color: Colors.red[400]),
           const SizedBox(height: 16),
           Text(
-            isPortuguese ? 'Erro ao carregar análises' : 'Error loading analytics',
+            isPortuguese
+                ? 'Erro ao carregar análises'
+                : 'Error loading analytics',
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
@@ -404,8 +420,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               BarChartData(
                 alignment: BarChartAlignment.spaceAround,
                 maxY: _analyticsData!.growthData
-                    .map((e) => e.plantCount.toDouble())
-                    .reduce((a, b) => a > b ? a : b) + 2,
+                        .map((e) => e.plantCount.toDouble())
+                        .reduce((a, b) => a > b ? a : b) +
+                    2,
                 barTouchData: BarTouchData(
                   touchTooltipData: BarTouchTooltipData(
                     getTooltipColor: (group) => AppTheme.primaryPurple,
@@ -418,7 +435,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       showTitles: true,
                       getTitlesWidget: (double value, TitleMeta meta) {
                         final index = value.toInt();
-                        if (index >= 0 && index < _analyticsData!.growthData.length) {
+                        if (index >= 0 &&
+                            index < _analyticsData!.growthData.length) {
                           return Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
@@ -449,11 +467,14 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       },
                     ),
                   ),
-                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false)),
+                  rightTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false)),
                 ),
                 borderData: FlBorderData(show: false),
-                barGroups: _analyticsData!.growthData.asMap().entries.map((entry) {
+                barGroups:
+                    _analyticsData!.growthData.asMap().entries.map((entry) {
                   return BarChartGroupData(
                     x: entry.key,
                     barRods: [
@@ -461,7 +482,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         toY: entry.value.plantCount.toDouble(),
                         gradient: AppTheme.primaryGradient,
                         width: 20,
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(4)),
                       ),
                     ],
                   );
@@ -545,7 +567,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                           ),
                           Text(
                             prediction.daysToHarvest == 0
-                                ? (isPortuguese ? 'Pronto para colher!' : 'Ready to harvest!')
+                                ? (isPortuguese
+                                    ? 'Pronto para colher!'
+                                    : 'Ready to harvest!')
                                 : isPortuguese
                                     ? 'Pronto em ${prediction.daysToHarvest} dias'
                                     : 'Ready in ${prediction.daysToHarvest} days',
@@ -558,7 +582,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: prediction.daysToHarvest <= 7
                             ? AppTheme.accentOrange.withValues(alpha: 0.1)

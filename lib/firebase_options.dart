@@ -44,7 +44,8 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDm8oT5VT_yGGzpfL3Kf0TFz2KJ1vR1W0Q', // Will be generated later
+    apiKey: 'AIzaSyDm8oT5VT_yGGzpfL3Kf0TFz2KJ1vR1W0Q',
+    // Will be generated later
     appId: '1:427229818801:web:seedfyapp',
     messagingSenderId: '427229818801',
     projectId: 'seedfyapp',

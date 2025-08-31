@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 class NvidiaAIService {
-  static const String _apiKey = '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';
+  static const String _apiKey =
+      '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';
   static const String _baseUrl = 'https://integrate.api.nvidia.com/v1';
-  
+
   final Dio _dio = Dio();
 
   NvidiaAIService() {
@@ -21,7 +23,7 @@ class NvidiaAIService {
       // Converte a imagem para base64
       final bytes = await imageFile.readAsBytes();
       final base64Image = base64Encode(bytes);
-      
+
       final response = await _dio.post(
         '$_baseUrl/chat/completions',
         data: {
@@ -53,9 +55,7 @@ Retorne as informações em JSON com os seguintes campos:
                 },
                 {
                   'type': 'image_url',
-                  'image_url': {
-                    'url': 'data:image/jpeg;base64,$base64Image'
-                  }
+                  'image_url': {'url': 'data:image/jpeg;base64,$base64Image'}
                 }
               ]
             }
@@ -67,13 +67,13 @@ Retorne as informações em JSON com os seguintes campos:
 
       final content = response.data['choices'][0]['message']['content'];
       final jsonMatch = RegExp(r'\{.*\}').firstMatch(content);
-      
+
       if (jsonMatch != null) {
         final jsonStr = jsonMatch.group(0)!;
         final analysisData = json.decode(jsonStr);
         return PlantAnalysisResult.fromJson(analysisData);
       }
-      
+
       throw Exception('Could not parse plant analysis response');
     } catch (e) {
       throw Exception('Failed to analyze plant image: $e');
@@ -81,7 +81,8 @@ Retorne as informações em JSON com os seguintes campos:
   }
 
   /// 🤖 Chat com assistente especializado em jardinagem
-  Future<String> chatWithGardenAssistant(String message, {String? imageBase64}) async {
+  Future<String> chatWithGardenAssistant(String message,
+      {String? imageBase64}) async {
     try {
       List<dynamic> content = [
         {
@@ -103,9 +104,7 @@ Pergunta: $message
       if (imageBase64 != null) {
         content.add({
           'type': 'image_url',
-          'image_url': {
-            'url': 'data:image/jpeg;base64,$imageBase64'
-          }
+          'image_url': {'url': 'data:image/jpeg;base64,$imageBase64'}
         });
       }
 
@@ -176,7 +175,7 @@ Retorne um array JSON com 5 recomendações:
 
       final content = response.data['choices'][0]['message']['content'];
       final jsonMatch = RegExp(r'\[.*\]').firstMatch(content);
-      
+
       if (jsonMatch != null) {
         final jsonStr = jsonMatch.group(0)!;
         final List<dynamic> recommendationsData = json.decode(jsonStr);
@@ -184,7 +183,7 @@ Retorne um array JSON com 5 recomendações:
             .map((data) => GardenRecommendation.fromJson(data))
             .toList();
       }
-      
+
       throw Exception('Could not parse recommendations response');
     } catch (e) {
       throw Exception('Failed to generate recommendations: $e');

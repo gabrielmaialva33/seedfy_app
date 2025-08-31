@@ -82,7 +82,8 @@ class GardenTask {
       type: type,
       dueDate: DateTime.parse(json['due_date']),
       done: json['done'] ?? false,
-      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toIso8601String()),
+      createdAt: DateTime.parse(
+          json['created_at'] ?? DateTime.now().toIso8601String()),
     );
   }
 

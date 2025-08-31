@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../core/providers/locale_provider.dart';
 
 class PathConfigurationStep extends StatefulWidget {
@@ -26,7 +27,7 @@ class PathConfigurationStep extends StatefulWidget {
 
 class _PathConfigurationStepState extends State<PathConfigurationStep> {
   late double _pathGap;
-  
+
   @override
   void initState() {
     super.initState();
@@ -43,17 +44,17 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
   int get _estimatedBeds {
     const bedWidth = 1.2;
     const bedLength = 2.0;
-    
+
     final bedsPerRow = (widget.areaWidth / (bedWidth + _pathGap)).floor();
     final bedsPerColumn = (widget.areaLength / (bedLength + _pathGap)).floor();
-    
+
     return bedsPerRow * bedsPerColumn;
   }
 
   double get _cultivableArea {
     const bedWidth = 1.2;
     const bedLength = 2.0;
-    
+
     return _estimatedBeds * bedWidth * bedLength;
   }
 
@@ -75,25 +76,25 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
           Text(
             isPortuguese ? 'Caminhos entre Canteiros' : 'Paths Between Beds',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+                  fontWeight: FontWeight.bold,
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           Text(
-            isPortuguese 
-              ? 'Configure a largura dos corredores para circulação entre os canteiros'
-              : 'Configure the width of corridors for circulation between beds',
+            isPortuguese
+                ? 'Configure a largura dos corredores para circulação entre os canteiros'
+                : 'Configure the width of corridors for circulation between beds',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.grey[600],
-            ),
+                  color: Colors.grey[600],
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           // Visual representation with grid
           Container(
             height: 200,
@@ -113,9 +114,9 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           // Path gap slider
           Card(
             child: Padding(
@@ -127,7 +128,9 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        isPortuguese ? 'Largura do corredor:' : 'Corridor width:',
+                        isPortuguese
+                            ? 'Largura do corredor:'
+                            : 'Corridor width:',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -152,9 +155,7 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
                       ),
                     ],
                   ),
-                  
                   const SizedBox(height: 16),
-                  
                   Slider(
                     value: _pathGap,
                     min: 0.2,
@@ -162,7 +163,6 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
                     divisions: 8,
                     onChanged: _updatePathGap,
                   ),
-                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -174,9 +174,9 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Quick preset buttons
           Text(
             isPortuguese ? 'Sugestões:' : 'Suggestions:',
@@ -185,9 +185,9 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          
+
           const SizedBox(height: 12),
-          
+
           Row(
             children: [
               Expanded(
@@ -212,9 +212,9 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
                   onPressed: () => _updatePathGap(0.4),
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(
-                      color: _pathGap == 0.4 
-                        ? Theme.of(context).primaryColor 
-                        : Colors.grey[400]!,
+                      color: _pathGap == 0.4
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey[400]!,
                       width: _pathGap == 0.4 ? 2 : 1,
                     ),
                   ),
@@ -250,9 +250,9 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Statistics
           Container(
             padding: const EdgeInsets.all(16),
@@ -315,9 +315,9 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
               ],
             ),
           ),
-          
+
           const Spacer(),
-          
+
           // Navigation buttons
           Row(
             children: [
@@ -338,7 +338,8 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
                         const SizedBox(width: 8),
                         Text(
                           isPortuguese ? 'Anterior' : 'Previous',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -361,7 +362,8 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
                       children: [
                         Text(
                           isPortuguese ? 'Próximo' : 'Next',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(width: 8),
                         const Icon(Icons.arrow_forward),
@@ -392,31 +394,32 @@ class BedLayoutPainter extends CustomPainter {
     final bedPaint = Paint()
       ..color = Colors.green[300]!
       ..style = PaintingStyle.fill;
-    
+
     final pathPaint = Paint()
       ..color = Colors.brown[200]!
       ..style = PaintingStyle.fill;
-    
+
     // Draw background (paths)
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, size.height),
       pathPaint,
     );
-    
+
     // Calculate bed layout
     const bedWidth = 40.0;
     const bedHeight = 25.0;
     final gapSize = pathGap * 20; // Scale for visualization
-    
+
     final bedsPerRow = ((size.width - gapSize) / (bedWidth + gapSize)).floor();
-    final bedsPerColumn = ((size.height - gapSize) / (bedHeight + gapSize)).floor();
-    
+    final bedsPerColumn =
+        ((size.height - gapSize) / (bedHeight + gapSize)).floor();
+
     // Draw beds
     for (int row = 0; row < bedsPerColumn; row++) {
       for (int col = 0; col < bedsPerRow; col++) {
         final x = gapSize + col * (bedWidth + gapSize);
         final y = gapSize + row * (bedHeight + gapSize);
-        
+
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             Rect.fromLTWH(x, y, bedWidth, bedHeight),

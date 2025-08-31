@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/locale_provider.dart';
-import '../../../services/supabase_service.dart';
-import '../../../models/farm.dart';
-import '../../../models/plot.dart';
 import '../../../models/bed.dart';
-import '../../../models/planting.dart';
 import '../../../models/crop.dart';
-import '../widgets/garden_grid.dart';
-import '../widgets/bed_editor_dialog.dart';
+import '../../../models/farm.dart';
+import '../../../models/planting.dart';
+import '../../../models/plot.dart';
+import '../../../services/supabase_service.dart';
 import '../../ai_camera/screens/ai_camera_screen.dart';
 import '../../ai_chat/screens/ai_chat_screen.dart';
 import '../../tasks/screens/tasks_screen.dart';
+import '../widgets/bed_editor_dialog.dart';
+import '../widgets/garden_grid.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -38,7 +39,7 @@ class _MapScreenState extends State<MapScreen> {
     try {
       final authProvider = context.read<AuthProvider>();
       final userId = authProvider.profile?.id;
-      
+
       if (userId == null) {
         throw Exception('User not authenticated');
       }
@@ -48,10 +49,9 @@ class _MapScreenState extends State<MapScreen> {
           .from('farms')
           .select()
           .eq('owner_id', userId);
-      
-      final farms = (farmsResponse as List)
-          .map((json) => Farm.fromJson(json))
-          .toList();
+
+      final farms =
+          (farmsResponse as List).map((json) => Farm.fromJson(json)).toList();
 
       if (farms.isEmpty) {
         // User hasn't completed onboarding, redirect
@@ -63,42 +63,40 @@ class _MapScreenState extends State<MapScreen> {
 
       // Load first farm's plot and beds
       final currentFarm = farms.first;
-      
+
       final plotsResponse = await SupabaseService.client
           .from('plots')
           .select()
           .eq('farm_id', currentFarm.id)
           .limit(1)
           .single();
-      
+
       final currentPlot = Plot.fromJson(plotsResponse);
-      
+
       // Load beds with plantings and crops
-      final bedsResponse = await SupabaseService.client
-          .from('beds')
-          .select('''
+      final bedsResponse = await SupabaseService.client.from('beds').select('''
             *,
             plantings(
               *,
               crops_catalog(*)
             )
-          ''')
-          .eq('plot_id', currentPlot.id);
-      
+          ''').eq('plot_id', currentPlot.id);
+
       final beds = (bedsResponse as List).map((bedJson) {
         final bed = Bed.fromJson(bedJson);
         Planting? planting;
         Crop? crop;
-        
-        if (bedJson['plantings'] != null && (bedJson['plantings'] as List).isNotEmpty) {
+
+        if (bedJson['plantings'] != null &&
+            (bedJson['plantings'] as List).isNotEmpty) {
           final plantingJson = (bedJson['plantings'] as List).first;
           planting = Planting.fromJson(plantingJson);
-          
+
           if (plantingJson['crops_catalog'] != null) {
             crop = Crop.fromJson(plantingJson['crops_catalog']);
           }
         }
-        
+
         return BedWithPlanting(
           bed: bed,
           planting: planting,
@@ -112,7 +110,6 @@ class _MapScreenState extends State<MapScreen> {
         _beds = beds;
         _isLoading = false;
       });
-
     } catch (e) {
       setState(() {
         _error = e.toString();
@@ -143,11 +140,11 @@ class _MapScreenState extends State<MapScreen> {
 
   void _handleAddBed(Offset position) {
     if (_currentPlot == null) return;
-    
+
     const scale = 50.0;
     final gridX = (position.dx / scale);
     final gridY = (position.dy / scale);
-    
+
     showDialog(
       context: context,
       builder: (context) => BedEditorDialog(
@@ -178,11 +175,11 @@ class _MapScreenState extends State<MapScreen> {
     if (bedWithPlanting.planting == null || bedWithPlanting.crop == null) {
       return BedStatus.empty;
     }
-    
+
     final now = DateTime.now();
     final harvestDate = bedWithPlanting.planting!.harvestEstimate;
     final daysUntilHarvest = harvestDate.difference(now).inDays;
-    
+
     if (daysUntilHarvest < 0) {
       return BedStatus.critical; // Overdue
     } else if (daysUntilHarvest <= 7) {
@@ -196,22 +193,24 @@ class _MapScreenState extends State<MapScreen> {
     try {
       final localeProvider = context.read<LocaleProvider>();
       final isPortuguese = localeProvider.locale.languageCode == 'pt';
-      
+
       final csvData = StringBuffer();
-      
+
       // CSV Header
       if (isPortuguese) {
-        csvData.writeln('Canteiro,Posição X,Posição Y,Largura (m),Altura (m),Área (m²),Cultura,Data Plantio,Previsão Colheita,Status');
+        csvData.writeln(
+            'Canteiro,Posição X,Posição Y,Largura (m),Altura (m),Área (m²),Cultura,Data Plantio,Previsão Colheita,Status');
       } else {
-        csvData.writeln('Bed,Position X,Position Y,Width (m),Height (m),Area (m²),Crop,Planting Date,Harvest Date,Status');
+        csvData.writeln(
+            'Bed,Position X,Position Y,Width (m),Height (m),Area (m²),Crop,Planting Date,Harvest Date,Status');
       }
-      
+
       // CSV Data
       for (final bedWithPlanting in _beds) {
         final bed = bedWithPlanting.bed;
         final planting = bedWithPlanting.planting;
         final crop = bedWithPlanting.crop;
-        
+
         csvData.writeln([
           bed.id,
           bed.x,
@@ -219,13 +218,14 @@ class _MapScreenState extends State<MapScreen> {
           bed.widthM,
           bed.heightM,
           (bed.widthM * bed.heightM).toStringAsFixed(2),
-          crop?.getName(localeProvider.locale.languageCode) ?? (isPortuguese ? 'Vazio' : 'Empty'),
+          crop?.getName(localeProvider.locale.languageCode) ??
+              (isPortuguese ? 'Vazio' : 'Empty'),
           planting?.sowingDate.toIso8601String().split('T')[0] ?? '',
           planting?.harvestEstimate.toIso8601String().split('T')[0] ?? '',
           _getStatusText(_getBedStatus(bedWithPlanting), isPortuguese),
         ].join(','));
       }
-      
+
       // Show CSV preview
       showDialog(
         context: context,
@@ -249,7 +249,6 @@ class _MapScreenState extends State<MapScreen> {
           ],
         ),
       );
-      
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -282,7 +281,8 @@ class _MapScreenState extends State<MapScreen> {
 
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: Text(isPortuguese ? 'Carregando...' : 'Loading...')),
+        appBar:
+            AppBar(title: Text(isPortuguese ? 'Carregando...' : 'Loading...')),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -298,7 +298,8 @@ class _MapScreenState extends State<MapScreen> {
               const SizedBox(height: 16),
               Text(
                 isPortuguese ? 'Erro ao carregar dados' : 'Error loading data',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
@@ -319,7 +320,8 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_currentFarm?.name ?? (isPortuguese ? 'Minha Horta' : 'My Garden')),
+        title: Text(
+            _currentFarm?.name ?? (isPortuguese ? 'Minha Horta' : 'My Garden')),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         actions: [
           IconButton(
@@ -391,7 +393,8 @@ class _MapScreenState extends State<MapScreen> {
                 case 'tasks':
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const TasksScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const TasksScreen()),
                   );
                   break;
                 case 'export':
@@ -417,42 +420,36 @@ class _MapScreenState extends State<MapScreen> {
             child: Row(
               children: [
                 _buildStatusLegend(
-                  isPortuguese ? 'Saudável' : 'Healthy', 
-                  Colors.green
-                ),
+                    isPortuguese ? 'Saudável' : 'Healthy', Colors.green),
                 const SizedBox(width: 16),
                 _buildStatusLegend(
-                  isPortuguese ? 'Atenção' : 'Warning', 
-                  Colors.orange
-                ),
+                    isPortuguese ? 'Atenção' : 'Warning', Colors.orange),
                 const SizedBox(width: 16),
                 _buildStatusLegend(
-                  isPortuguese ? 'Crítico' : 'Critical', 
-                  Colors.red
-                ),
+                    isPortuguese ? 'Crítico' : 'Critical', Colors.red),
                 const SizedBox(width: 16),
                 _buildStatusLegend(
-                  isPortuguese ? 'Vazio' : 'Empty', 
-                  Colors.grey
-                ),
+                    isPortuguese ? 'Vazio' : 'Empty', Colors.grey),
               ],
             ),
           ),
-          
+
           // Map
           Expanded(
-            child: _currentPlot == null 
-              ? Center(
-                  child: Text(
-                    isPortuguese ? 'Nenhum canteiro encontrado' : 'No beds found',
+            child: _currentPlot == null
+                ? Center(
+                    child: Text(
+                      isPortuguese
+                          ? 'Nenhum canteiro encontrado'
+                          : 'No beds found',
+                    ),
+                  )
+                : GardenGrid(
+                    plot: _currentPlot!,
+                    beds: _beds,
+                    onBedTapped: _handleBedTapped,
+                    onAddBed: _handleAddBed,
                   ),
-                )
-              : GardenGrid(
-                  plot: _currentPlot!,
-                  beds: _beds,
-                  onBedTapped: _handleBedTapped,
-                  onAddBed: _handleAddBed,
-                ),
           ),
         ],
       ),

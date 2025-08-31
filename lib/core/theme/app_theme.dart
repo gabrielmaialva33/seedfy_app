@@ -104,7 +104,8 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
-      fontFamily: 'Inter', // Fonte moderna
+      fontFamily: 'Inter',
+      // Fonte moderna
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryPurple,
         brightness: Brightness.light,

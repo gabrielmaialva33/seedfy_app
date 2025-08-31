@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../models/crop.dart';
 
@@ -28,24 +29,24 @@ class PreviewStep extends StatelessWidget {
   int get _estimatedBeds {
     const bedWidth = 1.2;
     const bedLength = 2.0;
-    
+
     final bedsPerRow = (areaWidth / (bedWidth + pathGap)).floor();
     final bedsPerColumn = (areaLength / (bedLength + pathGap)).floor();
-    
+
     return bedsPerRow * bedsPerColumn;
   }
 
   int _getTotalPlants() {
     int total = 0;
     final bedsPerCrop = (_estimatedBeds / selectedCrops.length).ceil();
-    
+
     for (final crop in selectedCrops) {
       const bedArea = 1.2 * 2.0; // Standard bed size
       final plantArea = crop.rowSpacingM * crop.plantSpacingM;
       final plantsPerBed = (bedArea / plantArea).floor();
       total += plantsPerBed * bedsPerCrop;
     }
-    
+
     return total;
   }
 
@@ -55,28 +56,28 @@ class PreviewStep extends StatelessWidget {
 
   DateTime _getEarliestHarvest() {
     if (selectedCrops.isEmpty) return DateTime.now();
-    
+
     final shortestCycle = selectedCrops
         .map((crop) => _getCycleDays(crop))
         .reduce((a, b) => a < b ? a : b);
-    
+
     return DateTime.now().add(Duration(days: shortestCycle));
   }
 
   DateTime _getLatestHarvest() {
     if (selectedCrops.isEmpty) return DateTime.now();
-    
+
     final longestCycle = selectedCrops
         .map((crop) => _getCycleDays(crop))
         .reduce((a, b) => a > b ? a : b);
-    
+
     return DateTime.now().add(Duration(days: longestCycle));
   }
 
   String _formatDate(DateTime date, bool isPortuguese) {
-    return isPortuguese 
-      ? '${date.day}/${date.month}/${date.year}'
-      : '${date.month}/${date.day}/${date.year}';
+    return isPortuguese
+        ? '${date.day}/${date.month}/${date.year}'
+        : '${date.month}/${date.day}/${date.year}';
   }
 
   @override
@@ -93,25 +94,25 @@ class PreviewStep extends StatelessWidget {
           Text(
             isPortuguese ? 'Preview da Horta' : 'Garden Preview',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+                  fontWeight: FontWeight.bold,
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           Text(
-            isPortuguese 
-              ? 'Revise sua configuração antes de criar a horta. Você pode voltar e editar qualquer passo.'
-              : 'Review your setup before creating the garden. You can go back and edit any step.',
+            isPortuguese
+                ? 'Revise sua configuração antes de criar a horta. Você pode voltar e editar qualquer passo.'
+                : 'Review your setup before creating the garden. You can go back and edit any step.',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.grey[600],
-            ),
+                  color: Colors.grey[600],
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           Expanded(
             child: ListView(
               children: [
@@ -140,19 +141,23 @@ class PreviewStep extends StatelessWidget {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Path configuration
                 _buildSummaryCard(
                   context,
-                  title: isPortuguese ? 'Configuração dos Caminhos' : 'Path Configuration',
+                  title: isPortuguese
+                      ? 'Configuração dos Caminhos'
+                      : 'Path Configuration',
                   icon: Icons.linear_scale,
                   onEdit: () => onEdit(1),
                   children: [
                     _buildInfoRow(
                       context,
-                      isPortuguese ? 'Largura dos corredores:' : 'Corridor width:',
+                      isPortuguese
+                          ? 'Largura dos corredores:'
+                          : 'Corridor width:',
                       '${pathGap.toStringAsFixed(1)}m',
                     ),
                     _buildInfoRow(
@@ -163,72 +168,78 @@ class PreviewStep extends StatelessWidget {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Selected crops
                 _buildSummaryCard(
                   context,
-                  title: isPortuguese 
-                    ? 'Culturas Selecionadas (${selectedCrops.length})'
-                    : 'Selected Crops (${selectedCrops.length})',
+                  title: isPortuguese
+                      ? 'Culturas Selecionadas (${selectedCrops.length})'
+                      : 'Selected Crops (${selectedCrops.length})',
                   icon: Icons.local_florist,
                   onEdit: () => onEdit(2),
                   children: [
                     ...selectedCrops.map((crop) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            decoration: BoxDecoration(
-                              color: Colors.green[100],
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.local_florist,
-                              color: Colors.green[700],
-                              size: 16,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              crop.getName(localeProvider.locale.languageCode),
-                              style: const TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              '${_getCycleDays(crop)} ${isPortuguese ? "dias" : "days"}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w600,
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  color: Colors.green[100],
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.local_florist,
+                                  color: Colors.green[700],
+                                  size: 16,
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  crop.getName(
+                                      localeProvider.locale.languageCode),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withValues(alpha: 0.2),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  '${_getCycleDays(crop)} ${isPortuguese ? "dias" : "days"}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )),
+                        )),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Growing timeline
                 _buildSummaryCard(
                   context,
-                  title: isPortuguese ? 'Cronograma de Cultivo' : 'Growing Timeline',
+                  title: isPortuguese
+                      ? 'Cronograma de Cultivo'
+                      : 'Growing Timeline',
                   icon: Icons.schedule,
                   onEdit: () => onEdit(3),
                   children: [
@@ -250,9 +261,9 @@ class PreviewStep extends StatelessWidget {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Interactive map preview
                 Container(
                   height: 200,
@@ -290,7 +301,9 @@ class PreviewStep extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            isPortuguese ? 'Preview da Distribuição' : 'Layout Preview',
+                            isPortuguese
+                                ? 'Preview da Distribuição'
+                                : 'Layout Preview',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -302,9 +315,9 @@ class PreviewStep extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Tips
                 Container(
                   padding: const EdgeInsets.all(16),
@@ -335,9 +348,9 @@ class PreviewStep extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        isPortuguese 
-                          ? '• O sistema irá criar automaticamente tarefas como regar, adubar e colher\n• Você poderá editar o mapa e reorganizar as culturas após a criação\n• As datas de colheita são estimativas baseadas nos ciclos padrão'
-                          : '• The system will automatically create tasks like watering, fertilizing and harvesting\n• You can edit the map and reorganize crops after creation\n• Harvest dates are estimates based on standard cycles',
+                        isPortuguese
+                            ? '• O sistema irá criar automaticamente tarefas como regar, adubar e colher\n• Você poderá editar o mapa e reorganizar as culturas após a criação\n• As datas de colheita são estimativas baseadas nos ciclos padrão'
+                            : '• The system will automatically create tasks like watering, fertilizing and harvesting\n• You can edit the map and reorganize crops after creation\n• Harvest dates are estimates based on standard cycles',
                         style: TextStyle(
                           color: Colors.blue[700],
                           fontSize: 14,
@@ -349,9 +362,9 @@ class PreviewStep extends StatelessWidget {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Navigation buttons
           Row(
             children: [
@@ -372,7 +385,8 @@ class PreviewStep extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           isPortuguese ? 'Anterior' : 'Previous',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -395,7 +409,8 @@ class PreviewStep extends StatelessWidget {
                       children: [
                         Text(
                           isPortuguese ? 'Criar Horta' : 'Create Garden',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(width: 8),
                         const Icon(Icons.arrow_forward),
@@ -455,7 +470,8 @@ class PreviewStep extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(BuildContext context, String label, String value, {bool isHighlighted = false}) {
+  Widget _buildInfoRow(BuildContext context, String label, String value,
+      {bool isHighlighted = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
@@ -472,7 +488,8 @@ class PreviewStep extends StatelessWidget {
             value,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: isHighlighted ? Theme.of(context).primaryColor : Colors.black,
+              color:
+                  isHighlighted ? Theme.of(context).primaryColor : Colors.black,
             ),
           ),
         ],
@@ -501,43 +518,44 @@ class GardenPreviewPainter extends CustomPainter {
     final pathPaint = Paint()
       ..color = Colors.brown[300]!
       ..style = PaintingStyle.fill;
-    
+
     final bedPaint = Paint()
       ..color = Colors.green[300]!
       ..style = PaintingStyle.fill;
-    
+
     final borderPaint = Paint()
       ..color = Colors.green[600]!
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
-    
+
     // Draw background (paths)
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, size.height),
       pathPaint,
     );
-    
+
     // Calculate bed layout
     const bedWidth = 20.0;
     const bedHeight = 15.0;
     final gapSize = (pathGap * 10).clamp(4.0, 15.0); // Scale for visualization
-    
+
     final bedsPerRow = ((size.width - gapSize) / (bedWidth + gapSize)).floor();
-    final bedsPerColumn = ((size.height - gapSize) / (bedHeight + gapSize)).floor();
-    
+    final bedsPerColumn =
+        ((size.height - gapSize) / (bedHeight + gapSize)).floor();
+
     // Draw beds with crop colors
     int bedIndex = 0;
     for (int row = 0; row < bedsPerColumn; row++) {
       for (int col = 0; col < bedsPerRow; col++) {
         final x = gapSize + col * (bedWidth + gapSize);
         final y = gapSize + row * (bedHeight + gapSize);
-        
+
         // Assign crop color if we have crops
         if (selectedCrops.isNotEmpty) {
           final cropIndex = bedIndex % selectedCrops.length;
           bedPaint.color = _getCropColor(cropIndex);
         }
-        
+
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             Rect.fromLTWH(x, y, bedWidth, bedHeight),
@@ -545,7 +563,7 @@ class GardenPreviewPainter extends CustomPainter {
           ),
           bedPaint,
         );
-        
+
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             Rect.fromLTWH(x, y, bedWidth, bedHeight),
@@ -553,7 +571,7 @@ class GardenPreviewPainter extends CustomPainter {
           ),
           borderPaint,
         );
-        
+
         bedIndex++;
       }
     }

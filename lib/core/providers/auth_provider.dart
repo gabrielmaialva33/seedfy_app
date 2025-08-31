@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../services/supabase_service.dart';
-import '../../services/firebase_service.dart';
+
 import '../../models/user_profile.dart';
+import '../../services/firebase_service.dart';
+import '../../services/supabase_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   User? _user;
   UserProfile? _profile;
   bool _isLoading = false;
-  
+
   User? get user => _user;
+
   UserProfile? get profile => _profile;
+
   bool get isLoading => _isLoading;
+
   bool get isAuthenticated => _user != null;
-  
+
   AuthProvider() {
     _initialize();
   }
-  
+
   void _initialize() {
     _user = SupabaseService.currentUser;
     if (_user != null) {
       _loadUserProfile();
     }
-    
+
     SupabaseService.authStateChanges.listen((data) {
       _user = data.session?.user;
       if (_user != null) {
@@ -34,24 +38,24 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
-  
+
   Future<void> _loadUserProfile() async {
     if (_user == null) return;
-    
+
     try {
       final response = await SupabaseService.client
           .from('profiles')
           .select()
           .eq('id', _user!.id)
           .single();
-      
+
       _profile = UserProfile.fromJson(response);
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading user profile: $e');
     }
   }
-  
+
   Future<void> signUp({
     required String email,
     required String password,
@@ -64,7 +68,7 @@ class AuthProvider extends ChangeNotifier {
     try {
       _isLoading = true;
       notifyListeners();
-      
+
       final response = await SupabaseService.client.auth.signUp(
         email: email,
         password: password,
@@ -76,15 +80,15 @@ class AuthProvider extends ChangeNotifier {
           'locale': locale ?? 'pt-BR',
         },
       );
-      
+
       if (response.user == null) {
         throw Exception('Failed to create account');
       }
-      
+
       _user = response.user;
-      await Future.delayed(const Duration(milliseconds: 500)); // Wait for trigger
+      await Future.delayed(
+          const Duration(milliseconds: 500)); // Wait for trigger
       await _loadUserProfile();
-      
     } catch (e) {
       throw Exception('Registration failed: ${e.toString()}');
     } finally {
@@ -92,7 +96,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<void> signIn({
     required String email,
     required String password,
@@ -100,26 +104,25 @@ class AuthProvider extends ChangeNotifier {
     try {
       _isLoading = true;
       notifyListeners();
-      
+
       final response = await SupabaseService.client.auth.signInWithPassword(
         email: email,
         password: password,
       );
-      
+
       if (response.user == null) {
         throw Exception('Login failed');
       }
-      
+
       _user = response.user;
       await _loadUserProfile();
-      
+
       // Also sign in with Firebase anonymously for data storage
       try {
         await FirebaseService.signInAnonymously();
       } catch (e) {
         debugPrint('Firebase anonymous sign in failed: $e');
       }
-      
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');
     } finally {
@@ -127,7 +130,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<void> signOut() async {
     await SupabaseService.client.auth.signOut();
     _user = null;
@@ -171,7 +174,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> hasCompletedOnboarding() async {
     if (_profile == null) return false;
-    
+
     try {
       // Check if user has any farms (indicates onboarding completed)
       final response = await SupabaseService.client

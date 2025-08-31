@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/locale_provider.dart';
-import 'signup_screen.dart';
 import 'forgot_password_screen.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 60),
-                
+
                 // Logo
                 Icon(
                   Icons.eco,
@@ -76,29 +77,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Theme.of(context).primaryColor,
                 ),
                 const SizedBox(height: 16),
-                
+
                 // App Name
                 Text(
                   'Seedfy',
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 Text(
-                  isPortuguese 
-                    ? 'Sua horta inteligente'
-                    : 'Your smart garden',
+                  isPortuguese ? 'Sua horta inteligente' : 'Your smart garden',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
+                        color: Colors.grey[600],
+                      ),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: 60),
-                
+
                 // Email Field
                 TextFormField(
                   controller: _emailController,
@@ -113,28 +112,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return isPortuguese ? 'Digite seu email' : 'Enter your email';
+                      return isPortuguese
+                          ? 'Digite seu email'
+                          : 'Enter your email';
                     }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
                       return isPortuguese ? 'Email inválido' : 'Invalid email';
                     }
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Password Field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     labelText: isPortuguese ? 'Senha' : 'Password',
-                    hintText: isPortuguese ? 'Digite sua senha' : 'Enter your password',
+                    hintText: isPortuguese
+                        ? 'Digite sua senha'
+                        : 'Enter your password',
                     prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                        _isPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
                       onPressed: () {
                         setState(() {
@@ -148,19 +154,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return isPortuguese ? 'Digite sua senha' : 'Enter your password';
+                      return isPortuguese
+                          ? 'Digite sua senha'
+                          : 'Enter your password';
                     }
                     if (value.length < 6) {
-                      return isPortuguese 
-                        ? 'Senha deve ter pelo menos 6 caracteres' 
-                        : 'Password must be at least 6 characters';
+                      return isPortuguese
+                          ? 'Senha deve ter pelo menos 6 caracteres'
+                          : 'Password must be at least 6 characters';
                     }
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 8),
-                
+
                 // Forgot Password
                 Align(
                   alignment: Alignment.centerRight,
@@ -178,9 +186,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Login Button
                 SizedBox(
                   height: 56,
@@ -192,22 +200,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     child: _isLoading
-                      ? const CircularProgressIndicator()
-                      : Text(
-                          isPortuguese ? 'Entrar' : 'Sign In',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
+                        ? const CircularProgressIndicator()
+                        : Text(
+                            isPortuguese ? 'Entrar' : 'Sign In',
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Sign Up Link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      isPortuguese ? 'Não tem uma conta? ' : "Don't have an account? ",
+                      isPortuguese
+                          ? 'Não tem uma conta? '
+                          : "Don't have an account? ",
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     TextButton(
@@ -226,9 +237,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // Language Toggle
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -239,9 +250,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        localeProvider.setLocale(
-                          isPortuguese ? const Locale('en', 'US') : const Locale('pt', 'BR')
-                        );
+                        localeProvider.setLocale(isPortuguese
+                            ? const Locale('en', 'US')
+                            : const Locale('pt', 'BR'));
                       },
                       child: Text(
                         isPortuguese ? '🇺🇸 English' : '🇧🇷 Português',

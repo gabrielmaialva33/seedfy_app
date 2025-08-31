@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+
 import '../theme/app_theme.dart';
 
 // Helper functions for plant UI
@@ -137,9 +138,9 @@ class ModernCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: gradient ?? AppTheme.cardGradient,
         borderRadius: AppTheme.cardRadius,
-        boxShadow: elevation != null 
-          ? (elevation! > 0 ? AppTheme.cardShadow : null)
-          : AppTheme.cardShadow,
+        boxShadow: elevation != null
+            ? (elevation! > 0 ? AppTheme.cardShadow : null)
+            : AppTheme.cardShadow,
       ),
       child: Material(
         color: Colors.transparent,
@@ -209,10 +210,10 @@ class GradientCard extends StatelessWidget {
         ),
       ),
     )
-    .animate()
-    .fadeIn(duration: 400.ms)
-    .scale(begin: const Offset(0.9, 0.9))
-    .shimmer(duration: 1500.ms, color: Colors.white.withValues(alpha: 0.2));
+        .animate()
+        .fadeIn(duration: 400.ms)
+        .scale(begin: const Offset(0.9, 0.9))
+        .shimmer(duration: 1500.ms, color: Colors.white.withValues(alpha: 0.2));
   }
 }
 
@@ -273,7 +274,8 @@ class PlantCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                        border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.3)),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -327,7 +329,8 @@ class PlantCard extends StatelessWidget {
                     top: 12,
                     left: 12,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: statusColor.withValues(alpha: 0.9),
                         borderRadius: BorderRadius.circular(8),
@@ -354,7 +357,8 @@ class PlantCard extends StatelessWidget {
                       child: Icon(
                         isFavorite ? Icons.favorite : Icons.favorite_border,
                         size: 18,
-                        color: isFavorite ? AppTheme.errorRed : AppTheme.textGray,
+                        color:
+                            isFavorite ? AppTheme.errorRed : AppTheme.textGray,
                       ),
                     ),
                   ),
@@ -402,10 +406,10 @@ class PlantCard extends StatelessWidget {
         ],
       ),
     )
-    .animate()
-    .fadeIn(duration: 600.ms, delay: 200.ms)
-    .scale(begin: const Offset(0.8, 0.8), end: const Offset(1.0, 1.0))
-    .shimmer(duration: 1200.ms, color: Colors.white.withValues(alpha: 0.3));
+        .animate()
+        .fadeIn(duration: 600.ms, delay: 200.ms)
+        .scale(begin: const Offset(0.8, 0.8), end: const Offset(1.0, 1.0))
+        .shimmer(duration: 1200.ms, color: Colors.white.withValues(alpha: 0.3));
   }
 
   Widget _buildProgressIndicator() {
@@ -426,17 +430,17 @@ class PlantCard extends StatelessWidget {
         ),
       ),
     )
-    .animate()
-    .scaleX(
-      duration: 1500.ms,
-      delay: 800.ms,
-      curve: Curves.elasticOut,
-    )
-    .shimmer(
-      duration: 2000.ms,
-      delay: 1000.ms,
-      color: Colors.white.withValues(alpha: 0.5),
-    );
+        .animate()
+        .scaleX(
+          duration: 1500.ms,
+          delay: 800.ms,
+          curve: Curves.elasticOut,
+        )
+        .shimmer(
+          duration: 2000.ms,
+          delay: 1000.ms,
+          color: Colors.white.withValues(alpha: 0.5),
+        );
   }
 }
 
@@ -470,12 +474,12 @@ class StoryCircle extends StatelessWidget {
               padding: const EdgeInsets.all(3),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: hasNewStory 
-                  ? AppTheme.primaryGradient
-                  : null,
-                border: !hasNewStory 
-                  ? Border.all(color: AppTheme.textGray.withValues(alpha: 0.3), width: 2)
-                  : null,
+                gradient: hasNewStory ? AppTheme.primaryGradient : null,
+                border: !hasNewStory
+                    ? Border.all(
+                        color: AppTheme.textGray.withValues(alpha: 0.3),
+                        width: 2)
+                    : null,
               ),
               child: Container(
                 decoration: BoxDecoration(
@@ -506,7 +510,8 @@ class StoryCircle extends StatelessWidget {
               width: 70,
               child: Text(
                 label,
-                style: AppTheme.smallStyle.copyWith(fontWeight: FontWeight.w500),
+                style:
+                    AppTheme.smallStyle.copyWith(fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -516,15 +521,14 @@ class StoryCircle extends StatelessWidget {
         ),
       ),
     )
-    .animate(delay: (200 * 1).ms)
-    .fadeIn(duration: 500.ms)
-    .scale(begin: const Offset(0.5, 0.5))
-    .then()
-    .shimmer(duration: 2000.ms, color: hasNewStory ? Colors.purple.withValues(alpha: 0.4) : Colors.transparent);
+        .animate(delay: (200 * 1).ms)
+        .fadeIn(duration: 500.ms)
+        .scale(begin: const Offset(0.5, 0.5))
+        .then()
+        .shimmer(
+            duration: 2000.ms,
+            color: hasNewStory
+                ? Colors.purple.withValues(alpha: 0.4)
+                : Colors.transparent);
   }
-
-
-
-
-
 }

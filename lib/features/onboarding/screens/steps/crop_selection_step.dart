@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../models/crop.dart';
 import '../../../../services/supabase_service.dart';
@@ -42,9 +43,8 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
           .select()
           .order('name_pt');
 
-      final crops = (response as List)
-          .map((json) => Crop.fromJson(json))
-          .toList();
+      final crops =
+          (response as List).map((json) => Crop.fromJson(json)).toList();
 
       setState(() {
         _availableCrops = crops;
@@ -74,11 +74,11 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
   }
 
   void _selectRecommendedCrops() {
-    final recommended = _availableCrops.where((crop) => 
-      ['Alface', 'Rúcula', 'Espinafre', 'Rabanete', 'Couve']
-          .contains(crop.namePt)
-    ).toList();
-    
+    final recommended = _availableCrops
+        .where((crop) => ['Alface', 'Rúcula', 'Espinafre', 'Rabanete', 'Couve']
+            .contains(crop.namePt))
+        .toList();
+
     setState(() {
       _selectedCrops = recommended;
     });
@@ -102,7 +102,9 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
             Icon(Icons.error_outline, size: 64, color: Colors.red[400]),
             const SizedBox(height: 16),
             Text(
-              isPortuguese ? 'Erro ao carregar culturas' : 'Error loading crops',
+              isPortuguese
+                  ? 'Erro ao carregar culturas'
+                  : 'Error loading crops',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -130,25 +132,25 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
           Text(
             isPortuguese ? 'Seleção de Culturas' : 'Crop Selection',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+                  fontWeight: FontWeight.bold,
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           Text(
-            isPortuguese 
-              ? 'Escolha as hortaliças que deseja cultivar. Você pode selecionar múltiplas culturas.'
-              : 'Choose the vegetables you want to grow. You can select multiple crops.',
+            isPortuguese
+                ? 'Escolha as hortaliças que deseja cultivar. Você pode selecionar múltiplas culturas.'
+                : 'Choose the vegetables you want to grow. You can select multiple crops.',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.grey[600],
-            ),
+                  color: Colors.grey[600],
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Selection summary and quick actions
           Container(
             padding: const EdgeInsets.all(16),
@@ -162,9 +164,9 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      isPortuguese 
-                        ? 'Selecionadas: ${_selectedCrops.length}'
-                        : 'Selected: ${_selectedCrops.length}',
+                      isPortuguese
+                          ? 'Selecionadas: ${_selectedCrops.length}'
+                          : 'Selected: ${_selectedCrops.length}',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -187,7 +189,6 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                       ),
                   ],
                 ),
-                
                 if (_selectedCrops.isEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
@@ -197,7 +198,9 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                         onPressed: _selectRecommendedCrops,
                         icon: const Icon(Icons.auto_awesome, size: 20),
                         label: Text(
-                          isPortuguese ? 'Seleção Recomendada' : 'Recommended Selection',
+                          isPortuguese
+                              ? 'Seleção Recomendada'
+                              : 'Recommended Selection',
                           style: const TextStyle(fontSize: 14),
                         ),
                       ),
@@ -206,9 +209,9 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Crop gallery
           Expanded(
             child: GridView.builder(
@@ -222,7 +225,7 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
               itemBuilder: (context, index) {
                 final crop = _availableCrops[index];
                 final isSelected = _isCropSelected(crop);
-                
+
                 return GestureDetector(
                   onTap: () => _toggleCrop(crop),
                   child: AnimatedContainer(
@@ -231,25 +234,27 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
                         color: isSelected
-                          ? Theme.of(context).primaryColor
-                          : Colors.grey[300]!,
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey[300]!,
                         width: isSelected ? 3 : 1,
                       ),
                       boxShadow: isSelected
-                        ? [
-                            BoxShadow(
-                              color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ]
-                        : [
-                            BoxShadow(
-                              color: Colors.grey.withValues(alpha: 0.1),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                          ? [
+                              BoxShadow(
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withValues(alpha: 0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ]
+                          : [
+                              BoxShadow(
+                                color: Colors.grey.withValues(alpha: 0.1),
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -304,7 +309,7 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                             ),
                           ),
                         ),
-                        
+
                         // Info section
                         Expanded(
                           flex: 2,
@@ -314,7 +319,8 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  crop.getName(localeProvider.locale.languageCode),
+                                  crop.getName(
+                                      localeProvider.locale.languageCode),
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -371,9 +377,9 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
               },
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Navigation buttons
           Row(
             children: [
@@ -394,7 +400,8 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                         const SizedBox(width: 8),
                         Text(
                           isPortuguese ? 'Anterior' : 'Previous',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -417,7 +424,8 @@ class _CropSelectionStepState extends State<CropSelectionStep> {
                       children: [
                         Text(
                           isPortuguese ? 'Próximo' : 'Next',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(width: 8),
                         const Icon(Icons.arrow_forward),

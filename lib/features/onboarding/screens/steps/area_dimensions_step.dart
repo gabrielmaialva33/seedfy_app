@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../core/providers/locale_provider.dart';
 
 class AreaDimensionsStep extends StatefulWidget {
@@ -28,8 +29,10 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
   @override
   void initState() {
     super.initState();
-    _lengthController = TextEditingController(text: widget.initialLength.toString());
-    _widthController = TextEditingController(text: widget.initialWidth.toString());
+    _lengthController =
+        TextEditingController(text: widget.initialLength.toString());
+    _widthController =
+        TextEditingController(text: widget.initialWidth.toString());
   }
 
   @override
@@ -40,7 +43,8 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
   }
 
   void _updateValues() {
-    final length = double.tryParse(_lengthController.text) ?? widget.initialLength;
+    final length =
+        double.tryParse(_lengthController.text) ?? widget.initialLength;
     final width = double.tryParse(_widthController.text) ?? widget.initialWidth;
     widget.onChanged(length, width);
   }
@@ -74,25 +78,25 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
             Text(
               isPortuguese ? 'Dimensões da Área' : 'Area Dimensions',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
               textAlign: TextAlign.center,
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             Text(
-              isPortuguese 
-                ? 'Informe as dimensões da sua área de cultivo em metros'
-                : 'Enter your cultivation area dimensions in meters',
+              isPortuguese
+                  ? 'Informe as dimensões da sua área de cultivo em metros'
+                  : 'Enter your cultivation area dimensions in meters',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.grey[600],
-              ),
+                    color: Colors.grey[600],
+                  ),
               textAlign: TextAlign.center,
             ),
-            
+
             const SizedBox(height: 40),
-            
+
             // Visual representation
             Container(
               height: 200,
@@ -210,18 +214,20 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 40),
-            
+
             // Length input
             Row(
               children: [
                 Expanded(
                   child: TextFormField(
                     controller: _lengthController,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
-                      labelText: isPortuguese ? 'Comprimento (m)' : 'Length (m)',
+                      labelText:
+                          isPortuguese ? 'Comprimento (m)' : 'Length (m)',
                       hintText: '5.0',
                       prefixIcon: const Icon(Icons.straighten),
                       border: OutlineInputBorder(
@@ -235,7 +241,9 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                       }
                       final number = double.tryParse(value);
                       if (number == null || number <= 0) {
-                        return isPortuguese ? 'Valor inválido' : 'Invalid value';
+                        return isPortuguese
+                            ? 'Valor inválido'
+                            : 'Invalid value';
                       }
                       if (number > 100) {
                         return isPortuguese ? 'Máximo 100m' : 'Maximum 100m';
@@ -252,12 +260,13 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                 Expanded(
                   child: TextFormField(
                     controller: _widthController,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: isPortuguese ? 'Largura (m)' : 'Width (m)',
                       hintText: '3.0',
-                      prefixIcon: const Icon(Icons.straighten, 
-                        textDirection: TextDirection.ltr),
+                      prefixIcon: const Icon(Icons.straighten,
+                          textDirection: TextDirection.ltr),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -269,7 +278,9 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                       }
                       final number = double.tryParse(value);
                       if (number == null || number <= 0) {
-                        return isPortuguese ? 'Valor inválido' : 'Invalid value';
+                        return isPortuguese
+                            ? 'Valor inválido'
+                            : 'Invalid value';
                       }
                       if (number > 100) {
                         return isPortuguese ? 'Máximo 100m' : 'Maximum 100m';
@@ -283,9 +294,9 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // Total area display
             Container(
               padding: const EdgeInsets.all(16),
@@ -302,9 +313,9 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    isPortuguese 
-                      ? 'Área total: ${_totalArea.toStringAsFixed(1)} m²'
-                      : 'Total area: ${_totalArea.toStringAsFixed(1)} m²',
+                    isPortuguese
+                        ? 'Área total: ${_totalArea.toStringAsFixed(1)} m²'
+                        : 'Total area: ${_totalArea.toStringAsFixed(1)} m²',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -314,9 +325,9 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                 ],
               ),
             ),
-            
+
             const Spacer(),
-            
+
             // Next button
             SizedBox(
               height: 56,
@@ -332,7 +343,8 @@ class _AreaDimensionsStepState extends State<AreaDimensionsStep> {
                   children: [
                     Text(
                       isPortuguese ? 'Próximo' : 'Next',
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(width: 8),
                     const Icon(Icons.arrow_forward),

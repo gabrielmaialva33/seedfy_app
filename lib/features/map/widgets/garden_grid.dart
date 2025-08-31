@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/providers/locale_provider.dart';
 import '../../../models/plot.dart';
 import '../screens/map_screen.dart';
@@ -23,9 +24,10 @@ class GardenGrid extends StatefulWidget {
 }
 
 class _GardenGridState extends State<GardenGrid> {
-  final TransformationController _transformationController = TransformationController();
+  final TransformationController _transformationController =
+      TransformationController();
   static const double _gridScale = 50.0; // pixels per meter
-  
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +40,7 @@ class _GardenGridState extends State<GardenGrid> {
   void _centerView() {
     final centerX = (widget.plot.lengthM * _gridScale) / 2;
     final centerY = (widget.plot.widthM * _gridScale) / 2;
-    
+
     _transformationController.value = Matrix4.identity()
       ..translate(-centerX + 200, -centerY + 200, 0.0)
       ..scale(1.0);
@@ -48,11 +50,11 @@ class _GardenGridState extends State<GardenGrid> {
     if (bedWithPlanting.planting == null || bedWithPlanting.crop == null) {
       return BedStatus.empty;
     }
-    
+
     final now = DateTime.now();
     final harvestDate = bedWithPlanting.planting!.harvestEstimate;
     final daysUntilHarvest = harvestDate.difference(now).inDays;
-    
+
     if (daysUntilHarvest < 0) {
       return BedStatus.critical; // Overdue
     } else if (daysUntilHarvest <= 7) {
@@ -77,7 +79,7 @@ class _GardenGridState extends State<GardenGrid> {
 
   int _getDaysUntilHarvest(BedWithPlanting bedWithPlanting) {
     if (bedWithPlanting.planting == null) return -1;
-    
+
     final now = DateTime.now();
     final harvestDate = bedWithPlanting.planting!.harvestEstimate;
     return harvestDate.difference(now).inDays;
@@ -109,7 +111,7 @@ class _GardenGridState extends State<GardenGrid> {
               ),
               child: const SizedBox.expand(),
             ),
-            
+
             // Tap detector for adding beds
             Positioned.fill(
               child: GestureDetector(
@@ -117,7 +119,7 @@ class _GardenGridState extends State<GardenGrid> {
                   // Check if tap is on empty space
                   final tapPosition = details.localPosition;
                   bool isOnBed = false;
-                  
+
                   for (final bedWithPlanting in widget.beds) {
                     final bedRect = Rect.fromLTWH(
                       100 + bedWithPlanting.bed.x * _gridScale,
@@ -125,13 +127,13 @@ class _GardenGridState extends State<GardenGrid> {
                       bedWithPlanting.bed.widthM * _gridScale,
                       bedWithPlanting.bed.heightM * _gridScale,
                     );
-                    
+
                     if (bedRect.contains(tapPosition)) {
                       isOnBed = true;
                       break;
                     }
                   }
-                  
+
                   if (!isOnBed) {
                     widget.onAddBed(Offset(
                       tapPosition.dx - 100,
@@ -141,14 +143,11 @@ class _GardenGridState extends State<GardenGrid> {
                 },
               ),
             ),
-            
+
             // Bed widgets
             ...widget.beds.map((bedWithPlanting) => _buildBedWidget(
-              context, 
-              bedWithPlanting, 
-              localeProvider.locale.languageCode
-            )),
-            
+                context, bedWithPlanting, localeProvider.locale.languageCode)),
+
             // Plot info overlay
             Positioned(
               top: 10,
@@ -193,11 +192,12 @@ class _GardenGridState extends State<GardenGrid> {
     );
   }
 
-  Widget _buildBedWidget(BuildContext context, BedWithPlanting bedWithPlanting, String locale) {
+  Widget _buildBedWidget(
+      BuildContext context, BedWithPlanting bedWithPlanting, String locale) {
     final bed = bedWithPlanting.bed;
     final status = _getBedStatus(bedWithPlanting);
     final daysUntilHarvest = _getDaysUntilHarvest(bedWithPlanting);
-    
+
     return Positioned(
       left: 100 + bed.x * _gridScale,
       top: 100 + bed.y * _gridScale,
@@ -242,7 +242,6 @@ class _GardenGridState extends State<GardenGrid> {
                           maxLines: 2,
                         ),
                       ),
-                    
                     if (daysUntilHarvest >= 0) ...[
                       const SizedBox(height: 2),
                       Container(
@@ -256,10 +255,12 @@ class _GardenGridState extends State<GardenGrid> {
                         ),
                         child: Text(
                           daysUntilHarvest == 0
-                            ? (locale.startsWith('pt') ? 'Hoje!' : 'Today!')
-                            : daysUntilHarvest < 0
-                              ? (locale.startsWith('pt') ? 'Atrasado' : 'Overdue')
-                              : '${daysUntilHarvest}d',
+                              ? (locale.startsWith('pt') ? 'Hoje!' : 'Today!')
+                              : daysUntilHarvest < 0
+                                  ? (locale.startsWith('pt')
+                                      ? 'Atrasado'
+                                      : 'Overdue')
+                                  : '${daysUntilHarvest}d',
                           style: const TextStyle(
                             fontSize: 10,
                             color: Colors.white,
@@ -271,7 +272,7 @@ class _GardenGridState extends State<GardenGrid> {
                   ],
                 ),
               ),
-              
+
               // Status indicator
               Positioned(
                 top: 4,
@@ -286,7 +287,7 @@ class _GardenGridState extends State<GardenGrid> {
                   ),
                 ),
               ),
-              
+
               // Quantity indicator
               if (bedWithPlanting.planting != null)
                 Positioned(

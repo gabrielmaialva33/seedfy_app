@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/locale_provider.dart';
 import 'login_screen.dart';
@@ -31,7 +32,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     try {
       final authProvider = context.read<AuthProvider>();
       await authProvider.resetPassword(_emailController.text.trim());
-      
+
       setState(() {
         _emailSent = true;
         _isLoading = false;
@@ -62,7 +63,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
-          child: _emailSent ? _buildSuccessMessage(isPortuguese) : _buildForm(isPortuguese),
+          child: _emailSent
+              ? _buildSuccessMessage(isPortuguese)
+              : _buildForm(isPortuguese),
         ),
       ),
     );
@@ -75,7 +78,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 40),
-          
+
           // Icon
           Icon(
             Icons.lock_reset,
@@ -83,31 +86,31 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             color: Theme.of(context).primaryColor,
           ),
           const SizedBox(height: 24),
-          
+
           // Title
           Text(
             isPortuguese ? 'Esqueceu sua senha?' : 'Forgot your password?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+                  fontWeight: FontWeight.bold,
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Description
           Text(
-            isPortuguese 
-              ? 'Digite seu email e enviaremos um link para redefinir sua senha.'
-              : 'Enter your email and we will send you a link to reset your password.',
+            isPortuguese
+                ? 'Digite seu email e enviaremos um link para redefinir sua senha.'
+                : 'Enter your email and we will send you a link to reset your password.',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.grey[600],
-            ),
+                  color: Colors.grey[600],
+                ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           // Email Field
           TextFormField(
             controller: _emailController,
@@ -124,15 +127,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               if (value == null || value.isEmpty) {
                 return isPortuguese ? 'Digite seu email' : 'Enter your email';
               }
-              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                  .hasMatch(value)) {
                 return isPortuguese ? 'Email inválido' : 'Invalid email';
               }
               return null;
             },
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Reset Button
           SizedBox(
             height: 56,
@@ -144,16 +148,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
               child: _isLoading
-                ? const CircularProgressIndicator()
-                : Text(
-                    isPortuguese ? 'Enviar Link' : 'Send Reset Link',
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
+                  ? const CircularProgressIndicator()
+                  : Text(
+                      isPortuguese ? 'Enviar Link' : 'Send Reset Link',
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Back to Login
           TextButton(
             onPressed: () {
@@ -178,7 +183,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 40),
-        
+
         // Success Icon
         Icon(
           Icons.mark_email_read,
@@ -186,32 +191,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           color: Colors.green,
         ),
         const SizedBox(height: 24),
-        
+
         // Success Title
         Text(
           isPortuguese ? 'Email enviado!' : 'Email sent!',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Colors.green,
-          ),
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
           textAlign: TextAlign.center,
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Success Description
         Text(
-          isPortuguese 
-            ? 'Verifique sua caixa de entrada e siga as instruções para redefinir sua senha.'
-            : 'Check your inbox and follow the instructions to reset your password.',
+          isPortuguese
+              ? 'Verifique sua caixa de entrada e siga as instruções para redefinir sua senha.'
+              : 'Check your inbox and follow the instructions to reset your password.',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Colors.grey[600],
-          ),
+                color: Colors.grey[600],
+              ),
           textAlign: TextAlign.center,
         ),
-        
+
         const SizedBox(height: 40),
-        
+
         // Back to Login Button
         SizedBox(
           height: 56,
