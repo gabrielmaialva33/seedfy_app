@@ -93,4 +93,20 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
       (farms) => emit(FarmState.farmsLoaded(farms)),
     );
   }
+
+  Future<void> _onUpdateFarm(
+    FarmEvent event,
+    Emitter<FarmState> emit,
+  ) async {
+    // TODO: Implement update farm logic
+    emit(const FarmState.error('Update farm not implemented'));
+  }
+
+  Future<void> _onDeleteFarm(
+    FarmEvent event,
+    Emitter<FarmState> emit,
+  ) async {
+    // TODO: Implement delete farm logic
+    emit(const FarmState.error('Delete farm not implemented'));
+  }
 }

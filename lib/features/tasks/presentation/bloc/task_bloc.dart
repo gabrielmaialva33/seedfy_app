@@ -12,37 +12,36 @@ import 'task_state.dart';
 @injectable
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final GetUserTasks getUserTasks;
-  final GetPendingTasks getPendingTasks;
-  final GetTodayTasks getTodayTasks;
-  final GetOverdueTasks getOverdueTasks;
   final CreateTask createTask;
   final CompleteTask completeTask;
   final TaskRepository taskRepository;
 
   TaskBloc({
     required this.getUserTasks,
-    required this.getPendingTasks,
-    required this.getTodayTasks,
-    required this.getOverdueTasks,
     required this.createTask,
     required this.completeTask,
     required this.taskRepository,
   }) : super(const TaskState.initial()) {
-    on<_GetUserTasks>(_onGetUserTasks);
-    on<_GetFarmTasks>(_onGetFarmTasks);
-    on<_GetPendingTasks>(_onGetPendingTasks);
-    on<_GetTodayTasks>(_onGetTodayTasks);
-    on<_GetOverdueTasks>(_onGetOverdueTasks);
-    on<_CreateTask>(_onCreateTask);
-    on<_UpdateTask>(_onUpdateTask);
-    on<_CompleteTask>(_onCompleteTask);
-    on<_DeleteTask>(_onDeleteTask);
-    on<_GetTaskStats>(_onGetTaskStats);
-    on<_RefreshTasks>(_onRefreshTasks);
+    on<TaskEvent>((event, emit) {
+      event.when(
+        getUserTasks: () => _onGetUserTasks(event, emit),
+        getFarmTasks: (farmId) => _onGetFarmTasks(event, emit),
+        getPlantingTasks: (plantingId) => _onGetPlantingTasks(event, emit),
+        getPendingTasks: () => _onGetPendingTasks(event, emit),
+        getTodayTasks: () => _onGetTodayTasks(event, emit),
+        getOverdueTasks: () => _onGetOverdueTasks(event, emit),
+        createTask: (task) => _onCreateTask(event, emit),
+        updateTask: (task) => _onUpdateTask(event, emit),
+        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(event, emit),
+        deleteTask: (taskId) => _onDeleteTask(event, emit),
+        getTaskStats: () => _onGetTaskStats(event, emit),
+        refreshTasks: () => _onRefreshTasks(event, emit),
+      );
+    });
   }
 
   Future<void> _onGetUserTasks(
-    _GetUserTasks event,
+    TaskEvent event,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
@@ -56,7 +55,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onGetFarmTasks(
-    _GetFarmTasks event,
+    TaskEvent event,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
