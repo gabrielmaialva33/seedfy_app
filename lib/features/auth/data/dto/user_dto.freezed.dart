@@ -21,9 +21,7 @@ mixin _$UserDto {
   String get locale;
   String get city;
   String get state;
-  @JsonKey(name: 'created_at')
   DateTime get createdAt;
-  @JsonKey(name: 'updated_at')
   DateTime? get updatedAt;
 
   /// Create a copy of UserDto
@@ -78,8 +76,8 @@ abstract mixin class $UserDtoCopyWith<$Res> {
       String locale,
       String city,
       String state,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt});
+      DateTime createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -246,8 +244,8 @@ extension UserDtoPatterns on UserDto {
             String locale,
             String city,
             String state,
-            @JsonKey(name: 'created_at') DateTime createdAt,
-            @JsonKey(name: 'updated_at') DateTime? updatedAt)?
+            DateTime createdAt,
+            DateTime? updatedAt)?
         $default, {
     required TResult orElse(),
   }) {
@@ -292,8 +290,8 @@ extension UserDtoPatterns on UserDto {
             String locale,
             String city,
             String state,
-            @JsonKey(name: 'created_at') DateTime createdAt,
-            @JsonKey(name: 'updated_at') DateTime? updatedAt)
+            DateTime createdAt,
+            DateTime? updatedAt)
         $default,
   ) {
     final _that = this;
@@ -336,8 +334,8 @@ extension UserDtoPatterns on UserDto {
             String locale,
             String city,
             String state,
-            @JsonKey(name: 'created_at') DateTime createdAt,
-            @JsonKey(name: 'updated_at') DateTime? updatedAt)?
+            DateTime createdAt,
+            DateTime? updatedAt)?
         $default,
   ) {
     final _that = this;
@@ -370,8 +368,8 @@ class _UserDto implements UserDto {
       required this.locale,
       required this.city,
       required this.state,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt});
+      required this.createdAt,
+      this.updatedAt});
   factory _UserDto.fromJson(Map<String, dynamic> json) =>
       _$UserDtoFromJson(json);
 
@@ -390,10 +388,8 @@ class _UserDto implements UserDto {
   @override
   final String state;
   @override
-  @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
-  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
   /// Create a copy of UserDto
@@ -454,8 +450,8 @@ abstract mixin class _$UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
       String locale,
       String city,
       String state,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt});
+      DateTime createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc

@@ -13,10 +13,9 @@ class UserDto with _$UserDto {
     required String locale,
     required String city,
     required String state,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
-    @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    required DateTime createdAt,
+    DateTime? updatedAt,
   }) = _UserDto;
 
-  factory UserDto.fromJson(Map<String, dynamic> json) =>
-      _$UserDtoFromJson(json);
+  factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
 }
