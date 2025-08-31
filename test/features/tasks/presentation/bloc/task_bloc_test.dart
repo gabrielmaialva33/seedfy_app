@@ -102,7 +102,7 @@ void main() {
           TaskState.tasksLoaded(testTasks),
         ],
         verify: (_) {
-          verify(() => mockGetUserTasks(NoParams())).called(1);
+          verify(() => mockGetUserTasks(any())).called(1);
         },
       );
 
@@ -224,7 +224,7 @@ void main() {
         verify: (_) {
           verify(() => mockCreateTask(CreateTaskParams(task: testTask)))
               .called(1);
-          verify(() => mockGetUserTasks(NoParams())).called(1);
+          verify(() => mockGetUserTasks(any())).called(1);
         },
       );
 
@@ -283,7 +283,7 @@ void main() {
                 notes: notes,
                 actualMinutes: actualMinutes,
               ))).called(1);
-          verify(() => mockGetUserTasks(NoParams())).called(1);
+          verify(() => mockGetUserTasks(any())).called(1);
         },
       );
 
