@@ -68,7 +68,8 @@
       "mcp__playwright__browser_close",
       "Bash(gzip:*)",
       "Bash(mkdir:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "mcp__playwright__browser_fill_form"
     ],
     "deny": [],
     "ask": []
