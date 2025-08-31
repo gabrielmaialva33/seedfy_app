@@ -1,0 +1,459 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../../core/errors/exceptions.dart';
+import '../../../../shared/domain/entities/task.dart';
+
+abstract class TaskRemoteDataSource {
+  Future<List<Task>> getUserTasks();
+  Future<List<Task>> getFarmTasks(String farmId);
+  Future<List<Task>> getPlantingTasks(String plantingId);
+  Future<List<Task>> getPendingTasks();
+  Future<List<Task>> getTodayTasks();
+  Future<List<Task>> getOverdueTasks();
+  Future<Task> createTask(Task task);
+  Future<Task> updateTask(Task task);
+  Future<Task> completeTask(String taskId, {String? notes, int? actualMinutes});
+  Future<void> deleteTask(String taskId);
+  Future<Map<String, dynamic>> getTaskStats();
+}
+
+class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
+  final SupabaseClient supabaseClient;
+
+  const TaskRemoteDataSourceImpl(this.supabaseClient);
+
+  @override
+  Future<List<Task>> getUserTasks() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final response = await supabaseClient
+          .from('tasks')
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .order('due_date', ascending: true);
+
+      return (response as List<dynamic>)
+          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to get user tasks: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<List<Task>> getFarmTasks(String farmId) async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final response = await supabaseClient
+          .from('tasks')
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(id, owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .eq('plantings.beds.plots.farms.id', farmId)
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .order('due_date', ascending: true);
+
+      return (response as List<dynamic>)
+          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to get farm tasks: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<List<Task>> getPlantingTasks(String plantingId) async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final response = await supabaseClient
+          .from('tasks')
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .eq('planting_id', plantingId)
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .order('due_date', ascending: true);
+
+      return (response as List<dynamic>)
+          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to get planting tasks: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<List<Task>> getPendingTasks() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final response = await supabaseClient
+          .from('tasks')
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .eq('done', false)
+          .order('due_date', ascending: true);
+
+      return (response as List<dynamic>)
+          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to get pending tasks: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<List<Task>> getTodayTasks() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final today = DateTime.now();
+      final todayStart = DateTime(today.year, today.month, today.day);
+      final todayEnd = todayStart.add(const Duration(days: 1));
+
+      final response = await supabaseClient
+          .from('tasks')
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .gte('due_date', todayStart.toIso8601String())
+          .lt('due_date', todayEnd.toIso8601String())
+          .order('due_date', ascending: true);
+
+      return (response as List<dynamic>)
+          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to get today tasks: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<List<Task>> getOverdueTasks() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final now = DateTime.now();
+
+      final response = await supabaseClient
+          .from('tasks')
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .eq('done', false)
+          .lt('due_date', now.toIso8601String())
+          .order('due_date', ascending: true);
+
+      return (response as List<dynamic>)
+          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to get overdue tasks: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<Task> createTask(Task task) async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final taskData = task.toJson();
+      taskData.remove('id'); // Let database generate ID
+      
+      final response = await supabaseClient
+          .from('tasks')
+          .insert(taskData)
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .single();
+
+      return Task.fromJson(response);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to create task: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<Task> updateTask(Task task) async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final response = await supabaseClient
+          .from('tasks')
+          .update(task.toJson())
+          .eq('id', task.id)
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .single();
+
+      return Task.fromJson(response);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to update task: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<Task> completeTask(String taskId, {String? notes, int? actualMinutes}) async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final updateData = {
+        'done': true,
+        'completed_at': DateTime.now().toIso8601String(),
+        'completed_by': user.id,
+      };
+
+      if (notes != null) updateData['notes'] = notes;
+      if (actualMinutes != null) updateData['actual_minutes'] = actualMinutes;
+
+      final response = await supabaseClient
+          .from('tasks')
+          .update(updateData)
+          .eq('id', taskId)
+          .select('''
+            *,
+            plantings!inner(
+              *,
+              beds!inner(
+                *,
+                plots!inner(
+                  *,
+                  farms!inner(owner_id)
+                )
+              ),
+              crops_catalog(*)
+            )
+          ''')
+          .single();
+
+      return Task.fromJson(response);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to complete task: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<void> deleteTask(String taskId) async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      await supabaseClient
+          .from('tasks')
+          .delete()
+          .eq('id', taskId);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to delete task: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getTaskStats() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) throw const AuthException('User not authenticated');
+
+      final totalTasks = await supabaseClient
+          .from('tasks')
+          .select('''
+            id,
+            plantings!inner(
+              beds!inner(
+                plots!inner(
+                  farms!inner(owner_id)
+                )
+              )
+            )
+          ''', const FetchOptions(count: CountOption.exact))
+          .eq('plantings.beds.plots.farms.owner_id', user.id);
+
+      final completedTasks = await supabaseClient
+          .from('tasks')
+          .select('''
+            id,
+            plantings!inner(
+              beds!inner(
+                plots!inner(
+                  farms!inner(owner_id)
+                )
+              )
+            )
+          ''', const FetchOptions(count: CountOption.exact))
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .eq('done', true);
+
+      final pendingTasks = await supabaseClient
+          .from('tasks')
+          .select('''
+            id,
+            plantings!inner(
+              beds!inner(
+                plots!inner(
+                  farms!inner(owner_id)
+                )
+              )
+            )
+          ''', const FetchOptions(count: CountOption.exact))
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .eq('done', false);
+
+      final overdueTasks = await supabaseClient
+          .from('tasks')
+          .select('''
+            id,
+            plantings!inner(
+              beds!inner(
+                plots!inner(
+                  farms!inner(owner_id)
+                )
+              )
+            )
+          ''', const FetchOptions(count: CountOption.exact))
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .eq('done', false)
+          .lt('due_date', DateTime.now().toIso8601String());
+
+      return {
+        'total_tasks': totalTasks.count ?? 0,
+        'completed_tasks': completedTasks.count ?? 0,
+        'pending_tasks': pendingTasks.count ?? 0,
+        'overdue_tasks': overdueTasks.count ?? 0,
+        'completion_rate': (totalTasks.count ?? 0) > 0 
+            ? ((completedTasks.count ?? 0) / (totalTasks.count ?? 0) * 100).round()
+            : 0,
+      };
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Failed to get task stats: ${e.toString()}');
+    }
+  }
+}
