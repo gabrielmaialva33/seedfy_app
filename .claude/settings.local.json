@@ -77,7 +77,9 @@
       "Bash(/opt/homebrew/bin/supabase link --project-ref zyltwdnzyoagnhjdashj)",
       "Bash(/opt/homebrew/bin/supabase db push --include-seed)",
       "Bash(/opt/homebrew/bin/supabase migration list)",
-      "Bash(/opt/homebrew/bin/supabase init)"
+      "Bash(/opt/homebrew/bin/supabase init)",
+      "Bash(PGPASSWORD='Mahina@01743' psql -h db.zyltwdnzyoagnhjdashj.supabase.co -p 5432 -U postgres -d postgres -c \"SELECT COUNT(*) FROM crops_catalog;\")",
+      "Bash(PGPASSWORD:*)"
     ],
     "deny": [],
     "ask": []
