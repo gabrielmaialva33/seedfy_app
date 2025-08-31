@@ -61,13 +61,13 @@ void main() {
     );
 
     final testTasks = [testTask];
-    final testStats = TaskStats(
-      totalTasks: 10,
-      completedTasks: 5,
-      pendingTasks: 3,
-      overdueTasks: 2,
-      completionRate: 0.5,
-    );
+    final testStats = <String, dynamic>{
+      'totalTasks': 10,
+      'completedTasks': 5,
+      'pendingTasks': 3,
+      'overdueTasks': 2,
+      'completionRate': 0.5,
+    };
 
     test('initial state is TaskState.initial', () {
       expect(taskBloc.state, equals(const TaskState.initial()));
