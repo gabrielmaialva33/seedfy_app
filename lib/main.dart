@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'core/di/injection_container.dart' as di;
 import 'core/providers/auth_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/theme/app_theme.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 import 'features/analytics/screens/analytics_screen.dart';
@@ -31,14 +34,24 @@ void main() async {
   // Initialize other services
   await SupabaseService.initialize();
   await FirebaseService.initialize();
+  
+  // Initialize dependency injection
+  await di.init();
 
   runApp(
-    MultiProvider(
+    MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        BlocProvider(
+          create: (_) => di.sl<AuthBloc>()..add(const AuthEvent.checkRequested()),
+        ),
       ],
-      child: const SeedfyApp(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => LocaleProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
+        child: const SeedfyApp(),
+      ),
     ),
   );
 }

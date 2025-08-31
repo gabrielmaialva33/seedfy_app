@@ -39,6 +39,23 @@ dependencies:
   
   # State management
   provider: ^6.1.2
+  flutter_bloc: ^8.1.3
+  bloc: ^8.1.2
+  
+  # Dependency Injection
+  get_it: ^7.6.4
+  injectable: ^2.3.2
+  
+  # Code Generation
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+  
+  # Functional Programming
+  dartz: ^0.10.1
+  equatable: ^2.0.5
+  
+  # Network
+  connectivity_plus: ^5.0.2
   
   # Backend
   supabase_flutter: ^2.8.0
@@ -94,6 +111,16 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  
+  # Code Generators
+  build_runner: ^2.4.7
+  freezed: ^2.4.6
+  json_serializable: ^6.7.1
+  injectable_generator: ^2.4.1
+  
+  # Testing
+  mocktail: ^1.0.1
+  bloc_test: ^9.1.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
