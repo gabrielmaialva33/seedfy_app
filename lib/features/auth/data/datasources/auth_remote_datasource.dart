@@ -143,7 +143,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Map<String, dynamic>> _getProfile(String userId) async {
     try {
       final response =
-          await client.from('profiles').select().eq('id', userId).single();
+          await client.from('profiles').select().eq('id', userId).maybeSingle();
+
+      if (response == null) {
+        throw app_exceptions.ServerException('Profile not found');
+      }
 
       return response;
     } catch (e) {
