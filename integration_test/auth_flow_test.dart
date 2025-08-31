@@ -8,7 +8,7 @@ void main() {
     patrolTest(
       'should navigate to login screen by default',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Verify we're on the login screen
@@ -21,11 +21,11 @@ void main() {
     patrolTest(
       'should show validation errors for invalid login',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Try to login with empty fields
-        await $(#loginButton).tap();
+        await $('Entrar').tap();
         await $.pumpAndSettle();
 
         // Should show validation errors
@@ -37,7 +37,7 @@ void main() {
     patrolTest(
       'should navigate to signup screen when signup button is tapped',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Tap on signup button
@@ -56,7 +56,7 @@ void main() {
     patrolTest(
       'should complete signup flow with valid data',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Navigate to signup
@@ -64,14 +64,14 @@ void main() {
         await $.pumpAndSettle();
 
         // Fill signup form
-        await $(#nameField).enterText('Test User');
-        await $(#emailField).enterText('test@example.com');
-        await $(#passwordField).enterText('Password123!');
-        await $(#cityField).enterText('São Paulo');
-        await $(#stateField).enterText('SP');
+        await $('Nome').enterText('Test User');
+        await $('Email').enterText('test@example.com');
+        await $('Senha').enterText('Password123!');
+        await $('Cidade').enterText('São Paulo');
+        await $('Estado').enterText('SP');
 
         // Submit form
-        await $(#signupButton).tap();
+        await $('Criar conta').tap();
         await $.pumpAndSettle();
 
         // Should show loading state
@@ -82,15 +82,15 @@ void main() {
     patrolTest(
       'should login with valid credentials',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Fill login form
-        await $(#emailField).enterText('test@seedfy.com');
-        await $(#passwordField).enterText('validpassword');
+        await $('Email').enterText('test@seedfy.com');
+        await $('Password').enterText('validpassword');
 
         // Submit login
-        await $(#loginButton).tap();
+        await $('Entrar').tap();
         await $.pumpAndSettle();
 
         // Should show loading indicator
@@ -101,7 +101,7 @@ void main() {
     patrolTest(
       'should navigate to forgot password screen',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Tap forgot password
@@ -110,8 +110,8 @@ void main() {
 
         // Should be on forgot password screen
         await $('Recuperar senha').waitUntilVisible();
-        expect($(#emailField), findsOneWidget);
-        expect($(#resetPasswordButton), findsOneWidget);
+        expect($('Email'), findsOneWidget);
+        expect($('Enviar'), findsOneWidget);
       },
     );
   });
@@ -120,7 +120,7 @@ void main() {
     patrolTest(
       'should navigate through main app sections when authenticated',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Mock successful login by directly navigating to home
@@ -133,7 +133,7 @@ void main() {
         // Test navigation to different screens
         // await testNavigationFlow($);
       },
-      skip: 'Requires authentication setup',
+      skip: true, // Requires authentication setup
     );
   });
 
@@ -141,25 +141,25 @@ void main() {
     patrolTest(
       'should open AI camera screen and handle permissions',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // This would test AI camera functionality
         // Requires proper navigation setup and permissions
       },
-      skip: 'Requires camera permissions and authentication',
+      skip: true, // Requires camera permissions and authentication
     );
 
     patrolTest(
       'should open AI chat and send message',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // This would test AI chat functionality
         // Requires authentication and API setup
       },
-      skip: 'Requires authentication and API setup',
+      skip: true, // Requires authentication and API setup
     );
   });
 
@@ -167,7 +167,7 @@ void main() {
     patrolTest(
       'should handle device permissions correctly',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Test camera permission
@@ -177,13 +177,13 @@ void main() {
         // await $.native.selectFineLocation();
         // await $.native.grantPermissionWhenInUse();
       },
-      skip: 'Requires native setup',
+      skip: true, // Requires native setup
     );
 
     patrolTest(
       'should handle app state changes',
       ($) async {
-        await app.main();
+        app.main();
         await $.pumpAndSettle();
 
         // Test app backgrounding/foregrounding
@@ -193,7 +193,7 @@ void main() {
         // Verify app state is maintained
         expect($('Seedfy'), findsOneWidget);
       },
-      skip: 'Requires native setup',
+      skip: true, // Requires native setup
     );
   });
 }
@@ -201,9 +201,9 @@ void main() {
 // Helper function to authenticate a user for testing
 Future<void> authenticateUser(PatrolIntegrationTester $) async {
   // Fill login form with test credentials
-  await $(#emailField).enterText('test@seedfy.com');
-  await $(#passwordField).enterText('testpassword');
-  await $(#loginButton).tap();
+  await $('Email').enterText('test@seedfy.com');
+  await $('Password').enterText('testpassword');
+  await $('Entrar').tap();
   
   // Wait for authentication to complete
   await $.pumpAndSettle(timeout: const Duration(seconds: 10));
