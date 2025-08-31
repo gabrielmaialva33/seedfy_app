@@ -439,12 +439,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
+                        });
                       },
                       child: Text(
                         isPortuguese ? 'Entrar' : 'Sign In',
