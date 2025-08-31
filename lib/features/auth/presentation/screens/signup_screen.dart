@@ -21,7 +21,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _cpfController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _cityController = TextEditingController();
@@ -42,7 +41,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
-    _cpfController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     _cityController.dispose();
@@ -165,18 +163,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
 
                 const SizedBox(height: 16),
-
-                // CPF Field (only for Portuguese)
-                if (isPortuguese) ...[                  
-                  MaskedTextField(
-                    controller: _cpfController,
-                    label: 'CPF',
-                    maskType: MaskType.cpf,
-                    prefixIcon: const Icon(Icons.badge_outlined),
-                    validator: Validators.validateCPF,
-                  ),
-                  const SizedBox(height: 16),
-                ],
 
                 // Location Section Header
                 Padding(

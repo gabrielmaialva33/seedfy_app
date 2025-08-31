@@ -5,16 +5,9 @@ class Validators {
     r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
   );
 
-  static final RegExp _phoneRegex = RegExp(
-    r'^\(\d{2}\)\s?\d{4,5}-?\d{4}$',
-  );
 
   static final RegExp _nameRegex = RegExp(
     r'^[a-zA-ZÀ-ÿ\s]{2,50}$',
-  );
-
-  static final RegExp _passwordRegex = RegExp(
-    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
   );
 
   static String? validateEmail(String? value) {

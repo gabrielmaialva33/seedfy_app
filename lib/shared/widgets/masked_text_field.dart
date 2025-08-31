@@ -216,10 +216,6 @@ class MaskedTextField extends StatelessWidget {
             width: 2,
           ),
         ),
-        filled: true,
-        fillColor: enabled
-            ? Theme.of(context).colorScheme.surface
-            : Theme.of(context).colorScheme.surfaceVariant,
       ),
     );
   }
@@ -322,10 +318,6 @@ class CustomMaskedTextField extends StatelessWidget {
             width: 2,
           ),
         ),
-        filled: true,
-        fillColor: enabled
-            ? Theme.of(context).colorScheme.surface
-            : Theme.of(context).colorScheme.surfaceVariant,
       ),
     );
   }
