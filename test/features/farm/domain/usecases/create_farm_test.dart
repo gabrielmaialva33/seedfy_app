@@ -21,8 +21,6 @@ void main() {
     final testFarm = Farm(
       id: '',
       name: 'Test Farm',
-      description: 'A test farm for unit testing',
-      location: 'Test Location',
       ownerId: 'user123',
       createdAt: DateTime(2023, 1, 1),
     );
