@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/exceptions.dart' as core_exceptions;
 import '../../../../shared/domain/entities/farm.dart';
 import '../../../../shared/domain/entities/plot.dart';
 import '../../../../shared/domain/entities/bed.dart';
@@ -27,7 +27,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Farm>> getUserFarms() async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('farms')
@@ -49,7 +49,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Farm> getFarm(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('farms')
@@ -70,7 +70,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Farm> createFarm(Farm farm) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final farmData = farm.toJson();
       farmData['owner_id'] = user.id;
@@ -94,7 +94,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Farm> updateFarm(Farm farm) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('farms')
@@ -116,7 +116,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<void> deleteFarm(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       await supabaseClient
           .from('farms')
@@ -134,7 +134,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Plot>> getFarmPlots(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('plots')
@@ -156,7 +156,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Bed>> getFarmBeds(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('beds')
@@ -181,7 +181,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Planting>> getFarmPlantings(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('plantings')
@@ -211,7 +211,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Map<String, dynamic>> getFarmStats(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       // Get stats using database functions or aggregations
       final plotsCount = await supabaseClient
