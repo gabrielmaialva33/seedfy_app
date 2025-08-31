@@ -261,7 +261,7 @@ void main() {
         final longNotes = 'A' * 2000; // Very long notes
         final taskWithLongNotes = testTask.copyWith(
           status: entities.TaskStatus.completed,
-          completionNotes: longNotes,
+          notes: longNotes,
         );
 
         when(() => mockTaskRepository.completeTask(
