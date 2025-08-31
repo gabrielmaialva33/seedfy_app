@@ -46,17 +46,52 @@ traffic light status indicators for harvest proximity. The system generates basi
 watering/fertilizing/transplanting/harvesting) with editing and rescheduling capabilities, plus CSV
 export functionality.
 
-## 🏗️ Architecture Overview
+<br>
 
-### Technology Stack
+## :computer: Technologies
 
-- **Frontend**: Flutter 3.x + Dart
-- **Backend**: Supabase (Auth, PostgreSQL, Storage, RLS)
-- **State Management**: Provider pattern
-- **Internationalization**: flutter_localizations (pt-BR, en-US)
-- **Database**: PostgreSQL with Row Level Security
-- **Authentication**: Supabase Auth
-- **Deployment**: Flutter Web + Mobile apps
+- **[Flutter](https://flutter.dev/)** 3.x + Dart
+- **[Supabase](https://supabase.com/)** (Auth, PostgreSQL, Storage, RLS)
+- **[Provider](https://pub.dev/packages/provider)** for State Management
+- **[PostgreSQL](https://www.postgresql.org/)** with Row Level Security
+- **[Flutter Localizations](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)** (pt-BR, en-US)
+
+<br>
+
+## :wrench: Tools
+
+- **[Visual Studio Code](https://code.visualstudio.com/)**
+- **[Android Studio](https://developer.android.com/studio)**
+- **[Supabase Dashboard](https://app.supabase.com/)**
+- **[Flutter Inspector](https://docs.flutter.dev/development/tools/flutter-inspector)**
+- **[Dart Analysis](https://dart.dev/tools/analysis)**
+
+<br>
+
+## :package: Installation
+
+### :heavy_check_mark: **Prerequisites**
+
+The following software must be installed:
+
+- **[Flutter](https://flutter.dev/docs/get-started/install)** (>=3.0.0)
+- **[Dart](https://dart.dev/get-dart)** (>=3.0.0)
+- **[Git](https://git-scm.com/)**
+- **[Android Studio](https://developer.android.com/studio)** or **[VS Code](https://code.visualstudio.com/)**
+- **[Supabase Account](https://supabase.com/)** and project
+
+<br>
+
+### :arrow_down: **Cloning the repository**
+
+```sh
+$ git clone https://github.com/gabrielmaialva33/seedfy_app.git
+$ cd seedfy_app
+```
+
+<br>
+
+### :arrow_forward: **Running the application**
 
 ### Key Features
 
@@ -470,44 +505,31 @@ The app supports two languages with complete localization:
 
 Users can switch languages in their profile settings, with preferences stored in Supabase.
 
-## 🚀 Getting Started
+```sh
+# Install dependencies
+$ flutter pub get
 
-### Prerequisites
+# Configure Supabase
+# Update lib/core/app_config.dart with your Supabase URL and anon key
+# Or use environment variables for production
 
-- Flutter 3.x+
-- Dart 3.x+
-- Supabase account and project
-- Android Studio / VS Code
+# Set up database
+$ cd supabase/migrations
+# Execute each file in numerical order (00001 to 00016) in your Supabase SQL editor
 
-### Installation
+# Run the application
+$ flutter run -d chrome  # For web development
+$ flutter run            # For mobile device/emulator
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd seedfy_app
-   ```
+# Build for production
+$ flutter build web --release
+$ flutter build apk --release
+$ flutter build ios --release
+```
 
-2. **Install dependencies**
-   ```bash
-   flutter pub get
-   ```
+<br>
 
-3. **Configure Supabase**
-    - Update `lib/core/app_config.dart` with your Supabase URL and anon key
-    - Or use environment variables for production
-
-4. **Set up database**
-   ```bash
-   # Run all migrations in order in your Supabase SQL editor
-   cd supabase/migrations
-   # Execute each file in numerical order (00001 to 00016)
-   ```
-
-5. **Run the app**
-   ```bash
-   flutter run -d chrome  # For web
-   flutter run            # For mobile
-   ```
+## :gear: Usage
 
 ## 🔧 Configuration
 
@@ -600,13 +622,28 @@ flutter test integration_test/
 flutter test test/widget_test.dart
 ```
 
-## 🤝 Contributing
+## :sparkles: Features
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+### Core Features
+
+- **User Authentication & Profiles**: Registration, profile management, password recovery
+- **Guided Onboarding Wizard**: Farm setup, bed configuration, crop selection
+- **Interactive Map Editor**: Grid-based bed layout with pan/zoom functionality
+- **Smart Task Management**: Auto-generated and manual tasks with scheduling
+- **Traffic Light Status System**: Visual indicators for harvest proximity
+- **Collaboration & Sharing**: Multi-user farm access with role-based permissions
+- **Data Export**: CSV export and historical tracking
+- **Internationalization**: Support for pt-BR and en-US languages
+
+### Advanced Features
+
+- **Real-time Collaboration**: Live updates across multiple users
+- **Intercropping Support**: Companion planting management
+- **Task Automation**: Intelligent task generation based on crop cycles
+- **Interactive Timeline**: Visual representation of planting and harvest schedules
+- **Mobile Optimization**: Responsive design for mobile and tablet devices
+
+<br>
 
 ## 📋 Roadmap
 
@@ -634,14 +671,16 @@ flutter test test/widget_test.dart
 - [ ] Community features
 - [ ] Marketplace integration
 
-## 📄 License
+### :writing_hand: **Author**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+| [![Gabriel Maia](https://avatars.githubusercontent.com/u/26732067?size=100)](https://github.com/gabrielmaialva33) |
+| ----------------------------------------------------------------------------------------------------------------- |
+| [Gabriel Maia](https://github.com/gabrielmaialva33)                                                               |
 
-## 🆘 Support
+## License
 
-For support, email support@seedfy.app or join our Discord community.
+[MIT License](LICENSE)
 
----
-
-**Built with ❤️ for sustainable agriculture and urban gardening**
+<p align="center"><img src="https://raw.githubusercontent.com/gabrielmaialva33/gabrielmaialva33/master/assets/gray0_ctp_on_line.svg?sanitize=true" /></p>
+<p align="center">&copy; 2024-present <a href="https://github.com/gabrielmaialva33/" target="_blank">Maia</a>
+</p>
