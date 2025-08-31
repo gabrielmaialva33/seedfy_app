@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/usecases/usecase.dart';
+import '../../../../shared/domain/entities/task.dart';
 import '../../domain/repositories/task_repository.dart';
 import '../../domain/usecases/complete_task.dart';
 import '../../domain/usecases/create_task.dart';
@@ -31,7 +32,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         getOverdueTasks: () => _onGetOverdueTasks(emit),
         createTask: (task) => _onCreateTask(task, emit),
         updateTask: (task) => _onUpdateTask(task, emit),
-        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(taskId, emit, notes, actualMinutes),
+        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(taskId, notes, actualMinutes, emit),
         deleteTask: (taskId) => _onDeleteTask(taskId, emit),
         getTaskStats: () => _onGetTaskStats(emit),
         refreshTasks: () => _onRefreshTasks(emit),
@@ -67,54 +68,51 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onGetPendingTasks(
-    _GetPendingTasks event,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
-    final result = await getPendingTasks(NoParams());
+    final result = await taskRepository.getPendingTasks();
 
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
-      (tasks) => emit(TaskState.pendingTasksLoaded(tasks)),
+      (tasks) => emit(TaskState.tasksLoaded(tasks)),
     );
   }
 
   Future<void> _onGetTodayTasks(
-    _GetTodayTasks event,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
-    final result = await getTodayTasks(NoParams());
+    final result = await taskRepository.getTodayTasks();
 
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
-      (tasks) => emit(TaskState.todayTasksLoaded(tasks)),
+      (tasks) => emit(TaskState.tasksLoaded(tasks)),
     );
   }
 
   Future<void> _onGetOverdueTasks(
-    _GetOverdueTasks event,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
-    final result = await getOverdueTasks(NoParams());
+    final result = await taskRepository.getOverdueTasks();
 
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
-      (tasks) => emit(TaskState.overdueTasksLoaded(tasks)),
+      (tasks) => emit(TaskState.tasksLoaded(tasks)),
     );
   }
 
   Future<void> _onCreateTask(
-    _CreateTask event,
+    Task task,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
-    final result = await createTask(CreateTaskParams(task: event.task));
+    final result = await createTask(CreateTaskParams(task: task));
 
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
@@ -127,12 +125,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onUpdateTask(
-    _UpdateTask event,
+    Task task,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
-    final result = await taskRepository.updateTask(event.task);
+    final result = await taskRepository.updateTask(task);
 
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
@@ -145,15 +143,17 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onCompleteTask(
-    _CompleteTask event,
+    String taskId,
+    String? notes,
+    int? actualMinutes,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
     final result = await completeTask(CompleteTaskParams(
-      taskId: event.taskId,
-      notes: event.notes,
-      actualMinutes: event.actualMinutes,
+      taskId: taskId,
+      notes: notes,
+      actualMinutes: actualMinutes,
     ));
 
     result.fold(
@@ -167,12 +167,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onDeleteTask(
-    _DeleteTask event,
+    String taskId,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
-    final result = await taskRepository.deleteTask(event.taskId);
+    final result = await taskRepository.deleteTask(taskId);
 
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
@@ -185,7 +185,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onGetTaskStats(
-    _GetTaskStats event,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
@@ -199,7 +198,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onRefreshTasks(
-    _RefreshTasks event,
     Emitter<TaskState> emit,
   ) async {
     // Don't emit loading state for refresh to avoid UI flicker
