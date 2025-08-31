@@ -160,8 +160,6 @@ void main() {
       final farm1 = Farm(
         id: '1',
         name: 'Test Farm 1',
-        description: 'Test 1',
-        location: 'Location 1',
         ownerId: 'user123',
         createdAt: DateTime(2023, 1, 1),
       );
@@ -169,8 +167,6 @@ void main() {
       final farm2 = Farm(
         id: '2',
         name: 'Test Farm 2',
-        description: 'Test 2',
-        location: 'Location 2',
         ownerId: 'user456',
         createdAt: DateTime(2023, 1, 2),
       );
