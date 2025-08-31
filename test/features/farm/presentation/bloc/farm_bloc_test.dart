@@ -18,11 +18,18 @@ class MockCreateFarm extends Mock implements CreateFarm {}
 
 class MockGetFarmDetails extends Mock implements GetFarmDetails {}
 
+class FakeFarm extends Fake implements Farm {}
+
 void main() {
   late FarmBloc farmBloc;
   late MockGetUserFarms mockGetUserFarms;
   late MockCreateFarm mockCreateFarm;
   late MockGetFarmDetails mockGetFarmDetails;
+
+  setUpAll(() {
+    registerFallbackValue(NoParams());
+    registerFallbackValue(FakeFarm());
+  });
 
   setUp(() {
     mockGetUserFarms = MockGetUserFarms();
@@ -58,7 +65,7 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'emits [loading, farmsLoaded] when getUserFarms succeeds',
         build: () {
-          when(() => mockGetUserFarms(NoParams()))
+          when(() => mockGetUserFarms(any()))
               .thenAnswer((_) async => Right(testFarms));
           return farmBloc;
         },

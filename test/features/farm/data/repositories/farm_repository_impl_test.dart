@@ -427,7 +427,7 @@ void main() {
         final result = await repository.getUserFarms();
 
         // Assert
-        expect(result, equals(const Right(<Farm>[])));
+        expect(result, equals(Right<Failure, List<Farm>>(const <Farm>[])));
       });
 
       test('should handle null responses gracefully', () async {
@@ -440,7 +440,7 @@ void main() {
         final result = await repository.getFarmStats('farm123');
 
         // Assert
-        expect(result, equals(const Right(<String, dynamic>{})));
+        expect(result, equals(Right<Failure, Map<String, dynamic>>(const <String, dynamic>{})));
       });
 
       test('should handle timeout exceptions', () async {
