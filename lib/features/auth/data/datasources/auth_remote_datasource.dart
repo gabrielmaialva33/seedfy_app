@@ -57,28 +57,28 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String locale = 'pt-BR',
   }) async {
     try {
+      // Pass user data as metadata for the trigger function
       final response = await client.auth.signUp(
         email: email,
         password: password,
+        data: {
+          'name': name,
+          'phone': phone,
+          'city': city,
+          'state': state,
+          'locale': locale,
+        },
       );
 
       if (response.user == null) {
         throw app_exceptions.AuthException('Signup failed');
       }
 
-      final profileData = {
-        'id': response.user!.id,
-        'email': email,
-        'name': name,
-        'phone': phone,
-        'city': city,
-        'state': state,
-        'locale': locale,
-        'created_at': DateTime.now().toIso8601String(),
-      };
+      // Wait a bit for the trigger to create the profile
+      await Future.delayed(const Duration(seconds: 1));
 
-      await client.from('profiles').insert(profileData);
-
+      // Fetch the created profile
+      final profileData = await _getProfile(response.user!.id);
       return UserDto.fromJson(profileData);
     } catch (e) {
       throw app_exceptions.AuthException(e.toString());
