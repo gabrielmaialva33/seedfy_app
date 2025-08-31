@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:seedfy_app/core/errors/failures.dart';
 import 'package:seedfy_app/core/usecases/usecase.dart';
-import 'package:seedfy_app/features/tasks/domain/entities/task_stats.dart';
 import 'package:seedfy_app/features/tasks/domain/repositories/task_repository.dart';
 import 'package:seedfy_app/features/tasks/domain/usecases/complete_task.dart';
 import 'package:seedfy_app/features/tasks/domain/usecases/create_task.dart';
