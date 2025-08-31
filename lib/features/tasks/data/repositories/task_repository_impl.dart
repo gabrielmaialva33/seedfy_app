@@ -54,7 +54,7 @@ class TaskRepositoryImpl implements TaskRepository {
         final createdTask = await remoteDataSource.createTask(task);
         return Right(createdTask);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       } catch (e) {
@@ -72,7 +72,7 @@ class TaskRepositoryImpl implements TaskRepository {
         final updatedTask = await remoteDataSource.updateTask(task);
         return Right(updatedTask);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       } catch (e) {
@@ -95,7 +95,7 @@ class TaskRepositoryImpl implements TaskRepository {
         );
         return Right(completedTask);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       } catch (e) {
@@ -113,7 +113,7 @@ class TaskRepositoryImpl implements TaskRepository {
         await remoteDataSource.deleteTask(taskId);
         return const Right(null);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       } catch (e) {
@@ -131,7 +131,7 @@ class TaskRepositoryImpl implements TaskRepository {
         final stats = await remoteDataSource.getTaskStats();
         return Right(stats);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       } catch (e) {
@@ -150,7 +150,7 @@ class TaskRepositoryImpl implements TaskRepository {
         final tasks = await getTasksFunction();
         return Right(tasks);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       } catch (e) {
