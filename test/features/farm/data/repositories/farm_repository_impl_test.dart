@@ -427,7 +427,8 @@ void main() {
         final result = await repository.getUserFarms();
 
         // Assert
-        expect(result, equals(Right<Failure, List<Farm>>(const <Farm>[])));
+        expect(result, isA<Right<Failure, List<Farm>>>());
+        expect(result.getOrElse(() => []), isEmpty);
       });
 
       test('should handle null responses gracefully', () async {
