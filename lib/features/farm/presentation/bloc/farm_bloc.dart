@@ -62,7 +62,7 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onCreateFarm(
-    _CreateFarm event,
+    FarmEvent event,
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
@@ -82,7 +82,7 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onRefreshFarms(
-    _RefreshFarms event,
+    FarmEvent event,
     Emitter<FarmState> emit,
   ) async {
     // Don't emit loading state for refresh to avoid UI flicker
