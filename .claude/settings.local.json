@@ -70,7 +70,8 @@
       "Bash(mkdir:*)",
       "Bash(git log:*)",
       "mcp__playwright__browser_fill_form",
-      "mcp__playwright__browser_resize"
+      "mcp__playwright__browser_resize",
+      "Bash(genhtml:*)"
     ],
     "deny": [],
     "ask": []
