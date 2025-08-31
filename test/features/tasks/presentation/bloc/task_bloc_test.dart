@@ -249,7 +249,7 @@ void main() {
                     actualMinutes: actualMinutes,
                   )))
               .thenAnswer((_) async =>
-                  Right(testTask.copyWith(status: TaskStatus.completed)));
+                  Right(testTask.copyWith(status: entities.TaskStatus.completed)));
           when(() => mockGetUserTasks(NoParams()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
@@ -259,7 +259,7 @@ void main() {
         expect: () => [
           const TaskState.loading(),
           TaskState.taskCompleted(
-              testTask.copyWith(status: TaskStatus.completed)),
+              testTask.copyWith(status: entities.TaskStatus.completed)),
           const TaskState.loading(),
           TaskState.tasksLoaded(testTasks),
         ],
