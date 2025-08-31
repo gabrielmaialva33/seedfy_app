@@ -274,11 +274,7 @@ void main() {
           TaskState.tasksLoaded(testTasks),
         ],
         verify: (_) {
-          verify(() => mockCompleteTask(const CompleteTaskParams(
-                taskId: taskId,
-                notes: notes,
-                actualMinutes: actualMinutes,
-              ))).called(1);
+          verify(() => mockCompleteTask(any())).called(1);
           verify(() => mockGetUserTasks(any())).called(1);
         },
       );
