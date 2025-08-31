@@ -250,24 +250,87 @@ graph TB
 
 ## 🗂️ Project Structure
 
+### Frontend Structure (lib/)
+
 ```
 lib/
-├── core/                    # Core functionality
-│   ├── constants/          # App constants
-│   ├── exceptions/         # Custom exceptions
-│   ├── extensions/         # Dart extensions
-│   └── utils/             # Utility functions
-├── features/              # Feature modules
-│   ├── auth/             # Authentication
-│   ├── dashboard/        # Main dashboard
-│   ├── farms/           # Farm management
-│   ├── map/             # Interactive map editor
-│   ├── onboarding/      # Guided setup wizard
-│   └── tasks/           # Task management
-├── l10n/                # Internationalization
-├── models/              # Data models
-├── services/            # Business logic services
-└── main.dart           # App entry point
+├── core/                       # Core functionality & utilities
+│   ├── di/                   # Dependency injection
+│   ├── errors/               # Error handling
+│   ├── network/              # Network configuration
+│   ├── providers/            # Core providers
+│   ├── theme/                # App theming
+│   └── widgets/              # Reusable widgets
+├── features/                   # Feature modules (Clean Architecture)
+│   ├── ai_camera/            # AI-powered camera features
+│   │   └── screens/
+│   ├── ai_chat/              # AI chat assistant
+│   │   └── screens/
+│   ├── analytics/            # Analytics dashboard
+│   │   └── screens/
+│   ├── auth/                 # Authentication module
+│   │   ├── data/            # Data layer (repositories, datasources)
+│   │   ├── domain/          # Domain layer (entities, usecases)
+│   │   └── presentation/    # Presentation layer (screens, widgets, blocs)
+│   ├── collaboration/        # Farm collaboration features
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── farm/                 # Farm management
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── home/                 # Home dashboard
+│   │   └── screens/
+│   ├── map/                  # Interactive map editor
+│   │   ├── screens/
+│   │   └── widgets/
+│   ├── onboarding/           # Guided setup wizard
+│   │   └── screens/
+│   ├── profile/              # User profile management
+│   │   └── screens/
+│   ├── settings/             # App settings
+│   │   └── screens/
+│   ├── shared/               # Shared feature components
+│   │   └── widgets/
+│   └── tasks/                # Task management
+│       └── screens/
+├── l10n/                       # Internationalization files
+├── shared/                     # Shared business logic
+│   ├── data/
+│   │   ├── datasources/
+│   │   └── dto/
+│   ├── domain/
+│   │   ├── entities/
+│   │   └── repositories/
+│   └── presentation/
+│       └── widgets/
+└── main.dart                   # Application entry point
+```
+
+### Backend Structure (supabase/)
+
+```
+supabase/
+├── migrations/                 # Database migrations (executed in order)
+│   ├── 00001_enable_extensions.sql          # PostgreSQL extensions
+│   ├── 00002_create_profiles_table.sql      # User profiles
+│   ├── 00003_create_farms_table.sql         # Farms/gardens
+│   ├── 00004_create_plots_table.sql         # Cultivation areas
+│   ├── 00005_create_beds_table.sql          # Individual beds
+│   ├── 00006_create_crops_catalog_table.sql # Crop varieties
+│   ├── 00007_create_plantings_table.sql     # Planted crops
+│   ├── 00008_create_tasks_table.sql         # Cultivation tasks
+│   ├── 00009_create_collaborators_table.sql # Farm collaborations
+│   ├── 00010_create_invitations_table.sql   # Collaboration invites
+│   ├── 00011_create_map_templates_table.sql # Reusable templates
+│   ├── 00012_create_functions.sql           # Database functions
+│   ├── 00013_create_triggers.sql            # Automatic triggers
+│   ├── 00014_insert_seed_data.sql           # Initial crop data
+│   ├── 00015_grant_permissions.sql          # Access permissions
+│   └── 00016_update_collaboration_policies.sql # RLS policies
+├── functions/                  # Edge functions (if any)
+└── seed.sql                   # Database seeding script
 ```
 
 ## 🌍 Internationalization
