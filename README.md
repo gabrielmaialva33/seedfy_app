@@ -1,10 +1,42 @@
-# Seedfy 🌱
+<h1 align="center">
+  <br>
+  <img src="https://raw.githubusercontent.com/gabrielmaialva33/seedfy_app/master/.github/assets/seedfy.png" alt="Seedfy" width="200">
+  <br>
+  Seedfy 🌱
+  <br>
+</h1>
 
-**Farm management app for small producers and urban gardens**
+<p align="center">
+  <strong>A comprehensive farm management application for small producers and urban gardening enthusiasts</strong>
+</p>
 
-Seedfy is a comprehensive farm management application designed specifically for small producers and
-urban gardening enthusiasts. It provides an intuitive interface for planning, managing, and tracking
-agricultural activities with guided workflows and intelligent task automation.
+<p align="center">
+  <img src="https://img.shields.io/github/license/gabrielmaialva33/seedfy_app?color=00b8d3?style=flat&logo=appveyor" alt="License" />
+  <img src="https://img.shields.io/github/languages/top/gabrielmaialva33/seedfy_app?style=flat&logo=appveyor" alt="GitHub top language" >
+  <img src="https://img.shields.io/github/languages/count/gabrielmaialva33/seedfy_app?style=flat&logo=appveyor" alt="GitHub language count" >
+  <img src="https://img.shields.io/github/repo-size/gabrielmaialva33/seedfy_app?style=flat&logo=appveyor" alt="Repository size" >
+  <a href="https://github.com/gabrielmaialva33/seedfy_app/commits/master">
+    <img src="https://img.shields.io/github/last-commit/gabrielmaialva33/seedfy_app?style=flat&logo=appveyor" alt="GitHub last commit" >
+    <img src="https://img.shields.io/badge/made%20by-Maia-15c3d6?style=flat&logo=appveyor" alt="Maia" >  
+  </a>
+</p>
+
+<br>
+
+<p align="center">
+  <a href="#bookmark-about">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#computer-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#wrench-tools">Tools</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#package-installation">Installation</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#gear-usage">Usage</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#memo-license">License</a>
+</p>
+
+<br>
+
+## :bookmark: About
+
+**Seedfy** is a comprehensive farm management application designed specifically for small producers and urban gardening enthusiasts. It provides an intuitive interface for planning, managing, and tracking agricultural activities with guided workflows and intelligent task automation.
 
 ## 🎯 Project Vision
 
