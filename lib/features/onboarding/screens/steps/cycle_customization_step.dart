@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/providers/locale_provider.dart';
-import '../../../../models/crop.dart';
+import '../../../../shared/domain/entities/crop.dart';
 
 class CycleCustomizationStep extends StatefulWidget {
   final List<Crop> selectedCrops;

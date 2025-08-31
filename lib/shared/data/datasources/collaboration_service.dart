@@ -1,8 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/collaborator.dart';
-import '../models/farm.dart';
-import '../models/invitation.dart';
+import '../shared/domain/entities/collaborator.dart';
+import '../shared/domain/entities/farm.dart';
+import '../shared/domain/entities/invitation.dart';
 
 class CollaborationService {
   static final _supabase = Supabase.instance.client;

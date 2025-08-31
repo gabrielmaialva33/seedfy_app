@@ -46,7 +46,8 @@
       "Bash(npx supabase:*)",
       "Bash(dart run:*)",
       "mcp__sequential-thinking__sequentialthinking",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash({} ;)"
     ],
     "deny": [],
     "ask": []

@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/app_config.dart';
-import '../models/farm.dart';
+import '../shared/domain/entities/farm.dart';
 
 class SupabaseService {
   static SupabaseClient get client => Supabase.instance.client;

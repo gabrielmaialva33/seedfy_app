@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../services/firebase_service.dart';
-import '../../../services/nvidia_ai_service.dart';
+import '../../../shared/data/datasources/firebase_service.dart';
+import '../../../shared/data/datasources/nvidia_ai_service.dart';
 
 class AICameraScreen extends StatefulWidget {
   const AICameraScreen({super.key});

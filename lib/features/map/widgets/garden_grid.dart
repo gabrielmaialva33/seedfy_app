@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 import '../../../core/providers/locale_provider.dart';
-import '../../../models/plot.dart';
+import '../../../shared/domain/entities/plot.dart';
 import '../screens/map_screen.dart';
 
 class GardenGrid extends StatefulWidget {

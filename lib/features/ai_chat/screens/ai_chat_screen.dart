@@ -7,8 +7,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-import '../../../services/firebase_service.dart';
-import '../../../services/nvidia_ai_service.dart';
+import '../../../shared/data/datasources/firebase_service.dart';
+import '../../../shared/data/datasources/nvidia_ai_service.dart';
 
 class AIChatScreen extends StatefulWidget {
   const AIChatScreen({super.key});

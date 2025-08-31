@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/providers/auth_provider.dart';
+import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../core/providers/locale_provider.dart';
-import '../../../models/crop.dart';
-import '../../../models/planting.dart';
-import '../../../models/task.dart';
-import '../../../services/supabase_service.dart';
+import '../../../shared/domain/entities/crop.dart';
+import '../../../shared/domain/entities/planting.dart';
+import '../../../shared/domain/entities/task.dart';
+import '../../../shared/data/datasources/supabase_service.dart';
 
 class TaskWithDetails {
   final GardenTask task;

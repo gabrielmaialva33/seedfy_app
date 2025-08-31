@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/providers/auth_provider.dart';
+import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../core/providers/locale_provider.dart';
 import 'forgot_password_screen.dart';
 import 'signup_screen.dart';

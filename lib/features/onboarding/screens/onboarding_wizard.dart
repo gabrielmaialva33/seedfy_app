@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/providers/auth_provider.dart';
+import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../core/providers/locale_provider.dart';
-import '../../../models/crop.dart';
-import '../../../services/supabase_service.dart';
+import '../../../shared/domain/entities/crop.dart';
+import '../../../shared/data/datasources/supabase_service.dart';
 import 'steps/approval_step.dart';
 import 'steps/area_dimensions_step.dart';
 import 'steps/crop_selection_step.dart';

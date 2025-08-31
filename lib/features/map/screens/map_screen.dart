@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/providers/auth_provider.dart';
+import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../core/providers/locale_provider.dart';
-import '../../../models/bed.dart';
-import '../../../models/crop.dart';
-import '../../../models/farm.dart';
-import '../../../models/planting.dart';
-import '../../../models/plot.dart';
-import '../../../services/supabase_service.dart';
+import '../../../shared/domain/entities/bed.dart';
+import '../../../shared/domain/entities/crop.dart';
+import '../../../shared/domain/entities/farm.dart';
+import '../../../shared/domain/entities/planting.dart';
+import '../../../shared/domain/entities/plot.dart';
+import '../../../shared/data/datasources/supabase_service.dart';
 import '../../ai_camera/screens/ai_camera_screen.dart';
 import '../../ai_chat/screens/ai_chat_screen.dart';
 import '../../tasks/screens/tasks_screen.dart';
