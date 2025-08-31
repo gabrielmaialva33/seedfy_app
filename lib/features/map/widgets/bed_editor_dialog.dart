@@ -463,7 +463,7 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                       const SizedBox(height: 12),
                       
                       DropdownButtonFormField<Crop>(
-                        initialValue: _selectedCrop,
+                        value: _selectedCrop,
                         decoration: InputDecoration(
                           labelText: isPortuguese ? 'Selecione uma cultura' : 'Select a crop',
                           border: const OutlineInputBorder(),

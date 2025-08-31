@@ -42,7 +42,8 @@
       "mcp__playwright__browser_navigate_back",
       "Bash(pkill:*)",
       "mcp__playwright__browser_console_messages",
-      "mcp__playwright__browser_take_screenshot"
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(npx supabase:*)"
     ],
     "deny": [],
     "ask": []

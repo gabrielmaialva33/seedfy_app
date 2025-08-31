@@ -129,8 +129,8 @@ class _GardenGridProState extends State<GardenGridPro>
     final centerY = (screenSize.height - plotHeight) / 2;
     
     _transformationController.value = Matrix4.identity()
-      ..translateByDouble(centerX, centerY, 0.0, 0.0)
-      ..scaleByDouble(1.0, 1.0, 1.0, 0.0);
+      ..translate(centerX, centerY, 0.0)
+      ..scale(1.0, 1.0, 1.0);
   }
 
   BedStatus _getBedStatus(BedWithPlanting bedWithPlanting) {

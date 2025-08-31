@@ -40,8 +40,8 @@ class _GardenGridState extends State<GardenGrid> {
     final centerY = (widget.plot.widthM * _gridScale) / 2;
     
     _transformationController.value = Matrix4.identity()
-      ..translateByDouble(-centerX + 200, -centerY + 200, 0.0, 0.0)
-      ..scaleByDouble(1.0, 1.0, 1.0, 0.0);
+      ..translate(-centerX + 200, -centerY + 200, 0.0)
+      ..scale(1.0, 1.0, 1.0);
   }
 
   BedStatus _getBedStatus(BedWithPlanting bedWithPlanting) {
