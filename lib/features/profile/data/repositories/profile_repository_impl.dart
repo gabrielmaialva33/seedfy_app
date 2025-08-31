@@ -52,16 +52,17 @@ class ProfileRepositoryImpl implements ProfileRepository {
       try {
         final currentUser = supabaseClient.auth.currentUser;
         if (currentUser == null)
-          throw const AuthException('User not authenticated');
+          throw core_exceptions.AuthException('User not authenticated');
 
         final response = await supabaseClient
             .from('profiles')
-            .update(user.toJson())
+            .update(UserMapper.toDto(user).toJson())
             .eq('id', currentUser.id)
             .select()
             .single();
 
-        final updatedUser = UserEntity.fromJson(response);
+        final updatedUserDto = UserDto.fromJson(response);
+        final updatedUser = UserMapper.toEntity(updatedUserDto);
         return Right(updatedUser);
       } on core_exceptions.AuthException catch (e) {
         return Left(AuthFailure(e.message));
