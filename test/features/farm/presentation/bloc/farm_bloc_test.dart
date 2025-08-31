@@ -75,14 +75,14 @@ void main() {
           FarmState.farmsLoaded(testFarms),
         ],
         verify: (_) {
-          verify(() => mockGetUserFarms(NoParams())).called(1);
+          verify(() => mockGetUserFarms(any())).called(1);
         },
       );
 
       blocTest<FarmBloc, FarmState>(
         'emits [loading, error] when getUserFarms fails',
         build: () {
-          when(() => mockGetUserFarms(NoParams())).thenAnswer(
+          when(() => mockGetUserFarms(any())).thenAnswer(
               (_) async => const Left(ServerFailure('Server error')));
           return farmBloc;
         },
@@ -92,7 +92,7 @@ void main() {
           const FarmState.error('Server error'),
         ],
         verify: (_) {
-          verify(() => mockGetUserFarms(NoParams())).called(1);
+          verify(() => mockGetUserFarms(any())).called(1);
         },
       );
     });
@@ -153,7 +153,7 @@ void main() {
         build: () {
           when(() => mockCreateFarm(CreateFarmParams(farm: testFarm)))
               .thenAnswer((_) async => Right(testFarm));
-          when(() => mockGetUserFarms(NoParams()))
+          when(() => mockGetUserFarms(any()))
               .thenAnswer((_) async => Right(testFarms));
           return farmBloc;
         },
@@ -167,7 +167,7 @@ void main() {
         verify: (_) {
           verify(() => mockCreateFarm(CreateFarmParams(farm: testFarm)))
               .called(1);
-          verify(() => mockGetUserFarms(NoParams())).called(1);
+          verify(() => mockGetUserFarms(any())).called(1);
         },
       );
 
@@ -196,7 +196,7 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'emits [farmsLoaded] when refreshFarms succeeds (no loading state)',
         build: () {
-          when(() => mockGetUserFarms(NoParams()))
+          when(() => mockGetUserFarms(any()))
               .thenAnswer((_) async => Right(testFarms));
           return farmBloc;
         },
@@ -205,14 +205,14 @@ void main() {
           FarmState.farmsLoaded(testFarms),
         ],
         verify: (_) {
-          verify(() => mockGetUserFarms(NoParams())).called(1);
+          verify(() => mockGetUserFarms(any())).called(1);
         },
       );
 
       blocTest<FarmBloc, FarmState>(
         'emits [error] when refreshFarms fails',
         build: () {
-          when(() => mockGetUserFarms(NoParams())).thenAnswer(
+          when(() => mockGetUserFarms(any())).thenAnswer(
               (_) async => const Left(NetworkFailure('No internet')));
           return farmBloc;
         },
@@ -221,7 +221,7 @@ void main() {
           const FarmState.error('No internet'),
         ],
         verify: (_) {
-          verify(() => mockGetUserFarms(NoParams())).called(1);
+          verify(() => mockGetUserFarms(any())).called(1);
         },
       );
     });
@@ -260,7 +260,7 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'handles multiple events correctly',
         build: () {
-          when(() => mockGetUserFarms(NoParams()))
+          when(() => mockGetUserFarms(any()))
               .thenAnswer((_) async => Right(testFarms));
           when(() =>
                   mockGetFarmDetails(const GetFarmDetailsParams(farmId: '1')))
@@ -284,7 +284,7 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'handles empty farms list correctly',
         build: () {
-          when(() => mockGetUserFarms(NoParams()))
+          when(() => mockGetUserFarms(any()))
               .thenAnswer((_) async => const Right([]));
           return farmBloc;
         },
