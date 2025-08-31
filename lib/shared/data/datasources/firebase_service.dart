@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../firebase_options.dart';
+import '../../../core/firebase_options.dart';
 
 class FirebaseService {
   static FirebaseAuth get _auth => FirebaseAuth.instance;
