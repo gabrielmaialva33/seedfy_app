@@ -279,6 +279,24 @@ CREATE POLICY "Farm owners can manage collaborators" ON collaborators FOR ALL US
   farm_id IN (SELECT id FROM farms WHERE owner_id = auth.uid())
 );
 
+-- Invitations policies
+CREATE POLICY "Users can view invitations sent to them" ON invitations FOR SELECT USING (
+  invitee_email = (SELECT email FROM profiles WHERE id = auth.uid())
+);
+CREATE POLICY "Farm owners can view invitations for their farms" ON invitations FOR SELECT USING (
+  farm_id IN (SELECT id FROM farms WHERE owner_id = auth.uid())
+);
+CREATE POLICY "Farm owners can create invitations" ON invitations FOR INSERT WITH CHECK (
+  farm_id IN (SELECT id FROM farms WHERE owner_id = auth.uid())
+  AND inviter_id = auth.uid()
+);
+CREATE POLICY "Users can update invitations sent to them" ON invitations FOR UPDATE USING (
+  invitee_email = (SELECT email FROM profiles WHERE id = auth.uid())
+);
+CREATE POLICY "Farm owners can delete invitations" ON invitations FOR DELETE USING (
+  farm_id IN (SELECT id FROM farms WHERE owner_id = auth.uid())
+);
+
 -- Crops catalog is public read-only
 CREATE POLICY "Anyone can view crops catalog" ON crops_catalog FOR SELECT TO authenticated USING (true);
 

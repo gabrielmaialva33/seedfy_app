@@ -162,8 +162,8 @@ class CollaborationService {
 
       return (response as List).map((json) {
         // Flatten the profile data
-        final collaboratorData = {
-          ...json,
+        final Map<String, dynamic> collaboratorData = {
+          ...json as Map<String, dynamic>,
           'name': json['profile']['name'],
           'email': json['profile']['email'],
         };
