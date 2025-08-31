@@ -45,154 +45,9 @@ class FarmRepositoryImpl implements FarmRepository {
   Future<Either<Failure, Farm>> getFarm(String farmId) async {
     try {
       if (await networkInfo.isConnected) {
-      try {
-        final farm = await remoteDataSource.getFarm(farmId);
-        return Right(farm);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-    } catch (e) {
-      return Left(ServerFailure('Network check failed: ${e.toString()}'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Farm>> createFarm(Farm farm) async {
-    try {
-      if (await networkInfo.isConnected) {
-      try {
-        final createdFarm = await remoteDataSource.createFarm(farm);
-        return Right(createdFarm);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-    } catch (e) {
-      return Left(ServerFailure('Network check failed: ${e.toString()}'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Farm>> updateFarm(Farm farm) async {
-    try {
-      if (await networkInfo.isConnected) {
-      try {
-        final updatedFarm = await remoteDataSource.updateFarm(farm);
-        return Right(updatedFarm);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> deleteFarm(String farmId) async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDataSource.deleteFarm(farmId);
-        return const Right(null);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<Plot>>> getFarmPlots(String farmId) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final plots = await remoteDataSource.getFarmPlots(farmId);
-        return Right(plots);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<Bed>>> getFarmBeds(String farmId) async {
-    try {
-      if (await networkInfo.isConnected) {
         try {
-        final beds = await remoteDataSource.getFarmBeds(farmId);
-        return Right(beds);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-    } catch (e) {
-      return Left(ServerFailure('Network check failed: ${e.toString()}'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<Planting>>> getFarmPlantings(
-      String farmId) async {
-    try {
-      if (await networkInfo.isConnected) {
-        try {
-        final plantings = await remoteDataSource.getFarmPlantings(farmId);
-        return Right(plantings);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-    } catch (e) {
-      return Left(ServerFailure('Network check failed: ${e.toString()}'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Map<String, dynamic>>> getFarmStats(
-      String farmId) async {
-    try {
-      if (await networkInfo.isConnected) {
-        try {
-          final stats = await remoteDataSource.getFarmStats(farmId);
-          return Right(stats);
+          final farm = await remoteDataSource.getFarm(farmId);
+          return Right(farm);
         } on AuthException catch (e) {
           return Left(AuthFailure(e.message));
         } on ServerException catch (e) {
@@ -207,4 +62,149 @@ class FarmRepositoryImpl implements FarmRepository {
       return Left(ServerFailure('Network check failed: ${e.toString()}'));
     }
   }
-}
+
+  @override
+  Future<Either<Failure, Farm>> createFarm(Farm farm) async {
+    try {
+      if (await networkInfo.isConnected) {
+        try {
+          final createdFarm = await remoteDataSource.createFarm(farm);
+          return Right(createdFarm);
+        } on AuthException catch (e) {
+          return Left(AuthFailure(e.message));
+        } on ServerException catch (e) {
+          return Left(ServerFailure(e.message ?? 'Server error'));
+        } catch (e) {
+          return Left(ServerFailure('Unknown error: ${e.toString()}'));
+        }
+      } else {
+        return const Left(NetworkFailure('No internet connection'));
+      }
+    } catch (e) {
+      return Left(ServerFailure('Network check failed: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Farm>> updateFarm(Farm farm) async {
+    try {
+      if (await networkInfo.isConnected) {
+        try {
+          final updatedFarm = await remoteDataSource.updateFarm(farm);
+          return Right(updatedFarm);
+        } on AuthException catch (e) {
+          return Left(AuthFailure(e.message));
+        } on ServerException catch (e) {
+          return Left(ServerFailure(e.message ?? 'Server error'));
+        } catch (e) {
+          return Left(ServerFailure('Unknown error: ${e.toString()}'));
+        }
+      } else {
+        return const Left(NetworkFailure('No internet connection'));
+      }
+    }
+
+    @override
+    Future<Either<Failure, void>> deleteFarm(String farmId) async {
+      if (await networkInfo.isConnected) {
+        try {
+          await remoteDataSource.deleteFarm(farmId);
+          return const Right(null);
+        } on AuthException catch (e) {
+          return Left(AuthFailure(e.message));
+        } on ServerException catch (e) {
+          return Left(ServerFailure(e.message ?? 'Server error'));
+        } catch (e) {
+          return Left(ServerFailure('Unknown error: ${e.toString()}'));
+        }
+      } else {
+        return const Left(NetworkFailure('No internet connection'));
+      }
+    }
+
+    @override
+    Future<Either<Failure, List<Plot>>> getFarmPlots(String farmId) async {
+      if (await networkInfo.isConnected) {
+        try {
+          final plots = await remoteDataSource.getFarmPlots(farmId);
+          return Right(plots);
+        } on AuthException catch (e) {
+          return Left(AuthFailure(e.message));
+        } on ServerException catch (e) {
+          return Left(ServerFailure(e.message ?? 'Server error'));
+        } catch (e) {
+          return Left(ServerFailure('Unknown error: ${e.toString()}'));
+        }
+      } else {
+        return const Left(NetworkFailure('No internet connection'));
+      }
+    }
+
+    @override
+    Future<Either<Failure, List<Bed>>> getFarmBeds(String farmId) async {
+      try {
+        if (await networkInfo.isConnected) {
+          try {
+            final beds = await remoteDataSource.getFarmBeds(farmId);
+            return Right(beds);
+          } on AuthException catch (e) {
+            return Left(AuthFailure(e.message));
+          } on ServerException catch (e) {
+            return Left(ServerFailure(e.message ?? 'Server error'));
+          } catch (e) {
+            return Left(ServerFailure('Unknown error: ${e.toString()}'));
+          }
+        } else {
+          return const Left(NetworkFailure('No internet connection'));
+        }
+      } catch (e) {
+        return Left(ServerFailure('Network check failed: ${e.toString()}'));
+      }
+    }
+
+    @override
+    Future<Either<Failure, List<Planting>>> getFarmPlantings(
+        String farmId) async {
+      try {
+        if (await networkInfo.isConnected) {
+          try {
+            final plantings = await remoteDataSource.getFarmPlantings(farmId);
+            return Right(plantings);
+          } on AuthException catch (e) {
+            return Left(AuthFailure(e.message));
+          } on ServerException catch (e) {
+            return Left(ServerFailure(e.message ?? 'Server error'));
+          } catch (e) {
+            return Left(ServerFailure('Unknown error: ${e.toString()}'));
+          }
+        } else {
+          return const Left(NetworkFailure('No internet connection'));
+        }
+      } catch (e) {
+        return Left(ServerFailure('Network check failed: ${e.toString()}'));
+      }
+    }
+
+    @override
+    Future<Either<Failure, Map<String, dynamic>>> getFarmStats(
+        String farmId) async {
+      try {
+        if (await networkInfo.isConnected) {
+          try {
+            final stats = await remoteDataSource.getFarmStats(farmId);
+            return Right(stats);
+          } on AuthException catch (e) {
+            return Left(AuthFailure(e.message));
+          } on ServerException catch (e) {
+            return Left(ServerFailure(e.message ?? 'Server error'));
+          } catch (e) {
+            return Left(ServerFailure('Unknown error: ${e.toString()}'));
+          }
+        } else {
+          return const Left(NetworkFailure('No internet connection'));
+        }
+      } catch (e) {
+        return Left(ServerFailure('Network check failed: ${e.toString()}'));
+      }
+    }
+  }

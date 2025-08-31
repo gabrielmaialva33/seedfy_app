@@ -45,7 +45,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
               })
               .select()
               .single();
-          
+
           final userDto = UserDto.fromJson(newProfile);
           final userEntity = UserMapper.toEntity(userDto);
           return Right(userEntity);

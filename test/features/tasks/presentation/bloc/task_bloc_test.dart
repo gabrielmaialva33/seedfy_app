@@ -30,7 +30,8 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(NoParams());
-    registerFallbackValue(CreateTaskParams(task: entities.Task(
+    registerFallbackValue(CreateTaskParams(
+        task: entities.Task(
       id: '',
       plantingId: '',
       title: '',
@@ -257,9 +258,8 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, taskCompleted, loading, tasksLoaded] when completeTask succeeds',
         build: () {
-          when(() => mockCompleteTask(any()))
-              .thenAnswer((_) async => Right(
-                  testTask.copyWith(status: entities.TaskStatus.completed)));
+          when(() => mockCompleteTask(any())).thenAnswer((_) async =>
+              Right(testTask.copyWith(status: entities.TaskStatus.completed)));
           when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
@@ -270,7 +270,8 @@ void main() {
           const TaskState.loading(),
           isA<TaskState>().having(
             (state) => state.maybeWhen(
-              taskCompleted: (task) => task.status == entities.TaskStatus.completed,
+              taskCompleted: (task) =>
+                  task.status == entities.TaskStatus.completed,
               orElse: () => false,
             ),
             'taskCompleted with completed status',
@@ -288,9 +289,8 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, error] when completeTask fails',
         build: () {
-          when(() => mockCompleteTask(any()))
-              .thenAnswer(
-                  (_) async => const Left(ValidationFailure('Task not found')));
+          when(() => mockCompleteTask(any())).thenAnswer(
+              (_) async => const Left(ValidationFailure('Task not found')));
           return taskBloc;
         },
         act: (bloc) => bloc.add(const TaskEvent.completeTask(
@@ -429,7 +429,8 @@ void main() {
           const TaskState.loading(),
           isA<TaskState>().having(
             (state) => state.maybeWhen(
-              taskCreated: (task) => task.description == null && task.estimatedMinutes == null,
+              taskCreated: (task) =>
+                  task.description == null && task.estimatedMinutes == null,
               orElse: () => false,
             ),
             'taskCreated with null fields',
@@ -438,9 +439,10 @@ void main() {
           const TaskState.loading(),
           isA<TaskState>().having(
             (state) => state.maybeWhen(
-              tasksLoaded: (tasks) => tasks.length == 1 && 
-                                      tasks.first.description == null && 
-                                      tasks.first.estimatedMinutes == null,
+              tasksLoaded: (tasks) =>
+                  tasks.length == 1 &&
+                  tasks.first.description == null &&
+                  tasks.first.estimatedMinutes == null,
               orElse: () => false,
             ),
             'tasksLoaded with task with null fields',
