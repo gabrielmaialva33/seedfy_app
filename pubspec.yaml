@@ -121,6 +121,14 @@ dev_dependencies:
   # Testing
   mocktail: ^1.0.1
   bloc_test: ^10.0.0
+  patrol: ^3.19.0
+
+patrol:
+  app_name: Seedfy
+  android:
+    package_name: com.seedfy.seedfy_app
+  ios:
+    bundle_id: com.seedfy.SeedfyApp
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
