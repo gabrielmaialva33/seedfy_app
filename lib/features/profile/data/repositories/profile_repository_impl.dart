@@ -21,7 +21,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
     if (await networkInfo.isConnected) {
       try {
         final user = supabaseClient.auth.currentUser;
-        if (user == null) throw const AuthException('User not authenticated');
+        if (user == null) {
+          throw core_exceptions.AuthException('User not authenticated');
+        }
 
         final response = await supabaseClient
             .from('profiles')
@@ -31,7 +33,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
         final userEntity = UserEntity.fromJson(response);
         return Right(userEntity);
-      } on AuthException catch (e) {
+      } on core_exceptions.AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on PostgrestException catch (e) {
         return Left(ServerFailure(e.message));
@@ -58,7 +60,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
         final updatedUser = UserEntity.fromJson(response);
         return Right(updatedUser);
-      } on AuthException catch (e) {
+      } on core_exceptions.AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on PostgrestException catch (e) {
         return Left(ServerFailure(e.message));
@@ -77,7 +79,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           UserAttributes(password: newPassword),
         );
         return const Right(null);
-      } on AuthException catch (e) {
+      } on core_exceptions.AuthException catch (e) {
         return Left(AuthFailure(e.message));
       }
     } else {
@@ -90,12 +92,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
     if (await networkInfo.isConnected) {
       try {
         final user = supabaseClient.auth.currentUser;
-        if (user == null) throw const AuthException('User not authenticated');
+        if (user == null) {
+          throw core_exceptions.AuthException('User not authenticated');
+        }
 
         await supabaseClient.from('profiles').delete().eq('id', user.id);
         await supabaseClient.auth.signOut();
         return const Right(null);
-      } on AuthException catch (e) {
+      } on core_exceptions.AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on PostgrestException catch (e) {
         return Left(ServerFailure(e.message));
