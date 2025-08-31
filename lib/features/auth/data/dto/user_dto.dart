@@ -4,7 +4,6 @@ part 'user_dto.freezed.dart';
 part 'user_dto.g.dart';
 
 @freezed
-@JsonSerializable(fieldRename: FieldRename.snake)
 class UserDto with _$UserDto {
   const factory UserDto({
     required String id,
