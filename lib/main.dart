@@ -18,7 +18,7 @@ import 'features/map/screens/map_screen.dart';
 import 'features/onboarding/screens/onboarding_wizard.dart';
 import 'features/profile/screens/profile_screen.dart';
 import 'features/settings/screens/settings_screen.dart';
-import 'firebase_options.dart';
+import 'core/firebase_options.dart';
 import 'shared/data/datasources/firebase_service.dart';
 import 'shared/data/datasources/supabase_service.dart';
 
