@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/providers/locale_provider.dart';
 import '../bloc/auth_bloc.dart';
-import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -438,16 +438,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     TextButton(
-                      onPressed: () {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
-                            ),
-                          );
-                        });
-                      },
+                      onPressed: () => context.go('/login'),
                       child: Text(
                         isPortuguese ? 'Entrar' : 'Sign In',
                         style: const TextStyle(fontWeight: FontWeight.w600),
