@@ -33,7 +33,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
             .eq('id', user.id)
             .single();
 
-        final userEntity = UserEntity.fromJson(response);
+        final userDto = UserDto.fromJson(response);
+        final userEntity = UserMapper.toEntity(userDto);
         return Right(userEntity);
       } on core_exceptions.AuthException catch (e) {
         return Left(AuthFailure(e.message));
