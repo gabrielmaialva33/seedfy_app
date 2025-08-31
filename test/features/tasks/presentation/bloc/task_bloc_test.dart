@@ -406,7 +406,7 @@ void main() {
             description: null,
             estimatedMinutes: null,
           );
-          when(() => mockCreateTask(CreateTaskParams(task: taskWithNulls)))
+          when(() => mockCreateTask(any()))
               .thenAnswer((_) async => Right(taskWithNulls));
           when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right([taskWithNulls]));
