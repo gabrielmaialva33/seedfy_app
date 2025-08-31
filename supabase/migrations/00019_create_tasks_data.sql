@@ -33,9 +33,9 @@ INSERT INTO public.tasks (
    NOW() + INTERVAL '1 day', false, NULL,
    'medium', 15, NULL, NULL, NOW(), NOW()),
 
-  ('eeee0003-1111-1111-1111-111111111111', NULL,
+  ('eeee0003-1111-1111-1111-111111111111', 'dddd0003-1111-1111-1111-111111111111',
    '11111111-1111-1111-1111-111111111111', 'other',
-   'Manutenção do Sistema de Irrigação', 'Verificar e limpar bicos do gotejamento',
+   'Manutenção do Sistema de Irrigação', 'Verificar e limpar bicos do gotejamento para o manjericão',
    NOW(), false, NULL,
    'high', 60, NULL, 'Já identifiquei 3 bicos entupidos', NOW() - INTERVAL '1 hour', NOW()),
 
@@ -47,7 +47,7 @@ INSERT INTO public.tasks (
    NOW() - INTERVAL '3 days', true, NOW() - INTERVAL '3 days',
    'high', 90, 85, 'Aplicação bem sucedida, pulgões controlados', NOW() - INTERVAL '4 days', NOW() - INTERVAL '3 days'),
 
-  ('eeee0005-2222-2222-2222-222222222222', NULL,
+  ('eeee0005-2222-2222-2222-222222222222', 'dddd0006-2222-2222-2222-222222222222',
    '22222222-2222-2222-2222-222222222222', 'other',
    'Preparação de Mudas', 'Semear 100 mudas de brócolis para próximo ciclo',
    NOW() + INTERVAL '5 days', false, NULL,
