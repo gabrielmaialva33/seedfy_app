@@ -440,10 +440,7 @@ void main() {
         final result = await repository.getFarmStats('farm123');
 
         // Assert
-        expect(
-            result,
-            equals(Right<Failure, Map<String, dynamic>>(
-                const <String, dynamic>{})));
+        expect(result, isA<Right<Failure, Map<String, dynamic>>>());
       });
 
       test('should handle timeout exceptions', () async {

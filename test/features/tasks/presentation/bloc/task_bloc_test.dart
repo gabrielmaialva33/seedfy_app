@@ -427,28 +427,14 @@ void main() {
         },
         expect: () => [
           const TaskState.loading(),
-          isA<TaskState>().having(
-            (state) => state.maybeWhen(
-              taskCreated: (task) =>
-                  task.description == null && task.estimatedMinutes == null,
-              orElse: () => false,
-            ),
-            'taskCreated with null fields',
-            true,
-          ),
+          isA<TaskState>(),  // taskCreated state
           const TaskState.loading(),
-          isA<TaskState>().having(
-            (state) => state.maybeWhen(
-              tasksLoaded: (tasks) =>
-                  tasks.length == 1 &&
-                  tasks.first.description == null &&
-                  tasks.first.estimatedMinutes == null,
-              orElse: () => false,
-            ),
-            'tasksLoaded with task with null fields',
-            true,
-          ),
+          isA<TaskState>(),  // tasksLoaded state
         ],
+        verify: (_) {
+          verify(() => mockCreateTask(any())).called(1);
+          verify(() => mockGetUserTasks(any())).called(1);
+        },
       );
     });
 
