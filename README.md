@@ -365,8 +365,8 @@ Users can switch languages in their profile settings, with preferences stored in
    ```
 
 3. **Configure Supabase**
-   - Update `lib/core/app_config.dart` with your Supabase URL and anon key
-   - Or use environment variables for production
+    - Update `lib/core/app_config.dart` with your Supabase URL and anon key
+    - Or use environment variables for production
 
 4. **Set up database**
    ```bash
@@ -408,6 +408,7 @@ supabase/migrations/
 ```
 
 Each migration file is:
+
 - **Self-contained**: Can be run independently
 - **Idempotent**: Safe to run multiple times (uses IF NOT EXISTS)
 - **Well-documented**: Contains comments explaining purpose
