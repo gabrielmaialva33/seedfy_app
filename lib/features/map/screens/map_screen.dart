@@ -346,6 +346,17 @@ class _MapScreenState extends State<MapScreen> {
             },
             tooltip: isPortuguese ? 'Assistente IA' : 'AI Assistant',
           ),
+          IconButton(
+            icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
+            onPressed: () {
+              setState(() {
+                _useInteractiveEditor = !_useInteractiveEditor;
+              });
+            },
+            tooltip: _useInteractiveEditor 
+                ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
+                : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
+          ),
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
             itemBuilder: (context) => [
@@ -448,12 +459,20 @@ class _MapScreenState extends State<MapScreen> {
                           : 'No beds found',
                     ),
                   )
-                : GardenGrid(
-                    plot: _currentPlot!,
-                    beds: _beds,
-                    onBedTapped: _handleBedTapped,
-                    onAddBed: _handleAddBed,
-                  ),
+                : _useInteractiveEditor
+                    ? InteractiveGardenGrid(
+                        plot: _currentPlot!,
+                        beds: _beds,
+                        onBedTapped: _handleBedTapped,
+                        onAddBed: _handleAddBed,
+                        onBedsUpdated: _refreshData,
+                      )
+                    : GardenGrid(
+                        plot: _currentPlot!,
+                        beds: _beds,
+                        onBedTapped: _handleBedTapped,
+                        onAddBed: _handleAddBed,
+                      ),
           ),
         ],
       ),
