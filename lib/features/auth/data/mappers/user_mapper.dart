@@ -25,6 +25,7 @@ class UserMapper {
       city: entity.city,
       state: entity.state,
       createdAt: entity.createdAt,
+      updatedAt: null, // Will be set by database
     );
   }
 }
