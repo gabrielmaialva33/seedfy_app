@@ -5,22 +5,22 @@ import '../../../../shared/domain/entities/task.dart' as entities;
 
 abstract class TaskRepository {
   /// Get all tasks for the current user
-  Future<Either<Failure, List<Task>>> getUserTasks();
+  Future<Either<Failure, List<entities.Task>>> getUserTasks();
 
   /// Get tasks for a specific farm
-  Future<Either<Failure, List<Task>>> getFarmTasks(String farmId);
+  Future<Either<Failure, List<entities.Task>>> getFarmTasks(String farmId);
 
   /// Get tasks for a specific planting
-  Future<Either<Failure, List<Task>>> getPlantingTasks(String plantingId);
+  Future<Either<Failure, List<entities.Task>>> getPlantingTasks(String plantingId);
 
   /// Get pending tasks (not done)
-  Future<Either<Failure, List<Task>>> getPendingTasks();
+  Future<Either<Failure, List<entities.Task>>> getPendingTasks();
 
   /// Get today's tasks
-  Future<Either<Failure, List<Task>>> getTodayTasks();
+  Future<Either<Failure, List<entities.Task>>> getTodayTasks();
 
   /// Get overdue tasks
-  Future<Either<Failure, List<Task>>> getOverdueTasks();
+  Future<Either<Failure, List<entities.Task>>> getOverdueTasks();
 
   /// Create a new task
   Future<Either<Failure, Task>> createTask(Task task);
