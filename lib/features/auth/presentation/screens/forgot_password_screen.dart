@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/providers/locale_provider.dart';
 import '../bloc/auth_bloc.dart';
-import 'login_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -166,14 +165,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
           // Back to Login
           TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
-              );
-            },
+            onPressed: () => context.go('/login'),
             child: Text(
               isPortuguese ? 'Voltar ao login' : 'Back to login',
             ),
