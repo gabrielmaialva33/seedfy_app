@@ -1,11 +1,13 @@
 -- Database triggers
 
--- Trigger to create profile on user signup
-DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
-CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON auth.users
-  FOR EACH ROW 
-  EXECUTE FUNCTION public.handle_new_user();
+-- Note: Trigger on auth.users requires superuser permissions
+-- This trigger should be created via Supabase Dashboard > Authentication > Hooks
+-- or configured via the Supabase CLI with proper permissions
+-- DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+-- CREATE TRIGGER on_auth_user_created
+--   AFTER INSERT ON auth.users
+--   FOR EACH ROW 
+--   EXECUTE FUNCTION public.handle_new_user();
 
 -- Triggers for updated_at columns
 CREATE TRIGGER update_profiles_updated_at 
@@ -66,5 +68,5 @@ CREATE TRIGGER on_planting_created
   EXECUTE FUNCTION public.generate_planting_tasks();
 
 -- Comments
-COMMENT ON TRIGGER on_auth_user_created ON auth.users IS 'Creates user profile on signup';
+-- COMMENT ON TRIGGER on_auth_user_created ON auth.users IS 'Creates user profile on signup';
 COMMENT ON TRIGGER on_planting_created ON public.plantings IS 'Generates tasks when a planting is created';

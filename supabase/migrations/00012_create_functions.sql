@@ -1,5 +1,40 @@
 -- Database functions and triggers
 
+-- First, ensure we can create functions
+-- Function to calculate bed area (ESSENTIAL - needed immediately)
+CREATE OR REPLACE FUNCTION public.calculate_bed_area(
+  p_width_m NUMERIC,
+  p_height_m NUMERIC
+)
+RETURNS NUMERIC AS $$
+BEGIN
+  RETURN ROUND(p_width_m * p_height_m, 2);
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+-- Function to calculate plant count for a bed
+CREATE OR REPLACE FUNCTION public.calculate_plant_count(
+  p_bed_width_m NUMERIC,
+  p_bed_height_m NUMERIC,
+  p_row_spacing_m NUMERIC,
+  p_plant_spacing_m NUMERIC
+)
+RETURNS INTEGER AS $$
+DECLARE
+  v_rows INTEGER;
+  v_plants_per_row INTEGER;
+BEGIN
+  -- Calculate number of rows
+  v_rows := FLOOR(p_bed_height_m / p_row_spacing_m);
+  
+  -- Calculate plants per row
+  v_plants_per_row := FLOOR(p_bed_width_m / p_plant_spacing_m);
+  
+  -- Return total plant count
+  RETURN GREATEST(v_rows * v_plants_per_row, 1);
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -151,39 +186,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Function to calculate bed area
-CREATE OR REPLACE FUNCTION public.calculate_bed_area(
-  p_width_m NUMERIC,
-  p_height_m NUMERIC
-)
-RETURNS NUMERIC AS $$
-BEGIN
-  RETURN ROUND(p_width_m * p_height_m, 2);
-END;
-$$ LANGUAGE plpgsql IMMUTABLE;
-
--- Function to calculate plant count for a bed
-CREATE OR REPLACE FUNCTION public.calculate_plant_count(
-  p_bed_width_m NUMERIC,
-  p_bed_height_m NUMERIC,
-  p_row_spacing_m NUMERIC,
-  p_plant_spacing_m NUMERIC
-)
-RETURNS INTEGER AS $$
-DECLARE
-  v_rows INTEGER;
-  v_plants_per_row INTEGER;
-BEGIN
-  -- Calculate number of rows
-  v_rows := FLOOR(p_bed_height_m / p_row_spacing_m);
-  
-  -- Calculate plants per row
-  v_plants_per_row := FLOOR(p_bed_width_m / p_plant_spacing_m);
-  
-  -- Return total plant count
-  RETURN GREATEST(v_rows * v_plants_per_row, 1);
-END;
-$$ LANGUAGE plpgsql IMMUTABLE;
 
 -- Comments
 COMMENT ON FUNCTION public.update_updated_at_column() IS 'Automatically updates the updated_at timestamp';
