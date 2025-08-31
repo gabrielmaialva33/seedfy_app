@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/widgets/responsive_builder.dart';
 import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../shared/data/datasources/supabase_service.dart';
 import '../../../shared/domain/entities/bed.dart';
