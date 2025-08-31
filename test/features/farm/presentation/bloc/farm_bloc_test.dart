@@ -249,7 +249,7 @@ void main() {
               .thenAnswer((_) async => Right(testFarms));
           when(() =>
                   mockGetFarmDetails(const GetFarmDetailsParams(farmId: '1')))
-              .thenAnswer((_) async => Right(testFarm));
+              .thenAnswer((_) async => Right(farmDetails));
           return farmBloc;
         },
         act: (bloc) {
@@ -260,7 +260,7 @@ void main() {
           const FarmState.loading(),
           FarmState.farmsLoaded(testFarms),
           const FarmState.loading(),
-          FarmState.farmDetailsLoaded(testFarm),
+          FarmState.farmDetailsLoaded(farmDetails),
         ],
       );
     });
