@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
@@ -58,7 +59,7 @@ class _MapScreenState extends State<MapScreen> {
       if (farms.isEmpty) {
         // User hasn't completed onboarding, redirect
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/onboarding');
+          context.go('/onboarding');
         }
         return;
       }
