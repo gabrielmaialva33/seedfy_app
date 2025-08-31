@@ -320,12 +320,43 @@ Users can switch languages in their profile settings, with preferences stored in
 
 ## 🔧 Configuration
 
+### Database Migrations
+
+The project uses a professional migration structure located in `supabase/migrations/`:
+
+```
+supabase/migrations/
+├── 00001_enable_extensions.sql          # PostgreSQL extensions
+├── 00002_create_profiles_table.sql      # User profiles
+├── 00003_create_farms_table.sql         # Farms/gardens
+├── 00004_create_plots_table.sql         # Cultivation areas
+├── 00005_create_beds_table.sql          # Individual beds
+├── 00006_create_crops_catalog_table.sql # Crop varieties
+├── 00007_create_plantings_table.sql     # Planted crops
+├── 00008_create_tasks_table.sql         # Cultivation tasks
+├── 00009_create_collaborators_table.sql # Farm collaborations
+├── 00010_create_invitations_table.sql   # Collaboration invites
+├── 00011_create_map_templates_table.sql # Reusable templates
+├── 00012_create_functions.sql           # Database functions
+├── 00013_create_triggers.sql            # Automatic triggers
+├── 00014_insert_seed_data.sql           # Initial crop data
+├── 00015_grant_permissions.sql          # Access permissions
+└── 00016_update_collaboration_policies.sql # RLS policies
+```
+
+Each migration file is:
+- **Self-contained**: Can be run independently
+- **Idempotent**: Safe to run multiple times (uses IF NOT EXISTS)
+- **Well-documented**: Contains comments explaining purpose
+- **Ordered**: Must be executed in numerical sequence
+
 ### Supabase Setup
 
 1. Create a new Supabase project
-2. Run the `supabase_setup.sql` script to create tables and RLS policies
-3. Configure authentication settings
-4. Add your project URL and API key to the app configuration
+2. Navigate to SQL Editor in the Supabase dashboard
+3. Execute each migration file in order (00001 to 00016)
+4. Configure authentication settings
+5. Add your project URL and API key to the app configuration
 
 ### Environment Variables
 
