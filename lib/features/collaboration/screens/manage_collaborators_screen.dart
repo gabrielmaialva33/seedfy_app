@@ -157,6 +157,10 @@ class _ManageCollaboratorsScreenState
                   return;
                 }
 
+                // Capture the navigator and scaffold messenger before async operation
+                final navigator = Navigator.of(context);
+                final scaffoldMessenger = ScaffoldMessenger.of(context);
+
                 try {
                   await CollaborationService.sendInvitation(
                     farmId: widget.farmId,
@@ -164,29 +168,26 @@ class _ManageCollaboratorsScreenState
                     role: selectedRole,
                   );
 
-                  if (mounted) {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          isPortuguese
-                              ? 'Convite enviado com sucesso!'
-                              : 'Invitation sent successfully!',
-                        ),
-                        backgroundColor: Colors.green,
+                  // Use captured references
+                  navigator.pop();
+                  scaffoldMessenger.showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        isPortuguese
+                            ? 'Convite enviado com sucesso!'
+                            : 'Invitation sent successfully!',
                       ),
-                    );
-                    _loadData();
-                  }
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  _loadData();
                 } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Error: $e'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
+                  scaffoldMessenger.showSnackBar(
+                    SnackBar(
+                      content: Text('Error: $e'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 }
               },
               child: Text(isPortuguese ? 'Enviar Convite' : 'Send Invite'),
