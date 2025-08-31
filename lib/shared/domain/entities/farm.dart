@@ -28,4 +28,18 @@ class Farm {
       'created_at': createdAt.toIso8601String(),
     };
   }
+
+  Farm copyWith({
+    String? id,
+    String? ownerId,
+    String? name,
+    DateTime? createdAt,
+  }) {
+    return Farm(
+      id: id ?? this.id,
+      ownerId: ownerId ?? this.ownerId,
+      name: name ?? this.name,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }
