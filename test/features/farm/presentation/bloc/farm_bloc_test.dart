@@ -7,6 +7,9 @@ import 'package:seedfy_app/core/usecases/usecase.dart';
 import 'package:seedfy_app/features/farm/domain/usecases/create_farm.dart';
 import 'package:seedfy_app/features/farm/domain/usecases/get_farm_details.dart';
 import 'package:seedfy_app/features/farm/domain/usecases/get_user_farms.dart';
+import 'package:seedfy_app/shared/domain/entities/bed.dart';
+import 'package:seedfy_app/shared/domain/entities/planting.dart';
+import 'package:seedfy_app/shared/domain/entities/plot.dart';
 import 'package:seedfy_app/features/farm/presentation/bloc/farm_bloc.dart';
 import 'package:seedfy_app/features/farm/presentation/bloc/farm_event.dart';
 import 'package:seedfy_app/features/farm/presentation/bloc/farm_state.dart';
@@ -90,7 +93,13 @@ void main() {
 
     group('GetFarmDetails', () {
       const farmId = 'farm123';
-      final farmDetails = testFarm;
+      final farmDetails = FarmDetailsResult(
+        farm: testFarm,
+        plots: [],
+        beds: [],
+        plantings: [],
+        stats: {},
+      );
 
       blocTest<FarmBloc, FarmState>(
         'emits [loading, farmDetailsLoaded] when getFarmDetails succeeds',
