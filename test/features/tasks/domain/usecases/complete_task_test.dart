@@ -128,7 +128,7 @@ void main() {
         const taskId = 'task123';
         const actualMinutes = 25;
         final taskWithMinutes = testTask.copyWith(
-          status: TaskStatus.completed,
+          status: entities.TaskStatus.completed,
           actualMinutes: actualMinutes,
         );
 
@@ -260,7 +260,7 @@ void main() {
         const taskId = 'task123';
         final longNotes = 'A' * 2000; // Very long notes
         final taskWithLongNotes = testTask.copyWith(
-          status: TaskStatus.completed,
+          status: entities.TaskStatus.completed,
           completionNotes: longNotes,
         );
 
