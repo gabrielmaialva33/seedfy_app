@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
@@ -116,7 +117,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
 
       // Navigate to map screen
       if (mounted) {
-        Navigator.pushReplacementNamed(context, '/map');
+        context.go('/map');
       }
     } catch (e) {
       if (mounted) {
