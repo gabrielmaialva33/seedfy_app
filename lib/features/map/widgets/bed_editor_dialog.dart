@@ -93,6 +93,8 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
+    
+    final navigator = Navigator.of(context);
 
     try {
       final bed = widget.bedWithPlanting.bed;
@@ -156,9 +158,7 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
         ), planting);
       }
 
-      if (context.mounted) {
-        Navigator.pop(context);
-      }
+      navigator.pop();
     } catch (e) {
       setState(() {
         _error = e.toString();
@@ -254,6 +254,8 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
   }
 
   Future<void> _deleteBed() async {
+    final navigator = Navigator.of(context);
+    
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -283,9 +285,7 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
             .eq('id', widget.bedWithPlanting.bed.id);
         
         widget.onDelete();
-        if (context.mounted) {
-          Navigator.pop(context);
-        }
+        navigator.pop();
       } catch (e) {
         setState(() {
           _error = e.toString();

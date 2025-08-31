@@ -219,7 +219,7 @@ class PreviewStep extends StatelessWidget {
                           ),
                         ],
                       ),
-                    )).toList(),
+                    )),
                   ],
                 ),
                 
