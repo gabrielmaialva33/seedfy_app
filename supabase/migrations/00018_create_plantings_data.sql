@@ -155,4 +155,7 @@ INSERT INTO public.plantings (
    NOW() - INTERVAL '130 days', NOW() - INTERVAL '35 days')
 ON CONFLICT (id) DO NOTHING;
 
+-- Re-enable the planting task trigger
+ALTER TABLE public.plantings ENABLE TRIGGER on_planting_created;
+
 COMMENT ON TABLE public.plantings IS 'Realistic planting data showing different stages and outcomes across user types';
