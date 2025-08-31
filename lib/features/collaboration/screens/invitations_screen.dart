@@ -156,7 +156,7 @@ class _InvitationsScreenState extends State<InvitationsScreen> {
                                       decoration: BoxDecoration(
                                         color: Theme.of(context)
                                             .primaryColor
-                                            .withOpacity(0.1),
+                                            .withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Icon(

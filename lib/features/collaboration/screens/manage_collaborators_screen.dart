@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../models/collaborator.dart';
 import '../../../models/invitation.dart';
-import '../../../models/farm.dart';
 import '../../../services/collaboration_service.dart';
 import '../../../services/supabase_service.dart';
 
