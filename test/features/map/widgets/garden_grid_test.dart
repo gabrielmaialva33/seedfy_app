@@ -76,10 +76,11 @@ void main() {
       Function(BedWithPlanting)? onTapped,
       Function(Offset)? onAdd,
     }) {
+      final localeProvider = LocaleProvider();
       return MaterialApp(
         home: Scaffold(
-          body: ChangeNotifierProvider(
-            create: (_) => LocaleProvider(),
+          body: ChangeNotifierProvider.value(
+            value: localeProvider,
             child: GardenGrid(
               plot: plot ?? testPlot,
               beds: beds ?? testBeds,
