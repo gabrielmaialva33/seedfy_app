@@ -376,12 +376,15 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
     return SizedBox(
       width: screenSize == ScreenSize.mobile ? double.infinity : 400,
       child: Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
+        key: _formKey,
+        child: SingleChildScrollView(
+          padding: screenSize == ScreenSize.mobile 
+              ? context.responsivePadding 
+              : EdgeInsets.zero,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
                           // Bed dimensions
                           Text(
                             isPortuguese ? 'Dimensões' : 'Dimensions',
@@ -664,30 +667,70 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                       ),
                     ),
                   ),
-                ),
-      actions: [
+                );
+  }
+
+  Widget _buildActions(BuildContext context, bool isPortuguese, bool isNewBed) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
         if (!isNewBed)
-          TextButton(
-            onPressed: _isLoading ? null : _deleteBed,
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(isPortuguese ? 'Excluir' : 'Delete'),
+          Expanded(
+            child: TouchOptimizedButton(
+              onPressed: _isLoading ? null : _deleteBed,
+              isDestructive: true,
+              child: Text(isPortuguese ? 'Excluir' : 'Delete'),
+            ),
           ),
-        TextButton(
-          onPressed: _isLoading ? null : () => Navigator.pop(context),
-          child: Text(isPortuguese ? 'Cancelar' : 'Cancel'),
+        if (!isNewBed) const SizedBox(width: 12),
+        Expanded(
+          child: TouchOptimizedButton(
+            onPressed: _isLoading ? null : () => Navigator.pop(context),
+            isSecondary: true,
+            child: Text(isPortuguese ? 'Cancelar' : 'Cancel'),
+          ),
         ),
-        ElevatedButton(
-          onPressed: _isLoading ? null : _saveBed,
-          child: _isLoading
-              ? const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : Text(isPortuguese ? 'Salvar' : 'Save'),
+        const SizedBox(width: 12),
+        Expanded(
+          flex: 2,
+          child: TouchOptimizedButton(
+            onPressed: _isLoading ? null : _saveBed,
+            child: _isLoading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                  )
+                : Text(isPortuguese ? 'Salvar' : 'Save'),
+          ),
         ),
       ],
     );
+  }
+
+  List<Widget> _buildDialogActions(BuildContext context, bool isPortuguese, bool isNewBed) {
+    return [
+      if (!isNewBed)
+        TextButton(
+          onPressed: _isLoading ? null : _deleteBed,
+          style: TextButton.styleFrom(foregroundColor: Colors.red),
+          child: Text(isPortuguese ? 'Excluir' : 'Delete'),
+        ),
+      TextButton(
+        onPressed: _isLoading ? null : () => Navigator.pop(context),
+        child: Text(isPortuguese ? 'Cancelar' : 'Cancel'),
+      ),
+      ElevatedButton(
+        onPressed: _isLoading ? null : _saveBed,
+        child: _isLoading
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : Text(isPortuguese ? 'Salvar' : 'Save'),
+      ),
+    ];
   }
 
   Widget _buildCycleCustomizationDialog(bool isPortuguese) {
