@@ -27,7 +27,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -43,7 +43,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -59,7 +59,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -75,7 +75,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -91,7 +91,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -107,7 +107,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -123,7 +123,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -139,7 +139,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -155,7 +155,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -171,7 +171,7 @@ class PlotRepositoryImpl implements PlotRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));

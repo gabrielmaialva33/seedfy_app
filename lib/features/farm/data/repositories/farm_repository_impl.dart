@@ -28,7 +28,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -46,7 +46,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -64,7 +64,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -82,7 +82,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -100,7 +100,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -118,7 +118,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -136,7 +136,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -155,7 +155,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -174,7 +174,7 @@ class FarmRepositoryImpl implements FarmRepository {
       } on AuthException catch (e) {
         return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
+        return Left(ServerFailure(e.message ?? 'Server error'));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
