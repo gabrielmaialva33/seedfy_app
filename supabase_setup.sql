@@ -401,6 +401,10 @@ CREATE INDEX IF NOT EXISTS idx_tasks_planting ON tasks(planting_id);
 CREATE INDEX IF NOT EXISTS idx_tasks_due_date ON tasks(due_date);
 CREATE INDEX IF NOT EXISTS idx_collaborators_farm ON collaborators(farm_id);
 CREATE INDEX IF NOT EXISTS idx_collaborators_profile ON collaborators(profile_id);
+CREATE INDEX IF NOT EXISTS idx_invitations_invitee_email ON invitations(invitee_email);
+CREATE INDEX IF NOT EXISTS idx_invitations_farm_id ON invitations(farm_id);
+CREATE INDEX IF NOT EXISTS idx_invitations_status ON invitations(status);
+CREATE INDEX IF NOT EXISTS idx_invitations_token ON invitations(token);
 
 -- Grant necessary permissions
 GRANT USAGE ON SCHEMA public TO authenticated;
