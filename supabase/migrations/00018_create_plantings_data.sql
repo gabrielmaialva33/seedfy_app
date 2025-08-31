@@ -1,6 +1,9 @@
 -- Create realistic plantings data for seed users
 -- This migration adds current and historical plantings to demonstrate the app's functionality
 
+-- Temporarily disable the planting task trigger to avoid conflicts
+ALTER TABLE public.plantings DISABLE TRIGGER on_planting_created;
+
 -- Add plantings for each user's beds
 INSERT INTO public.plantings (
   id,
