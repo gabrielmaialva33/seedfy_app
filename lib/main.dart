@@ -1,11 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'core/di/injection_container.dart' as di;
-import 'core/firebase_options.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
