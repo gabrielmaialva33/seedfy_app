@@ -64,8 +64,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           leading: CircleAvatar(
             backgroundColor: AppTheme.primaryPurple,
             child: Text(
-              profile?.name != null && profile.name!.isNotEmpty
-                  ? profile.name!.substring(0, 1).toUpperCase() 
+              profile?.name != null && profile.name.isNotEmpty
+                  ? profile.name.substring(0, 1).toUpperCase() 
                   : 'U',
               style: const TextStyle(
                 color: Colors.white,
