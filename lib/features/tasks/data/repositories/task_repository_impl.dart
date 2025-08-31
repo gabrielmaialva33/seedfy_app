@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/network_info.dart';
+import '../../../../shared/domain/entities/task.dart' as entities;
 import '../../domain/repositories/task_repository.dart';
 import '../datasources/task_remote_datasource.dart';
 
