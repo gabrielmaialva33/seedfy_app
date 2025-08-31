@@ -576,25 +576,51 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: Column(
         children: [
-          // Status legend
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Theme.of(context).colorScheme.surfaceContainer,
-            child: Row(
-              children: [
-                _buildStatusLegend(
-                    isPortuguese ? 'Saudável' : 'Healthy', Colors.green),
-                const SizedBox(width: 16),
-                _buildStatusLegend(
-                    isPortuguese ? 'Atenção' : 'Warning', Colors.orange),
-                const SizedBox(width: 16),
-                _buildStatusLegend(
-                    isPortuguese ? 'Crítico' : 'Critical', Colors.red),
-                const SizedBox(width: 16),
-                _buildStatusLegend(
-                    isPortuguese ? 'Vazio' : 'Empty', Colors.grey),
-              ],
-            ),
+          // Status legend - responsive layout
+          ResponsiveBuilder(
+            builder: (context, screenSize) {
+              return Container(
+                padding: context.responsivePadding,
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                child: screenSize == ScreenSize.mobile
+                    ? Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              _buildStatusLegend(
+                                  isPortuguese ? 'Saudável' : 'Healthy', Colors.green),
+                              _buildStatusLegend(
+                                  isPortuguese ? 'Atenção' : 'Warning', Colors.orange),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              _buildStatusLegend(
+                                  isPortuguese ? 'Crítico' : 'Critical', Colors.red),
+                              _buildStatusLegend(
+                                  isPortuguese ? 'Vazio' : 'Empty', Colors.grey),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildStatusLegend(
+                              isPortuguese ? 'Saudável' : 'Healthy', Colors.green),
+                          _buildStatusLegend(
+                              isPortuguese ? 'Atenção' : 'Warning', Colors.orange),
+                          _buildStatusLegend(
+                              isPortuguese ? 'Crítico' : 'Critical', Colors.red),
+                          _buildStatusLegend(
+                              isPortuguese ? 'Vazio' : 'Empty', Colors.grey),
+                        ],
+                      ),
+              );
+            },
           ),
 
           // Map
