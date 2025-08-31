@@ -3,16 +3,16 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../../shared/domain/entities/task.dart';
+import '../../../../shared/domain/entities/task.dart' as entities;
 import '../repositories/task_repository.dart';
 
-class CompleteTask implements UseCase<Task, CompleteTaskParams> {
+class CompleteTask implements UseCase<entities.Task, CompleteTaskParams> {
   final TaskRepository repository;
 
   const CompleteTask(this.repository);
 
   @override
-  Future<Either<Failure, Task>> call(CompleteTaskParams params) async {
+  Future<Either<Failure, entities.Task>> call(CompleteTaskParams params) async {
     return await repository.completeTask(
       params.taskId,
       notes: params.notes,
