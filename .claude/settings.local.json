@@ -65,7 +65,8 @@
       "Bash(supabase:*)",
       "Bash(brew install:*)",
       "mcp__playwright__browser_type",
-      "mcp__playwright__browser_close"
+      "mcp__playwright__browser_close",
+      "Bash(gzip:*)"
     ],
     "deny": [],
     "ask": []
