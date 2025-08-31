@@ -24,24 +24,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }) : super(const TaskState.initial()) {
     on<TaskEvent>((event, emit) {
       event.when(
-        getUserTasks: () => _onGetUserTasks(event, emit),
-        getFarmTasks: (farmId) => _onGetFarmTasks(event, emit),
-        getPlantingTasks: (plantingId) => _onGetPlantingTasks(event, emit),
-        getPendingTasks: () => _onGetPendingTasks(event, emit),
-        getTodayTasks: () => _onGetTodayTasks(event, emit),
-        getOverdueTasks: () => _onGetOverdueTasks(event, emit),
-        createTask: (task) => _onCreateTask(event, emit),
-        updateTask: (task) => _onUpdateTask(event, emit),
-        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(event, emit),
-        deleteTask: (taskId) => _onDeleteTask(event, emit),
-        getTaskStats: () => _onGetTaskStats(event, emit),
-        refreshTasks: () => _onRefreshTasks(event, emit),
+        getUserTasks: () => _onGetUserTasks(emit),
+        getFarmTasks: (farmId) => _onGetFarmTasks(farmId, emit),
+        getPendingTasks: () => _onGetPendingTasks(emit),
+        getTodayTasks: () => _onGetTodayTasks(emit),
+        getOverdueTasks: () => _onGetOverdueTasks(emit),
+        createTask: (task) => _onCreateTask(task, emit),
+        updateTask: (task) => _onUpdateTask(task, emit),
+        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(taskId, notes, actualMinutes, emit),
+        deleteTask: (taskId) => _onDeleteTask(taskId, emit),
+        getTaskStats: () => _onGetTaskStats(emit),
+        refreshTasks: () => _onRefreshTasks(emit),
       );
     });
   }
 
   Future<void> _onGetUserTasks(
-    TaskEvent event,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());

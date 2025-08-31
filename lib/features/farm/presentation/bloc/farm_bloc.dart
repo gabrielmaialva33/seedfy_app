@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/usecases/usecase.dart';
+import '../../../../shared/domain/entities/farm.dart';
 import '../../domain/usecases/create_farm.dart';
 import '../../domain/usecases/get_farm_details.dart';
 import '../../domain/usecases/get_user_farms.dart';
@@ -21,18 +22,17 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }) : super(const FarmState.initial()) {
     on<FarmEvent>((event, emit) {
       event.when(
-        getUserFarms: () => _onGetUserFarms(event, emit),
-        getFarmDetails: (farmId) => _onGetFarmDetails(event, emit),
-        createFarm: (farm) => _onCreateFarm(event, emit),
-        updateFarm: (farm) => _onUpdateFarm(event, emit),
-        deleteFarm: (farmId) => _onDeleteFarm(event, emit),
-        refreshFarms: () => _onRefreshFarms(event, emit),
+        getUserFarms: () => _onGetUserFarms(emit),
+        getFarmDetails: (farmId) => _onGetFarmDetails(farmId, emit),
+        createFarm: (farm) => _onCreateFarm(farm, emit),
+        updateFarm: (farm) => _onUpdateFarm(farm, emit),
+        deleteFarm: (farmId) => _onDeleteFarm(farmId, emit),
+        refreshFarms: () => _onRefreshFarms(emit),
       );
     });
   }
 
   Future<void> _onGetUserFarms(
-    FarmEvent event,
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
@@ -46,13 +46,13 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onGetFarmDetails(
-    FarmEvent event,
+    String farmId,
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
 
     final result = await getFarmDetails(
-      GetFarmDetailsParams(farmId: event.farmId),
+      GetFarmDetailsParams(farmId: farmId),
     );
 
     result.fold(
@@ -62,13 +62,13 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onCreateFarm(
-    FarmEvent event,
+    Farm farm,
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
 
     final result = await createFarm(
-      CreateFarmParams(farm: event.farm),
+      CreateFarmParams(farm: farm),
     );
 
     result.fold(
@@ -82,7 +82,6 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onRefreshFarms(
-    FarmEvent event,
     Emitter<FarmState> emit,
   ) async {
     // Don't emit loading state for refresh to avoid UI flicker
@@ -95,7 +94,7 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onUpdateFarm(
-    FarmEvent event,
+    Farm farm,
     Emitter<FarmState> emit,
   ) async {
     // TODO: Implement update farm logic
@@ -103,7 +102,7 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onDeleteFarm(
-    FarmEvent event,
+    String farmId,
     Emitter<FarmState> emit,
   ) async {
     // TODO: Implement delete farm logic
