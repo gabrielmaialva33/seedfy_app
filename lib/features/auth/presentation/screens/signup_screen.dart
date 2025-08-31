@@ -86,9 +86,30 @@ class _SignupScreenState extends State<SignupScreen> {
     final localeProvider = context.watch<LocaleProvider>();
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
 
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.when(
+          initial: () {},
+          loading: () {},
+          authenticated: (user) {
+            // Navigate to onboarding for new users
+            context.go('/onboarding');
+          },
+          unauthenticated: () {},
+          error: (message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+          passwordResetSent: () {},
+        );
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Form(
             key: _formKey,
@@ -389,6 +410,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ),
         ),
+      ),
       ),
     );
   }
