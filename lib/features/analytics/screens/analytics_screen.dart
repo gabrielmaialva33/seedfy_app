@@ -71,7 +71,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         _error = null;
       });
 
-      final authProvider = context.read<AuthProvider>();
+      final authProvider = context.read<AuthBloc>();
       final userId = authProvider.profile?.id;
 
       if (userId == null) {

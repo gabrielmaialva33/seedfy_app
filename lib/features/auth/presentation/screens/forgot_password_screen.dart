@@ -30,7 +30,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authProvider = context.read<AuthProvider>();
+      final authProvider = context.read<AuthBloc>();
       await authProvider.resetPassword(_emailController.text.trim());
 
       setState(() {

@@ -37,7 +37,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _loadData() async {
     try {
-      final authProvider = context.read<AuthProvider>();
+      final authProvider = context.read<AuthBloc>();
       final userId = authProvider.profile?.id;
 
       if (userId == null) {
@@ -404,7 +404,7 @@ class _MapScreenState extends State<MapScreen> {
                   _refreshData();
                   break;
                 case 'logout':
-                  context.read<AuthProvider>().signOut();
+                  context.read<AuthBloc>().signOut();
                   break;
               }
             },

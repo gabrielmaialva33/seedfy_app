@@ -49,7 +49,7 @@ class _TasksScreenState extends State<TasksScreen>
 
   Future<void> _loadTasks() async {
     try {
-      final authProvider = context.read<AuthProvider>();
+      final authProvider = context.read<AuthBloc>();
       final userId = authProvider.profile?.id;
 
       if (userId == null) {

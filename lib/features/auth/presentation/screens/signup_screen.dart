@@ -77,7 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authProvider = context.read<AuthProvider>();
+      final authProvider = context.read<AuthBloc>();
       await authProvider.signUp(
         name: _nameController.text.trim(),
         email: _emailController.text.trim(),

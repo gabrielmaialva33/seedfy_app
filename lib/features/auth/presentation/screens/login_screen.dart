@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
-import '../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
 import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
 
@@ -33,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authProvider = context.read<AuthProvider>();
+      final authProvider = context.read<AuthBloc>();
       await authProvider.signIn(
         email: _emailController.text.trim(),
         password: _passwordController.text,

@@ -23,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final localeProvider = context.watch<LocaleProvider>();
-    final authProvider = context.watch<AuthProvider>();
+    final authProvider = context.watch<AuthBloc>();
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
 
     return Scaffold(
@@ -266,7 +266,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
 
     try {
-      final authProvider = context.read<AuthProvider>();
+      final authProvider = context.read<AuthBloc>();
       final userId = authProvider.profile?.id;
 
       if (userId == null) {
