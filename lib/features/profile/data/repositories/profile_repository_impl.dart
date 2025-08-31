@@ -46,7 +46,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     if (await networkInfo.isConnected) {
       try {
         final currentUser = supabaseClient.auth.currentUser;
-        if (currentUser == null) throw const AuthException('User not authenticated');
+        if (currentUser == null)
+          throw const AuthException('User not authenticated');
 
         final response = await supabaseClient
             .from('profiles')
@@ -68,7 +69,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updatePassword(String currentPassword, String newPassword) async {
+  Future<Either<Failure, void>> updatePassword(
+      String currentPassword, String newPassword) async {
     if (await networkInfo.isConnected) {
       try {
         await supabaseClient.auth.updateUser(

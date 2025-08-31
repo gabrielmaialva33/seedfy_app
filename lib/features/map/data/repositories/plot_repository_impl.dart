@@ -3,9 +3,9 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../../shared/domain/entities/plot.dart';
 import '../../../../shared/domain/entities/bed.dart';
 import '../../../../shared/domain/entities/planting.dart';
+import '../../../../shared/domain/entities/plot.dart';
 import '../../domain/repositories/plot_repository.dart';
 import '../datasources/plot_remote_datasource.dart';
 

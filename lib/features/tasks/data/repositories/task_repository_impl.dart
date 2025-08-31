@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../../shared/domain/entities/task.dart';
 import '../../domain/repositories/task_repository.dart';
 import '../datasources/task_remote_datasource.dart';
 
@@ -27,7 +26,8 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, List<Task>>> getPlantingTasks(String plantingId) async {
+  Future<Either<Failure, List<Task>>> getPlantingTasks(
+      String plantingId) async {
     return await _getTasks(() => remoteDataSource.getPlantingTasks(plantingId));
   }
 
@@ -83,7 +83,8 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, Task>> completeTask(String taskId, {String? notes, int? actualMinutes}) async {
+  Future<Either<Failure, Task>> completeTask(String taskId,
+      {String? notes, int? actualMinutes}) async {
     if (await networkInfo.isConnected) {
       try {
         final completedTask = await remoteDataSource.completeTask(
@@ -141,7 +142,8 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   /// Helper method to reduce code duplication for getting tasks
-  Future<Either<Failure, List<Task>>> _getTasks(Future<List<Task>> Function() getTasksFunction) async {
+  Future<Either<Failure, List<Task>>> _getTasks(
+      Future<List<Task>> Function() getTasksFunction) async {
     if (await networkInfo.isConnected) {
       try {
         final tasks = await getTasksFunction();

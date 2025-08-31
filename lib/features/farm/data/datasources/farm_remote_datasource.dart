@@ -1,20 +1,28 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/errors/exceptions.dart' as core_exceptions;
-import '../../../../shared/domain/entities/farm.dart';
-import '../../../../shared/domain/entities/plot.dart';
 import '../../../../shared/domain/entities/bed.dart';
+import '../../../../shared/domain/entities/farm.dart';
 import '../../../../shared/domain/entities/planting.dart';
+import '../../../../shared/domain/entities/plot.dart';
 
 abstract class FarmRemoteDataSource {
   Future<List<Farm>> getUserFarms();
+
   Future<Farm> getFarm(String farmId);
+
   Future<Farm> createFarm(Farm farm);
+
   Future<Farm> updateFarm(Farm farm);
+
   Future<void> deleteFarm(String farmId);
+
   Future<List<Plot>> getFarmPlots(String farmId);
+
   Future<List<Bed>> getFarmBeds(String farmId);
+
   Future<List<Planting>> getFarmPlantings(String farmId);
+
   Future<Map<String, dynamic>> getFarmStats(String farmId);
 }
 
@@ -27,7 +35,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Farm>> getUserFarms() async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final response = await supabaseClient
           .from('farms')
@@ -41,7 +51,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to get user farms: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to get user farms: ${e.toString()}');
     }
   }
 
@@ -49,7 +60,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Farm> getFarm(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final response = await supabaseClient
           .from('farms')
@@ -62,7 +75,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to get farm: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to get farm: ${e.toString()}');
     }
   }
 
@@ -70,23 +84,23 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Farm> createFarm(Farm farm) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final farmData = farm.toJson();
       farmData['owner_id'] = user.id;
       farmData.remove('id'); // Let database generate ID
 
-      final response = await supabaseClient
-          .from('farms')
-          .insert(farmData)
-          .select()
-          .single();
+      final response =
+          await supabaseClient.from('farms').insert(farmData).select().single();
 
       return Farm.fromJson(response);
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to create farm: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to create farm: ${e.toString()}');
     }
   }
 
@@ -94,7 +108,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Farm> updateFarm(Farm farm) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final response = await supabaseClient
           .from('farms')
@@ -108,7 +124,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to update farm: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to update farm: ${e.toString()}');
     }
   }
 
@@ -116,7 +133,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<void> deleteFarm(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       await supabaseClient
           .from('farms')
@@ -126,7 +145,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to delete farm: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to delete farm: ${e.toString()}');
     }
   }
 
@@ -134,7 +154,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Plot>> getFarmPlots(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final response = await supabaseClient
           .from('plots')
@@ -148,7 +170,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to get farm plots: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to get farm plots: ${e.toString()}');
     }
   }
 
@@ -156,16 +179,14 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Bed>> getFarmBeds(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
-      final response = await supabaseClient
-          .from('beds')
-          .select('''
+      final response = await supabaseClient.from('beds').select('''
             *,
             plots!inner(farm_id)
-          ''')
-          .eq('plots.farm_id', farmId)
-          .order('created_at', ascending: true);
+          ''').eq('plots.farm_id', farmId).order('created_at', ascending: true);
 
       return (response as List<dynamic>)
           .map((json) => Bed.fromJson(json as Map<String, dynamic>))
@@ -173,7 +194,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to get farm beds: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to get farm beds: ${e.toString()}');
     }
   }
 
@@ -181,7 +203,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<List<Planting>> getFarmPlantings(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final response = await supabaseClient
           .from('plantings')
@@ -203,7 +227,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to get farm plantings: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to get farm plantings: ${e.toString()}');
     }
   }
 
@@ -211,7 +236,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
   Future<Map<String, dynamic>> getFarmStats(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       // Get stats using database functions or aggregations
       final plotsCount = await supabaseClient
@@ -220,14 +247,10 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .eq('farm_id', farmId)
           .count(CountOption.exact);
 
-      final bedsCount = await supabaseClient
-          .from('beds')
-          .select('''
+      final bedsCount = await supabaseClient.from('beds').select('''
             id,
             plots!inner(farm_id)
-          ''')
-          .eq('plots.farm_id', farmId)
-          .count(CountOption.exact);
+          ''').eq('plots.farm_id', farmId).count(CountOption.exact);
 
       final activePlantings = await supabaseClient
           .from('plantings')
@@ -267,7 +290,8 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw core_exceptions.ServerException('Failed to get farm stats: ${e.toString()}');
+      throw core_exceptions.ServerException(
+          'Failed to get farm stats: ${e.toString()}');
     }
   }
 }

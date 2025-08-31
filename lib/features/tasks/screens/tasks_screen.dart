@@ -513,6 +513,14 @@ class _TasksScreenState extends State<TasksScreen>
         return Icons.transfer_within_a_station;
       case TaskType.harvest:
         return Icons.agriculture;
+      case TaskType.weed:
+        return Icons.grass;
+      case TaskType.prune:
+        return Icons.cut;
+      case TaskType.monitor:
+        return Icons.visibility;
+      case TaskType.other:
+        return Icons.more_horiz;
     }
   }
 
@@ -526,6 +534,14 @@ class _TasksScreenState extends State<TasksScreen>
         return Colors.orange;
       case TaskType.harvest:
         return Colors.green;
+      case TaskType.weed:
+        return Colors.red;
+      case TaskType.prune:
+        return Colors.purple;
+      case TaskType.monitor:
+        return Colors.grey;
+      case TaskType.other:
+        return Colors.blueGrey;
     }
   }
 
@@ -540,6 +556,14 @@ class _TasksScreenState extends State<TasksScreen>
           return 'Transplantar';
         case TaskType.harvest:
           return 'Colher';
+        case TaskType.weed:
+          return 'Capinar';
+        case TaskType.prune:
+          return 'Podar';
+        case TaskType.monitor:
+          return 'Monitorar';
+        case TaskType.other:
+          return 'Outro';
       }
     } else {
       switch (type) {
@@ -551,6 +575,14 @@ class _TasksScreenState extends State<TasksScreen>
           return 'Transplant';
         case TaskType.harvest:
           return 'Harvest';
+        case TaskType.weed:
+          return 'Weed';
+        case TaskType.prune:
+          return 'Prune';
+        case TaskType.monitor:
+          return 'Monitor';
+        case TaskType.other:
+          return 'Other';
       }
     }
   }

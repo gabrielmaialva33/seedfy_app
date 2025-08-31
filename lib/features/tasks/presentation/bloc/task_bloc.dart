@@ -2,10 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/usecases/usecase.dart';
-import '../../domain/usecases/get_user_tasks.dart';
-import '../../domain/usecases/create_task.dart';
-import '../../domain/usecases/complete_task.dart';
 import '../../domain/repositories/task_repository.dart';
+import '../../domain/usecases/complete_task.dart';
+import '../../domain/usecases/create_task.dart';
+import '../../domain/usecases/get_user_tasks.dart';
 import 'task_event.dart';
 import 'task_state.dart';
 
@@ -46,9 +46,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await getUserTasks(NoParams());
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (tasks) => emit(TaskState.tasksLoaded(tasks)),
@@ -60,9 +60,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await taskRepository.getFarmTasks(event.farmId);
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (tasks) => emit(TaskState.tasksLoaded(tasks)),
@@ -74,9 +74,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await getPendingTasks(NoParams());
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (tasks) => emit(TaskState.pendingTasksLoaded(tasks)),
@@ -88,9 +88,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await getTodayTasks(NoParams());
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (tasks) => emit(TaskState.todayTasksLoaded(tasks)),
@@ -102,9 +102,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await getOverdueTasks(NoParams());
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (tasks) => emit(TaskState.overdueTasksLoaded(tasks)),
@@ -116,9 +116,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await createTask(CreateTaskParams(task: event.task));
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (task) {
@@ -134,9 +134,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await taskRepository.updateTask(event.task);
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (task) {
@@ -152,13 +152,13 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await completeTask(CompleteTaskParams(
       taskId: event.taskId,
       notes: event.notes,
       actualMinutes: event.actualMinutes,
     ));
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (task) {
@@ -174,9 +174,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await taskRepository.deleteTask(event.taskId);
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (_) {
@@ -192,9 +192,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
-    
+
     final result = await taskRepository.getTaskStats();
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (stats) => emit(TaskState.statsLoaded(stats)),
@@ -207,7 +207,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   ) async {
     // Don't emit loading state for refresh to avoid UI flicker
     final result = await getUserTasks(NoParams());
-    
+
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
       (tasks) => emit(TaskState.tasksLoaded(tasks)),

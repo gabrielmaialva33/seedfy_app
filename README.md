@@ -36,7 +36,9 @@
 
 ## :bookmark: About
 
-**Seedfy** is a comprehensive farm management application designed specifically for small producers and urban gardening enthusiasts. It provides an intuitive interface for planning, managing, and tracking agricultural activities with guided workflows and intelligent task automation.
+**Seedfy** is a comprehensive farm management application designed specifically for small producers
+and urban gardening enthusiasts. It provides an intuitive interface for planning, managing, and
+tracking agricultural activities with guided workflows and intelligent task automation.
 
 ## 🎯 Project Vision
 
@@ -54,7 +56,9 @@ export functionality.
 - **[Supabase](https://supabase.com/)** (Auth, PostgreSQL, Storage, RLS)
 - **[Provider](https://pub.dev/packages/provider)** for State Management
 - **[PostgreSQL](https://www.postgresql.org/)** with Row Level Security
-- **[Flutter Localizations](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)** (pt-BR, en-US)
+- *
+  *[Flutter Localizations](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
+  ** (pt-BR, en-US)
 
 <br>
 
@@ -77,7 +81,8 @@ The following software must be installed:
 - **[Flutter](https://flutter.dev/docs/get-started/install)** (>=3.0.0)
 - **[Dart](https://dart.dev/get-dart)** (>=3.0.0)
 - **[Git](https://git-scm.com/)**
-- **[Android Studio](https://developer.android.com/studio)** or **[VS Code](https://code.visualstudio.com/)**
+- **[Android Studio](https://developer.android.com/studio)** or *
+  *[VS Code](https://code.visualstudio.com/)**
 - **[Supabase Account](https://supabase.com/)** and project
 
 <br>
@@ -674,7 +679,7 @@ flutter test test/widget_test.dart
 ### :writing_hand: **Author**
 
 | [![Gabriel Maia](https://avatars.githubusercontent.com/u/26732067?size=100)](https://github.com/gabrielmaialva33) |
-| ----------------------------------------------------------------------------------------------------------------- |
+|-------------------------------------------------------------------------------------------------------------------|
 | [Gabriel Maia](https://github.com/gabrielmaialva33)                                                               |
 
 ## License

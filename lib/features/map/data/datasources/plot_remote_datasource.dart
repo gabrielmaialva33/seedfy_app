@@ -1,20 +1,29 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/errors/exceptions.dart' as core_exceptions;
-import '../../../../shared/domain/entities/plot.dart';
 import '../../../../shared/domain/entities/bed.dart';
 import '../../../../shared/domain/entities/planting.dart';
+import '../../../../shared/domain/entities/plot.dart';
 
 abstract class PlotRemoteDataSource {
   Future<List<Plot>> getFarmPlots(String farmId);
+
   Future<Plot> getPlot(String plotId);
+
   Future<Plot> createPlot(Plot plot);
+
   Future<Plot> updatePlot(Plot plot);
+
   Future<void> deletePlot(String plotId);
+
   Future<List<Bed>> getPlotBeds(String plotId);
+
   Future<Bed> createBed(Bed bed);
+
   Future<Bed> updateBed(Bed bed);
+
   Future<void> deleteBed(String bedId);
+
   Future<List<Planting>> getBedPlantings(String bedId);
 }
 
@@ -27,7 +36,8 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<List<Plot>> getFarmPlots(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null)
+        throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('plots')
@@ -51,17 +61,13 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<Plot> getPlot(String plotId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null)
+        throw const core_exceptions.AuthException('User not authenticated');
 
-      final response = await supabaseClient
-          .from('plots')
-          .select('''
+      final response = await supabaseClient.from('plots').select('''
             *,
             farms!inner(owner_id)
-          ''')
-          .eq('id', plotId)
-          .eq('farms.owner_id', user.id)
-          .single();
+          ''').eq('id', plotId).eq('farms.owner_id', user.id).single();
 
       return Plot.fromJson(response);
     } on PostgrestException catch (e) {
@@ -73,16 +79,14 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<Plot> createPlot(Plot plot) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null)
+        throw const core_exceptions.AuthException('User not authenticated');
 
       final plotData = plot.toJson();
       plotData.remove('id');
 
-      final response = await supabaseClient
-          .from('plots')
-          .insert(plotData)
-          .select()
-          .single();
+      final response =
+          await supabaseClient.from('plots').insert(plotData).select().single();
 
       return Plot.fromJson(response);
     } on PostgrestException catch (e) {
@@ -138,11 +142,8 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
       final bedData = bed.toJson();
       bedData.remove('id');
 
-      final response = await supabaseClient
-          .from('beds')
-          .insert(bedData)
-          .select()
-          .single();
+      final response =
+          await supabaseClient.from('beds').insert(bedData).select().single();
 
       return Bed.fromJson(response);
     } on PostgrestException catch (e) {
@@ -178,14 +179,10 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   @override
   Future<List<Planting>> getBedPlantings(String bedId) async {
     try {
-      final response = await supabaseClient
-          .from('plantings')
-          .select('''
+      final response = await supabaseClient.from('plantings').select('''
             *,
             crops_catalog(*)
-          ''')
-          .eq('bed_id', bedId)
-          .order('sowing_date', ascending: false);
+          ''').eq('bed_id', bedId).order('sowing_date', ascending: false);
 
       return (response as List<dynamic>)
           .map((json) => Planting.fromJson(json as Map<String, dynamic>))

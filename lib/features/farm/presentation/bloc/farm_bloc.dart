@@ -2,9 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/usecases/usecase.dart';
-import '../../domain/usecases/get_user_farms.dart';
 import '../../domain/usecases/create_farm.dart';
 import '../../domain/usecases/get_farm_details.dart';
+import '../../domain/usecases/get_user_farms.dart';
 import 'farm_event.dart';
 import 'farm_state.dart';
 
@@ -30,9 +30,9 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
-    
+
     final result = await getUserFarms(NoParams());
-    
+
     result.fold(
       (failure) => emit(FarmState.error(failure.message)),
       (farms) => emit(FarmState.farmsLoaded(farms)),
@@ -44,11 +44,11 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
-    
+
     final result = await getFarmDetails(
       GetFarmDetailsParams(farmId: event.farmId),
     );
-    
+
     result.fold(
       (failure) => emit(FarmState.error(failure.message)),
       (details) => emit(FarmState.farmDetailsLoaded(details)),
@@ -60,11 +60,11 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
-    
+
     final result = await createFarm(
       CreateFarmParams(farm: event.farm),
     );
-    
+
     result.fold(
       (failure) => emit(FarmState.error(failure.message)),
       (farm) {
@@ -81,7 +81,7 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   ) async {
     // Don't emit loading state for refresh to avoid UI flicker
     final result = await getUserFarms(NoParams());
-    
+
     result.fold(
       (failure) => emit(FarmState.error(failure.message)),
       (farms) => emit(FarmState.farmsLoaded(farms)),

@@ -3,10 +3,10 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../../shared/domain/entities/farm.dart';
-import '../../../../shared/domain/entities/plot.dart';
 import '../../../../shared/domain/entities/bed.dart';
+import '../../../../shared/domain/entities/farm.dart';
 import '../../../../shared/domain/entities/planting.dart';
+import '../../../../shared/domain/entities/plot.dart';
 import '../../domain/repositories/farm_repository.dart';
 import '../datasources/farm_remote_datasource.dart';
 
@@ -146,7 +146,8 @@ class FarmRepositoryImpl implements FarmRepository {
   }
 
   @override
-  Future<Either<Failure, List<Planting>>> getFarmPlantings(String farmId) async {
+  Future<Either<Failure, List<Planting>>> getFarmPlantings(
+      String farmId) async {
     if (await networkInfo.isConnected) {
       try {
         final plantings = await remoteDataSource.getFarmPlantings(farmId);
@@ -164,7 +165,8 @@ class FarmRepositoryImpl implements FarmRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getFarmStats(String farmId) async {
+  Future<Either<Failure, Map<String, dynamic>>> getFarmStats(
+      String farmId) async {
     if (await networkInfo.isConnected) {
       try {
         final stats = await remoteDataSource.getFarmStats(farmId);
