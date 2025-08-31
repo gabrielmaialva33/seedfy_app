@@ -57,7 +57,9 @@
       "Read(/Users/gabrielmaia/.claude/**)",
       "Read(/Users/gabrielmaia/.claude/agents/**)",
       "Read(/Users/gabrielmaia/.claude/agents/core/**)",
-      "Read(/Users/gabrielmaia/.claude/agents/core/**)"
+      "Read(/Users/gabrielmaia/.claude/agents/core/**)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)"
     ],
     "deny": [],
     "ask": []
