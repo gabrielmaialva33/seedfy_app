@@ -23,13 +23,13 @@ abstract class TaskRepository {
   Future<Either<Failure, List<entities.Task>>> getOverdueTasks();
 
   /// Create a new task
-  Future<Either<Failure, Task>> createTask(Task task);
+  Future<Either<Failure, entities.Task>> createTask(Task task);
 
   /// Update an existing task
-  Future<Either<Failure, Task>> updateTask(Task task);
+  Future<Either<Failure, entities.Task>> updateTask(Task task);
 
   /// Mark task as completed
-  Future<Either<Failure, Task>> completeTask(String taskId,
+  Future<Either<Failure, entities.Task>> completeTask(String taskId,
       {String? notes, int? actualMinutes});
 
   /// Delete a task
