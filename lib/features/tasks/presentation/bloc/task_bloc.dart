@@ -31,7 +31,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         getOverdueTasks: () => _onGetOverdueTasks(emit),
         createTask: (task) => _onCreateTask(task, emit),
         updateTask: (task) => _onUpdateTask(task, emit),
-        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(taskId, notes, actualMinutes, emit),
+        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(taskId, emit, notes, actualMinutes),
         deleteTask: (taskId) => _onDeleteTask(taskId, emit),
         getTaskStats: () => _onGetTaskStats(emit),
         refreshTasks: () => _onRefreshTasks(emit),
@@ -53,12 +53,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onGetFarmTasks(
-    TaskEvent event,
+    String farmId,
     Emitter<TaskState> emit,
   ) async {
     emit(const TaskState.loading());
 
-    final result = await taskRepository.getFarmTasks(event.farmId);
+    final result = await taskRepository.getFarmTasks(farmId);
 
     result.fold(
       (failure) => emit(TaskState.error(failure.message)),
