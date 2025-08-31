@@ -87,6 +87,75 @@ class AppLocalizationsPt extends AppLocalizations {
   String get map_addBed => 'Adicionar Canteiro';
 
   @override
+  String get nav_map => 'Mapa';
+
+  @override
+  String get nav_tasks => 'Tarefas';
+
+  @override
+  String get nav_analytics => 'Análises';
+
+  @override
+  String get nav_settings => 'Configurações';
+
+  @override
+  String get analytics_title => 'Análises';
+
+  @override
+  String get analytics_totalPlants => 'Total de Plantas';
+
+  @override
+  String get analytics_readyToHarvest => 'Prontas para Colher';
+
+  @override
+  String get analytics_activeTasks => 'Tarefas Ativas';
+
+  @override
+  String get analytics_averageGrowth => 'Crescimento Médio';
+
+  @override
+  String get analytics_plantGrowth => 'Crescimento das Plantas';
+
+  @override
+  String get analytics_harvestPrediction => 'Previsão de Colheita';
+
+  @override
+  String get analytics_noData => 'Sem dados disponíveis';
+
+  @override
+  String get settings_title => 'Configurações';
+
+  @override
+  String get settings_profile => 'Perfil';
+
+  @override
+  String get settings_language => 'Idioma';
+
+  @override
+  String get settings_collaborators => 'Colaboradores';
+
+  @override
+  String get settings_export => 'Exportar Dados';
+
+  @override
+  String get settings_about => 'Sobre';
+
+  @override
+  String get settings_help => 'Ajuda';
+
+  @override
+  String get settings_portuguese => 'Português';
+
+  @override
+  String get settings_english => 'Inglês';
+
+  @override
+  String get settings_exportSuccess => 'Dados exportados com sucesso!';
+
+  @override
+  String get settings_exportError => 'Erro ao exportar dados';
+
+  @override
   String get status_healthy => 'Saudável';
 
   @override

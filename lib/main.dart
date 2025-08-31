@@ -17,6 +17,8 @@ import 'features/map/screens/map_screen.dart';
 import 'features/home/screens/home_screen.dart';
 import 'features/profile/screens/profile_screen.dart';
 import 'features/onboarding/screens/onboarding_wizard.dart';
+import 'features/analytics/screens/analytics_screen.dart';
+import 'features/settings/screens/settings_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,6 +99,14 @@ class SeedfyApp extends StatelessWidget {
         GoRoute(
           path: '/ai-chat',
           builder: (context, state) => const AIChatScreen(),
+        ),
+        GoRoute(
+          path: '/analytics',
+          builder: (context, state) => const AnalyticsScreen(),
+        ),
+        GoRoute(
+          path: '/settings',
+          builder: (context, state) => const SettingsScreen(),
         ),
       ],
     );

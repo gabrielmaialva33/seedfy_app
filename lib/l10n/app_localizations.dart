@@ -254,6 +254,144 @@ abstract class AppLocalizations {
   /// **'Add Bed'**
   String get map_addBed;
 
+  /// Navigation map tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get nav_map;
+
+  /// Navigation tasks tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get nav_tasks;
+
+  /// Navigation analytics tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get nav_analytics;
+
+  /// Navigation settings tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get nav_settings;
+
+  /// Analytics screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get analytics_title;
+
+  /// Total plants metric
+  ///
+  /// In en, this message translates to:
+  /// **'Total Plants'**
+  String get analytics_totalPlants;
+
+  /// Ready to harvest metric
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Harvest'**
+  String get analytics_readyToHarvest;
+
+  /// Active tasks metric
+  ///
+  /// In en, this message translates to:
+  /// **'Active Tasks'**
+  String get analytics_activeTasks;
+
+  /// Average growth metric
+  ///
+  /// In en, this message translates to:
+  /// **'Average Growth'**
+  String get analytics_averageGrowth;
+
+  /// Plant growth chart title
+  ///
+  /// In en, this message translates to:
+  /// **'Plant Growth'**
+  String get analytics_plantGrowth;
+
+  /// Harvest prediction chart title
+  ///
+  /// In en, this message translates to:
+  /// **'Harvest Prediction'**
+  String get analytics_harvestPrediction;
+
+  /// No data message
+  ///
+  /// In en, this message translates to:
+  /// **'No data available'**
+  String get analytics_noData;
+
+  /// Settings screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings_title;
+
+  /// Profile settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get settings_profile;
+
+  /// Language settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settings_language;
+
+  /// Collaborators settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Collaborators'**
+  String get settings_collaborators;
+
+  /// Export data button
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data'**
+  String get settings_export;
+
+  /// About section
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settings_about;
+
+  /// Help section
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get settings_help;
+
+  /// Portuguese language option
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get settings_portuguese;
+
+  /// English language option
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get settings_english;
+
+  /// Export success message
+  ///
+  /// In en, this message translates to:
+  /// **'Data exported successfully!'**
+  String get settings_exportSuccess;
+
+  /// Export error message
+  ///
+  /// In en, this message translates to:
+  /// **'Error exporting data'**
+  String get settings_exportError;
+
   /// Healthy status text
   ///
   /// In en, this message translates to:

@@ -87,6 +87,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String get map_addBed => 'Add Bed';
 
   @override
+  String get nav_map => 'Map';
+
+  @override
+  String get nav_tasks => 'Tasks';
+
+  @override
+  String get nav_analytics => 'Analytics';
+
+  @override
+  String get nav_settings => 'Settings';
+
+  @override
+  String get analytics_title => 'Analytics';
+
+  @override
+  String get analytics_totalPlants => 'Total Plants';
+
+  @override
+  String get analytics_readyToHarvest => 'Ready to Harvest';
+
+  @override
+  String get analytics_activeTasks => 'Active Tasks';
+
+  @override
+  String get analytics_averageGrowth => 'Average Growth';
+
+  @override
+  String get analytics_plantGrowth => 'Plant Growth';
+
+  @override
+  String get analytics_harvestPrediction => 'Harvest Prediction';
+
+  @override
+  String get analytics_noData => 'No data available';
+
+  @override
+  String get settings_title => 'Settings';
+
+  @override
+  String get settings_profile => 'Profile';
+
+  @override
+  String get settings_language => 'Language';
+
+  @override
+  String get settings_collaborators => 'Collaborators';
+
+  @override
+  String get settings_export => 'Export Data';
+
+  @override
+  String get settings_about => 'About';
+
+  @override
+  String get settings_help => 'Help';
+
+  @override
+  String get settings_portuguese => 'Portuguese';
+
+  @override
+  String get settings_english => 'English';
+
+  @override
+  String get settings_exportSuccess => 'Data exported successfully!';
+
+  @override
+  String get settings_exportError => 'Error exporting data';
+
+  @override
   String get status_healthy => 'Healthy';
 
   @override

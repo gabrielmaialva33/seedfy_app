@@ -109,6 +109,101 @@
     "description": "Add bed button text"
   },
   
+  "nav_map": "Map",
+  "@nav_map": {
+    "description": "Navigation map tab label"
+  },
+  "nav_tasks": "Tasks",
+  "@nav_tasks": {
+    "description": "Navigation tasks tab label"
+  },
+  "nav_analytics": "Analytics",
+  "@nav_analytics": {
+    "description": "Navigation analytics tab label"
+  },
+  "nav_settings": "Settings",
+  "@nav_settings": {
+    "description": "Navigation settings tab label"
+  },
+  
+  "analytics_title": "Analytics",
+  "@analytics_title": {
+    "description": "Analytics screen title"
+  },
+  "analytics_totalPlants": "Total Plants",
+  "@analytics_totalPlants": {
+    "description": "Total plants metric"
+  },
+  "analytics_readyToHarvest": "Ready to Harvest",
+  "@analytics_readyToHarvest": {
+    "description": "Ready to harvest metric"
+  },
+  "analytics_activeTasks": "Active Tasks",
+  "@analytics_activeTasks": {
+    "description": "Active tasks metric"
+  },
+  "analytics_averageGrowth": "Average Growth",
+  "@analytics_averageGrowth": {
+    "description": "Average growth metric"
+  },
+  "analytics_plantGrowth": "Plant Growth",
+  "@analytics_plantGrowth": {
+    "description": "Plant growth chart title"
+  },
+  "analytics_harvestPrediction": "Harvest Prediction",
+  "@analytics_harvestPrediction": {
+    "description": "Harvest prediction chart title"
+  },
+  "analytics_noData": "No data available",
+  "@analytics_noData": {
+    "description": "No data message"
+  },
+  
+  "settings_title": "Settings",
+  "@settings_title": {
+    "description": "Settings screen title"
+  },
+  "settings_profile": "Profile",
+  "@settings_profile": {
+    "description": "Profile settings section"
+  },
+  "settings_language": "Language",
+  "@settings_language": {
+    "description": "Language settings section"
+  },
+  "settings_collaborators": "Collaborators",
+  "@settings_collaborators": {
+    "description": "Collaborators settings section"
+  },
+  "settings_export": "Export Data",
+  "@settings_export": {
+    "description": "Export data button"
+  },
+  "settings_about": "About",
+  "@settings_about": {
+    "description": "About section"
+  },
+  "settings_help": "Help",
+  "@settings_help": {
+    "description": "Help section"
+  },
+  "settings_portuguese": "Portuguese",
+  "@settings_portuguese": {
+    "description": "Portuguese language option"
+  },
+  "settings_english": "English",
+  "@settings_english": {
+    "description": "English language option"
+  },
+  "settings_exportSuccess": "Data exported successfully!",
+  "@settings_exportSuccess": {
+    "description": "Export success message"
+  },
+  "settings_exportError": "Error exporting data",
+  "@settings_exportError": {
+    "description": "Export error message"
+  },
+  
   "status_healthy": "Healthy",
   "@status_healthy": {
     "description": "Healthy status text"

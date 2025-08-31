@@ -31,6 +31,32 @@
   "map_title": "Mapa da Horta",
   "map_addBed": "Adicionar Canteiro",
   
+  "nav_map": "Mapa",
+  "nav_tasks": "Tarefas",
+  "nav_analytics": "Análises",
+  "nav_settings": "Configurações",
+  
+  "analytics_title": "Análises",
+  "analytics_totalPlants": "Total de Plantas",
+  "analytics_readyToHarvest": "Prontas para Colher",
+  "analytics_activeTasks": "Tarefas Ativas",
+  "analytics_averageGrowth": "Crescimento Médio",
+  "analytics_plantGrowth": "Crescimento das Plantas",
+  "analytics_harvestPrediction": "Previsão de Colheita",
+  "analytics_noData": "Sem dados disponíveis",
+  
+  "settings_title": "Configurações",
+  "settings_profile": "Perfil",
+  "settings_language": "Idioma",
+  "settings_collaborators": "Colaboradores",
+  "settings_export": "Exportar Dados",
+  "settings_about": "Sobre",
+  "settings_help": "Ajuda",
+  "settings_portuguese": "Português",
+  "settings_english": "Inglês",
+  "settings_exportSuccess": "Dados exportados com sucesso!",
+  "settings_exportError": "Erro ao exportar dados",
+  
   "status_healthy": "Saudável",
   "status_warning": "Atenção",
   "status_critical": "Crítico"
