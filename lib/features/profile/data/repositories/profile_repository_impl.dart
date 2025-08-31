@@ -51,8 +51,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
     if (await networkInfo.isConnected) {
       try {
         final currentUser = supabaseClient.auth.currentUser;
-        if (currentUser == null)
+        if (currentUser == null) {
           throw core_exceptions.AuthException('User not authenticated');
+        }
 
         final response = await supabaseClient
             .from('profiles')
