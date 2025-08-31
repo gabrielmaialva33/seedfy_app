@@ -20,12 +20,12 @@ class ApprovalStep extends StatelessWidget {
     final localeProvider = context.watch<LocaleProvider>();
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
 
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Spacer(),
+          const SizedBox(height: 40),
 
           // Success icon animation
           TweenAnimationBuilder<double>(
@@ -33,28 +33,30 @@ class ApprovalStep extends StatelessWidget {
             duration: const Duration(milliseconds: 800),
             curve: Curves.elasticOut,
             builder: (context, value, child) {
-              return Transform.scale(
-                scale: value,
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context)
-                            .primaryColor
-                            .withValues(alpha: 0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.eco,
-                    size: 60,
-                    color: Colors.white,
+              return Center(
+                child: Transform.scale(
+                  scale: value,
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context)
+                              .primaryColor
+                              .withValues(alpha: 0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.eco,
+                      size: 60,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               );
@@ -172,7 +174,7 @@ class ApprovalStep extends StatelessWidget {
             },
           ),
 
-          const Spacer(),
+          const SizedBox(height: 40),
 
           // Action buttons
           TweenAnimationBuilder<double>(
