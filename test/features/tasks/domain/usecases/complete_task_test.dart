@@ -164,7 +164,7 @@ void main() {
               taskId,
               notes: null,
               actualMinutes: null,
-            )).thenAnswer((_) async => Left(failure));
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
         final result =
@@ -189,7 +189,7 @@ void main() {
               taskId,
               notes: null,
               actualMinutes: null,
-            )).thenAnswer((_) async => Left(failure));
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
         final result =
@@ -213,7 +213,7 @@ void main() {
               taskId,
               notes: null,
               actualMinutes: null,
-            )).thenAnswer((_) async => Left(failure));
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
         final result =
@@ -238,7 +238,7 @@ void main() {
               taskId,
               notes: null,
               actualMinutes: null,
-            )).thenAnswer((_) async => Left(failure));
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
         final result =
@@ -290,7 +290,7 @@ void main() {
               taskId,
               notes: null,
               actualMinutes: negativeMinutes,
-            )).thenAnswer((_) async => Left(failure));
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(
