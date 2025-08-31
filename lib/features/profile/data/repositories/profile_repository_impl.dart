@@ -31,7 +31,25 @@ class ProfileRepositoryImpl implements ProfileRepository {
             .from('profiles')
             .select()
             .eq('id', user.id)
-            .single();
+            .maybeSingle();
+
+        if (response == null) {
+          // Profile doesn't exist - create it with basic user info
+          final newProfile = await supabaseClient
+              .from('profiles')
+              .insert({
+                'id': user.id,
+                'email': user.email,
+                'name': user.userMetadata?['name'] ?? user.email?.split('@')[0],
+                'created_at': DateTime.now().toIso8601String(),
+              })
+              .select()
+              .single();
+          
+          final userDto = UserDto.fromJson(newProfile);
+          final userEntity = UserMapper.toEntity(userDto);
+          return Right(userEntity);
+        }
 
         final userDto = UserDto.fromJson(response);
         final userEntity = UserMapper.toEntity(userDto);
@@ -60,7 +78,11 @@ class ProfileRepositoryImpl implements ProfileRepository {
             .update(UserMapper.toDto(user).toJson())
             .eq('id', currentUser.id)
             .select()
-            .single();
+            .maybeSingle();
+
+        if (response == null) {
+          throw core_exceptions.AuthException('Profile not found for update');
+        }
 
         final updatedUserDto = UserDto.fromJson(response);
         final updatedUser = UserMapper.toEntity(updatedUserDto);
