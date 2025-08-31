@@ -75,7 +75,8 @@
       "Bash(grep:*)",
       "Bash(/opt/homebrew/bin/supabase login)",
       "Bash(/opt/homebrew/bin/supabase link --project-ref zyltwdnzyoagnhjdashj)",
-      "Bash(/opt/homebrew/bin/supabase db push --include-seed)"
+      "Bash(/opt/homebrew/bin/supabase db push --include-seed)",
+      "Bash(/opt/homebrew/bin/supabase migration list)"
     ],
     "deny": [],
     "ask": []
