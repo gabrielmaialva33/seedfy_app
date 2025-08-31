@@ -206,7 +206,18 @@ void main() {
     });
 
     test('toJson should handle null optional fields', () {
-      final json = task.toJson();
+      final taskWithNulls = Task(
+        id: 'test-task-123',
+        plantingId: 'test-planting-456',
+        title: 'Water tomatoes',
+        type: TaskType.water,
+        status: TaskStatus.pending,
+        dueDate: DateTime(2023, 12, 25),
+        done: false,
+        createdAt: DateTime(2023, 12, 20),
+      );
+      
+      final json = taskWithNulls.toJson();
 
       expect(json['description'], null);
       expect(json['sowing_date'], null);
