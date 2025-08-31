@@ -59,17 +59,17 @@ INSERT INTO public.tasks (
    NOW() + INTERVAL '2 days', false, NULL,
    'medium', 60, NULL, NULL, NOW(), NOW()),
 
-  ('eeee0007-2222-2222-2222-222222222222', NULL,
+  ('eeee0007-2222-2222-2222-222222222222', 'dddd0007-2222-2222-2222-222222222222',
    '22222222-2222-2222-2222-222222222222', 'other',
-   'Análise de Solo', 'Coletar amostras para análise de pH e nutrientes',
+   'Análise de Solo', 'Coletar amostras para análise de pH e nutrientes da cenoura',
    NOW() - INTERVAL '7 days', false, NULL,
    'low', 45, NULL, 'Precisa reagendar com laboratório', NOW() - INTERVAL '10 days', NOW() - INTERVAL '7 days'),
 
   -- Ana's Community Garden Tasks (Rio de Janeiro)
   -- Educational and community activities
-  ('eeee0008-3333-3333-3333-333333333333', NULL,
+  ('eeee0008-3333-3333-3333-333333333333', 'dddd0009-3333-3333-3333-333333333333',
    '33333333-3333-3333-3333-333333333333', 'other',
-   'Oficina de Compostagem', 'Ensinar as famílias sobre compostagem doméstica',
+   'Oficina de Compostagem', 'Ensinar as famílias sobre compostagem doméstica relacionada à salsa',
    NOW() - INTERVAL '5 days', true, NOW() - INTERVAL '5 days',
    'medium', 120, 130, '15 pessoas participaram, muito interesse!', NOW() - INTERVAL '7 days', NOW() - INTERVAL '5 days'),
 
@@ -79,9 +79,9 @@ INSERT INTO public.tasks (
    NOW() + INTERVAL '3 days', false, NULL,
    'high', 90, NULL, NULL, NOW(), NOW()),
 
-  ('eeee0010-3333-3333-3333-333333333333', NULL,
+  ('eeee0010-3333-3333-3333-333333333333', 'dddd0011-3333-3333-3333-333333333333',
    '33333333-3333-3333-3333-333333333333', 'other',
-   'Reunião Mensal', 'Planejamento das atividades do próximo mês',
+   'Reunião Mensal', 'Planejamento das atividades do próximo mês sobre rabanete',
    NOW() + INTERVAL '7 days', false, NULL,
    'medium', 60, NULL, NULL, NOW(), NOW()),
 
