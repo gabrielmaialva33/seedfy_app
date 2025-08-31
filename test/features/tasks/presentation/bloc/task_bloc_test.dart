@@ -30,15 +30,15 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(NoParams());
-    registerFallbackValue(const CreateTaskParams(task: entities.Task(
+    registerFallbackValue(CreateTaskParams(task: entities.Task(
       id: '',
       plantingId: '',
       title: '',
       type: entities.TaskType.other,
       status: entities.TaskStatus.pending,
-      dueDate: const DateTimeHelper().now(),
+      dueDate: DateTime.now(),
       done: false,
-      createdAt: const DateTimeHelper().now(),
+      createdAt: DateTime.now(),
     )));
     registerFallbackValue(const CompleteTaskParams(taskId: ''));
   });
