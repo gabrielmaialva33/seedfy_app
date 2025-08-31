@@ -158,7 +158,7 @@ void main() {
       test('should return NotFoundFailure when task does not exist', () async {
         // Arrange
         const taskId = 'nonexistent';
-        final failure = NotFoundFailure('Task not found');
+        const failure = ValidationFailure('Task not found');
 
         when(() => mockTaskRepository.completeTask(
               taskId,
