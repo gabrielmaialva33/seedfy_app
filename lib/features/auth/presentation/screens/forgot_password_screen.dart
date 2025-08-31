@@ -32,10 +32,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     try {
       context.read<AuthBloc>().add(
-        AuthEvent.resetPasswordRequested(
-          email: _emailController.text.trim(),
-        ),
-      );
+            AuthEvent.resetPasswordRequested(
+              email: _emailController.text.trim(),
+            ),
+          );
 
       setState(() {
         _emailSent = true;

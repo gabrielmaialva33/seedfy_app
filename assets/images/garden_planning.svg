@@ -50,8 +50,8 @@
     </g>
 
     <!-- Title text -->
-    <text fill="#2E7D32" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle"
-        x="100" y="30">
+    <text fill="#2E7D32" font-family="Arial, sans-serif" font-size="16" font-weight="bold"
+        text-anchor="middle" x="100" y="30">
         Planeje sua Horta
     </text>
 </svg>

@@ -14,7 +14,7 @@ void main() {
 
         // Verify the app launched successfully
         expect(find.byType(MaterialApp), findsOneWidget);
-        
+
         // Verify we're on login screen by default
         expect(find.text('Entrar'), findsAtLeastNWidgets(1));
       },
@@ -50,10 +50,10 @@ void main() {
           // Simulate orientation change by rebuilding with different size
           await $.tester.binding.setSurfaceSize(const Size(800, 600));
           await $.pumpAndSettle();
-          
+
           // Verify app still works
           expect(find.byType(MaterialApp), findsOneWidget);
-          
+
           // Restore original size
           await $.tester.binding.setSurfaceSize(const Size(400, 800));
           await $.pumpAndSettle();
@@ -79,9 +79,9 @@ void main() {
           ),
           (data) {},
         );
-        
+
         await $.pumpAndSettle();
-        
+
         // Verify app handles memory pressure
         expect(find.byType(MaterialApp), findsOneWidget);
       },
@@ -93,15 +93,15 @@ void main() {
       'app starts within reasonable time',
       ($) async {
         final stopwatch = Stopwatch()..start();
-        
+
         app.main();
         await $.pumpAndSettle();
-        
+
         stopwatch.stop();
-        
+
         // App should start within 5 seconds
         expect(stopwatch.elapsedMilliseconds, lessThan(5000));
-        
+
         // Verify app loaded correctly
         expect(find.byType(MaterialApp), findsOneWidget);
       },
@@ -114,16 +114,16 @@ void main() {
         await $.pumpAndSettle();
 
         final stopwatch = Stopwatch();
-        
+
         // Test navigation timing
         stopwatch.start();
         await $('Criar conta').tap();
         await $.pumpAndSettle();
         stopwatch.stop();
-        
+
         // Navigation should be fast (under 1 second)
         expect(stopwatch.elapsedMilliseconds, lessThan(1000));
-        
+
         // Verify we navigated successfully
         expect($('Nome'), findsOneWidget);
       },
@@ -154,7 +154,7 @@ void main() {
         // Test screen reader support
         final binding = $.tester.binding;
         expect(binding, isNotNull);
-        
+
         // Verify app has semantic information available
         expect(find.byType(MaterialApp), findsOneWidget);
       },
@@ -170,7 +170,7 @@ void main() {
 
         // Test with no network (simulated)
         // This would require mock network setup
-        
+
         // Verify app shows appropriate error messages
         // expect($('Erro de conexão'), findsNothing);
       },
@@ -185,7 +185,7 @@ void main() {
 
         // Verify app is running
         expect(find.byType(MaterialApp), findsOneWidget);
-        
+
         // Test error boundary behavior
         // This would require triggering specific errors
       },

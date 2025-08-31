@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
 import '../../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../../shared/data/datasources/supabase_service.dart';
 import '../../../shared/domain/entities/bed.dart';
 import '../../../shared/domain/entities/crop.dart';
 import '../../../shared/domain/entities/farm.dart';
 import '../../../shared/domain/entities/planting.dart';
 import '../../../shared/domain/entities/plot.dart';
-import '../../../shared/data/datasources/supabase_service.dart';
 import '../../ai_camera/screens/ai_camera_screen.dart';
 import '../../ai_chat/screens/ai_chat_screen.dart';
 import '../../tasks/screens/tasks_screen.dart';
@@ -404,7 +404,9 @@ class _MapScreenState extends State<MapScreen> {
                   _refreshData();
                   break;
                 case 'logout':
-                  context.read<AuthBloc>().add(const AuthEvent.logoutRequested());
+                  context
+                      .read<AuthBloc>()
+                      .add(const AuthEvent.logoutRequested());
                   break;
               }
             },

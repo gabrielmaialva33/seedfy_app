@@ -9,8 +9,11 @@ import 'package:seedfy_app/shared/data/datasources/supabase_service.dart';
 
 // Mock classes
 class MockAuthRepository extends Mock implements AuthRepository {}
+
 class MockSupabaseService extends Mock implements SupabaseService {}
+
 class MockLoginUsecase extends Mock implements LoginUseCase {}
+
 class MockSignupUsecase extends Mock implements SignupUseCase {}
 
 // Test data helpers

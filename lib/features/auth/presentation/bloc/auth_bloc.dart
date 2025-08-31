@@ -3,13 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/signup_usecase.dart';
-import '../../domain/repositories/auth_repository.dart';
 
+part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
-part 'auth_bloc.freezed.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

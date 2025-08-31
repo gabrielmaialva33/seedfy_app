@@ -79,15 +79,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
     try {
       context.read<AuthBloc>().add(
-        AuthEvent.signupRequested(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-          name: _nameController.text.trim(),
-          phone: _phoneController.text.trim(),
-          city: _cityController.text.trim(),
-          state: _selectedState ?? _stateController.text.trim(),
-        ),
-      );
+            AuthEvent.signupRequested(
+              email: _emailController.text.trim(),
+              password: _passwordController.text,
+              name: _nameController.text.trim(),
+              phone: _phoneController.text.trim(),
+              city: _cityController.text.trim(),
+              state: _selectedState ?? _stateController.text.trim(),
+            ),
+          );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

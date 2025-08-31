@@ -2,37 +2,37 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // 🌱 Paleta Seedfy - Inspirada na natureza e agricultura sustentável
-  
+
   // Cores Principais
-  static const seedfyGreen = Color(0xFF22C55E);      // Verde vibrante principal
-  static const earthGreen = Color(0xFF059669);       // Verde terra mais escuro
-  static const soilBrown = Color(0xFFA16207);        // Marrom terra fértil
-  static const sunGold = Color(0xFFEAB308);          // Dourado do sol
-  static const blossomPink = Color(0xFFEC4899);      // Rosa floração
-  
+  static const seedfyGreen = Color(0xFF22C55E); // Verde vibrante principal
+  static const earthGreen = Color(0xFF059669); // Verde terra mais escuro
+  static const soilBrown = Color(0xFFA16207); // Marrom terra fértil
+  static const sunGold = Color(0xFFEAB308); // Dourado do sol
+  static const blossomPink = Color(0xFFEC4899); // Rosa floração
+
   // Sistema de Status (Semafórico para plantações)
-  static const healthyGreen = Color(0xFF22C55E);     // Saudável (>7 dias)
-  static const warningYellow = Color(0xFFF59E0B);    // Atenção (3-7 dias)
-  static const criticalRed = Color(0xFFEF4444);      // Crítico (<3 dias)
-  static const emptyGray = Color(0xFF6B7280);        // Canteiros vazios
-  
+  static const healthyGreen = Color(0xFF22C55E); // Saudável (>7 dias)
+  static const warningYellow = Color(0xFFF59E0B); // Atenção (3-7 dias)
+  static const criticalRed = Color(0xFFEF4444); // Crítico (<3 dias)
+  static const emptyGray = Color(0xFF6B7280); // Canteiros vazios
+
   // Cores Complementares
-  static const softGreen = Color(0xFFDCFCE7);        // Background suave
-  static const stoneGray = Color(0xFFF3F4F6);        // Cards e neutrals
-  static const darkText = Color(0xFF1F2937);         // Textos principais
-  static const lightText = Color(0xFF6B7280);        // Textos secundários
-  static const pureWhite = Color(0xFFFFFFFF);        // Branco puro
-  
+  static const softGreen = Color(0xFFDCFCE7); // Background suave
+  static const stoneGray = Color(0xFFF3F4F6); // Cards e neutrals
+  static const darkText = Color(0xFF1F2937); // Textos principais
+  static const lightText = Color(0xFF6B7280); // Textos secundários
+  static const pureWhite = Color(0xFFFFFFFF); // Branco puro
+
   // Manter compatibilidade com código existente
-  static const primaryPurple = seedfyGreen;          // Compatibilidade
-  static const primaryGreen = earthGreen;            // Compatibilidade
-  static const accentOrange = sunGold;               // Compatibilidade
-  static const backgroundLight = softGreen;          // Compatibilidade
-  static const cardWhite = pureWhite;                // Compatibilidade
-  static const textDark = darkText;                  // Compatibilidade
-  static const textGray = lightText;                 // Compatibilidade
-  static const successGreen = healthyGreen;          // Compatibilidade
-  static const errorRed = criticalRed;               // Compatibilidade
+  static const primaryPurple = seedfyGreen; // Compatibilidade
+  static const primaryGreen = earthGreen; // Compatibilidade
+  static const accentOrange = sunGold; // Compatibilidade
+  static const backgroundLight = softGreen; // Compatibilidade
+  static const cardWhite = pureWhite; // Compatibilidade
+  static const textDark = darkText; // Compatibilidade
+  static const textGray = lightText; // Compatibilidade
+  static const successGreen = healthyGreen; // Compatibilidade
+  static const errorRed = criticalRed; // Compatibilidade
 
   // Gradientes inspirados na natureza
   static const seedfyGradient = LinearGradient(
@@ -40,13 +40,13 @@ class AppTheme {
     end: Alignment.bottomRight,
     colors: [seedfyGreen, earthGreen],
   );
-  
+
   static const sunsetGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [sunGold, soilBrown],
   );
-  
+
   static const gardenGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -58,7 +58,7 @@ class AppTheme {
     end: Alignment.bottomCenter,
     colors: [softGreen, stoneGray],
   );
-  
+
   // Manter compatibilidade
   static const primaryGradient = seedfyGradient;
   static const cardGradient = gardenGradient;

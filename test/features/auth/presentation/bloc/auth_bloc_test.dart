@@ -35,7 +35,7 @@ void main() {
     mockAuthRepository = MockAuthRepository();
     mockLoginUsecase = MockLoginUsecase();
     mockSignupUsecase = MockSignupUsecase();
-    
+
     // Setup auth state stream
     when(() => mockAuthRepository.authStateChanges)
         .thenAnswer((_) => const Stream.empty());
@@ -84,17 +84,17 @@ void main() {
         ],
         verify: (bloc) {
           verify(() => mockLoginUsecase(const LoginParams(
-            email: TestData.validEmail,
-            password: TestData.validPassword,
-          ))).called(1);
+                email: TestData.validEmail,
+                password: TestData.validPassword,
+              ))).called(1);
         },
       );
 
       blocTest<AuthBloc, AuthState>(
         'emits [loading, error] when login fails',
         build: () {
-          when(() => mockLoginUsecase(any()))
-              .thenAnswer((_) async => const Left(ServerFailure('Login failed')));
+          when(() => mockLoginUsecase(any())).thenAnswer(
+              (_) async => const Left(ServerFailure('Login failed')));
           return authBloc;
         },
         act: (bloc) => bloc.add(const AuthEvent.loginRequested(
@@ -107,9 +107,9 @@ void main() {
         ],
         verify: (bloc) {
           verify(() => mockLoginUsecase(const LoginParams(
-            email: TestData.validEmail,
-            password: TestData.validPassword,
-          ))).called(1);
+                email: TestData.validEmail,
+                password: TestData.validPassword,
+              ))).called(1);
         },
       );
     });
@@ -137,22 +137,22 @@ void main() {
         ],
         verify: (bloc) {
           verify(() => mockSignupUsecase(const SignupParams(
-            email: TestData.validEmail,
-            password: TestData.validPassword,
-            name: TestData.validName,
-            phone: '11999999999',
-            city: 'São Paulo',
-            state: 'SP',
-            locale: 'pt-BR',
-          ))).called(1);
+                email: TestData.validEmail,
+                password: TestData.validPassword,
+                name: TestData.validName,
+                phone: '11999999999',
+                city: 'São Paulo',
+                state: 'SP',
+                locale: 'pt-BR',
+              ))).called(1);
         },
       );
 
       blocTest<AuthBloc, AuthState>(
         'emits [loading, error] when signup fails',
         build: () {
-          when(() => mockSignupUsecase(any()))
-              .thenAnswer((_) async => const Left(ServerFailure('Signup failed')));
+          when(() => mockSignupUsecase(any())).thenAnswer(
+              (_) async => const Left(ServerFailure('Signup failed')));
           return authBloc;
         },
         act: (bloc) => bloc.add(const AuthEvent.signupRequested(
@@ -192,8 +192,8 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [loading, error] when logout fails',
         build: () {
-          when(() => mockAuthRepository.logout())
-              .thenAnswer((_) async => const Left(ServerFailure('Logout failed')));
+          when(() => mockAuthRepository.logout()).thenAnswer(
+              (_) async => const Left(ServerFailure('Logout failed')));
           return authBloc;
         },
         act: (bloc) => bloc.add(const AuthEvent.logoutRequested()),

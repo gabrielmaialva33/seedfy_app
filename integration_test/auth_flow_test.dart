@@ -129,7 +129,7 @@ void main() {
 
         // This test would require proper authentication setup
         // await authenticateUser($);
-        
+
         // Test navigation to different screens
         // await testNavigationFlow($);
       },
@@ -172,7 +172,7 @@ void main() {
 
         // Test camera permission
         // await $.native.grantPermissionWhenInUse();
-        
+
         // Test location permission
         // await $.native.selectFineLocation();
         // await $.native.grantPermissionWhenInUse();
@@ -189,7 +189,7 @@ void main() {
         // Test app backgrounding/foregrounding
         // await $.native.pressHome();
         // await $.native.openApp();
-        
+
         // Verify app state is maintained
         expect($('Seedfy'), findsOneWidget);
       },
@@ -204,10 +204,10 @@ Future<void> authenticateUser(PatrolIntegrationTester $) async {
   await $('Email').enterText('test@seedfy.com');
   await $('Password').enterText('testpassword');
   await $('Entrar').tap();
-  
+
   // Wait for authentication to complete
   await $.pumpAndSettle(timeout: const Duration(seconds: 10));
-  
+
   // Verify we're authenticated (home screen visible)
   await $('Home').waitUntilVisible();
 }

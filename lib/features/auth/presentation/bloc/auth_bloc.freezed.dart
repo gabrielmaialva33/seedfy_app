@@ -28,6 +28,7 @@ mixin _$AuthEvent {
     required TResult Function(UserEntity? user) userChanged,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String email, String password)? loginRequested,
@@ -53,6 +54,7 @@ mixin _$AuthEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(AuthLoginRequested value) loginRequested,
@@ -64,6 +66,7 @@ mixin _$AuthEvent {
     required TResult Function(AuthUserChanged value) userChanged,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AuthLoginRequested value)? loginRequested,
@@ -98,9 +101,9 @@ class _$AuthEventCopyWithImpl<$Res, $Val extends AuthEvent>
     implements $AuthEventCopyWith<$Res> {
   _$AuthEventCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
+// ignore: unused_field
   final $Val _value;
-  // ignore: unused_field
+// ignore: unused_field
   final $Res Function($Val) _then;
 
   /// Create a copy of AuthEvent
@@ -1239,9 +1242,9 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
     implements $AuthStateCopyWith<$Res> {
   _$AuthStateCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
+// ignore: unused_field
   final $Val _value;
-  // ignore: unused_field
+// ignore: unused_field
   final $Res Function($Val) _then;
 
   /// Create a copy of AuthState

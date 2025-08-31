@@ -29,7 +29,8 @@ class AuthFailure extends Failure {
 }
 
 class InvalidCredentialsFailure extends AuthFailure {
-  const InvalidCredentialsFailure() : super('Invalid email or password', 'invalid_credentials');
+  const InvalidCredentialsFailure()
+      : super('Invalid email or password', 'invalid_credentials');
 }
 
 class UserNotFoundFailure extends AuthFailure {
@@ -37,7 +38,8 @@ class UserNotFoundFailure extends AuthFailure {
 }
 
 class EmailAlreadyInUseFailure extends AuthFailure {
-  const EmailAlreadyInUseFailure() : super('Email already in use', 'email_already_in_use');
+  const EmailAlreadyInUseFailure()
+      : super('Email already in use', 'email_already_in_use');
 }
 
 class WeakPasswordFailure extends AuthFailure {
@@ -54,15 +56,17 @@ class FarmNotFoundFailure extends FarmFailure {
 }
 
 class FarmAccessDeniedFailure extends FarmFailure {
-  const FarmAccessDeniedFailure() : super('Access denied to this farm', 'access_denied');
+  const FarmAccessDeniedFailure()
+      : super('Access denied to this farm', 'access_denied');
 }
 
 // Validation failures
 class ValidationFailure extends Failure {
   final Map<String, String>? errors;
-  
-  const ValidationFailure(String message, [this.errors]) : super(message, 'validation_error');
-  
+
+  const ValidationFailure(String message, [this.errors])
+      : super(message, 'validation_error');
+
   @override
   List<Object?> get props => [message, code, errors];
 }

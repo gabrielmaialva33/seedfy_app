@@ -20,7 +20,8 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> login(String email, String password) async {
+  Future<Either<Failure, UserEntity>> login(
+      String email, String password) async {
     if (!(await networkInfo.isConnected)) {
       return const Left(NetworkFailure());
     }

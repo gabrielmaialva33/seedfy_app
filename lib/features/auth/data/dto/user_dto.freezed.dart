@@ -21,13 +21,21 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserDto {
   String get id => throw _privateConstructorUsedError;
+
   String get email => throw _privateConstructorUsedError;
+
   String get name => throw _privateConstructorUsedError;
+
   String? get phone => throw _privateConstructorUsedError;
+
   String get locale => throw _privateConstructorUsedError;
+
   String get city => throw _privateConstructorUsedError;
+
   String get state => throw _privateConstructorUsedError;
+
   DateTime get createdAt => throw _privateConstructorUsedError;
+
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this UserDto to a JSON map.
@@ -43,6 +51,7 @@ mixin _$UserDto {
 abstract class $UserDtoCopyWith<$Res> {
   factory $UserDtoCopyWith(UserDto value, $Res Function(UserDto) then) =
       _$UserDtoCopyWithImpl<$Res, UserDto>;
+
   @useResult
   $Res call(
       {String id,
@@ -63,6 +72,7 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -127,6 +137,7 @@ abstract class _$$UserDtoImplCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
   factory _$$UserDtoImplCopyWith(
           _$UserDtoImpl value, $Res Function(_$UserDtoImpl) then) =
       __$$UserDtoImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -302,20 +313,28 @@ abstract class _UserDto implements UserDto {
 
   @override
   String get id;
+
   @override
   String get email;
+
   @override
   String get name;
+
   @override
   String? get phone;
+
   @override
   String get locale;
+
   @override
   String get city;
+
   @override
   String get state;
+
   @override
   DateTime get createdAt;
+
   @override
   DateTime? get updatedAt;
 

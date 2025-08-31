@@ -50,8 +50,8 @@
     <circle cx="140" cy="60" fill="none" r="30" stroke="#2E7D32" stroke-dasharray="5,5"
         stroke-width="3" />
 
-    <text fill="#2E7D32" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle"
-        x="100" y="25">
+    <text fill="#2E7D32" font-family="Arial, sans-serif" font-size="14" font-weight="bold"
+        text-anchor="middle" x="100" y="25">
         Escolha suas Culturas
     </text>
 </svg>

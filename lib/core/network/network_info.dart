@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 
 abstract class NetworkInfo {
   Future<bool> get isConnected;
+
   Stream<bool> get connectionStream;
 }
 
@@ -21,7 +22,8 @@ class NetworkInfoImpl implements NetworkInfo {
   @override
   Stream<bool> get connectionStream {
     return connectivity.onConnectivityChanged.map(
-      (results) => !results.contains(ConnectivityResult.none) && results.isNotEmpty,
+      (results) =>
+          !results.contains(ConnectivityResult.none) && results.isNotEmpty,
     );
   }
 }

@@ -35,11 +35,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       context.read<AuthBloc>().add(
-        AuthEvent.loginRequested(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        ),
-      );
+            AuthEvent.loginRequested(
+              email: _emailController.text.trim(),
+              password: _passwordController.text,
+            ),
+          );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -6,6 +6,7 @@ import '../dto/user_dto.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserDto> login(String email, String password);
+
   Future<UserDto> signup({
     required String email,
     required String password,
@@ -15,9 +16,13 @@ abstract class AuthRemoteDataSource {
     required String state,
     String locale,
   });
+
   Future<void> logout();
+
   UserDto? getCurrentUser();
+
   Stream<UserDto?> get authStateChanges;
+
   Future<void> resetPassword(String email);
 }
 
@@ -116,7 +121,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Stream<UserDto?> get authStateChanges {
     return client.auth.onAuthStateChange.asyncMap((state) async {
       if (state.session?.user == null) return null;
-      
+
       try {
         final profileData = await _getProfile(state.session!.user.id);
         return UserDto.fromJson(profileData);
@@ -137,12 +142,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   Future<Map<String, dynamic>> _getProfile(String userId) async {
     try {
-      final response = await client
-          .from('profiles')
-          .select()
-          .eq('id', userId)
-          .single();
-      
+      final response =
+          await client.from('profiles').select().eq('id', userId).single();
+
       return response;
     } catch (e) {
       throw app_exceptions.ServerException('Failed to fetch profile');

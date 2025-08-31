@@ -240,7 +240,8 @@ erDiagram
 
 #### Core Tables
 
-- **profiles**: User profiles extending Supabase authentication with personal information and preferences
+- **profiles**: User profiles extending Supabase authentication with personal information and
+  preferences
 - **farms**: Farm or garden entities owned by users with location and descriptive data
 - **collaborators**: Many-to-many relationship for farm access control (owner, editor, viewer roles)
 - **invitations**: Pending collaboration invitations with expiration and status tracking
@@ -253,8 +254,10 @@ erDiagram
 
 #### Agricultural Data
 
-- **crops_catalog**: Comprehensive crop database with cultivation parameters, spacing requirements, and companion planting information
-- **plantings**: Active crop instances in beds with customizable parameters and intercropping support
+- **crops_catalog**: Comprehensive crop database with cultivation parameters, spacing requirements,
+  and companion planting information
+- **plantings**: Active crop instances in beds with customizable parameters and intercropping
+  support
 - **tasks**: Agricultural tasks linked to plantings with assignment and priority management
 
 ### Database Features
