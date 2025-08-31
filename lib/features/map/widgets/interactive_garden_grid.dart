@@ -4,10 +4,8 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 
 import '../../../core/providers/locale_provider.dart';
 import '../../../shared/data/datasources/supabase_service.dart';
-import '../../../shared/domain/entities/bed.dart';
 import '../../../shared/domain/entities/plot.dart';
 import '../screens/map_screen.dart';
-import 'bed_editor_dialog.dart';
 
 class InteractiveGardenGrid extends StatefulWidget {
   final Plot plot;
@@ -349,9 +347,6 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
         },
         onPanUpdate: (details) {
           if (_isDragging) {
-            final newLeft = (100 + bed.x * _gridScale) + (details.globalPosition.dx - _dragStartOffset!.dx);
-            final newTop = (100 + bed.y * _gridScale) + (details.globalPosition.dy - _dragStartOffset!.dy);
-            
             // Update position in real-time for visual feedback
             setState(() {
               // Visual update only - actual database update happens on pan end
@@ -359,9 +354,11 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
           }
         },
         onPanEnd: (details) {
-          if (_isDragging) {
-            final newLeft = (100 + bed.x * _gridScale) + (details.velocity.pixelsPerSecond.dx / 10);
-            final newTop = (100 + bed.y * _gridScale) + (details.velocity.pixelsPerSecond.dy / 10);
+          if (_isDragging && _dragStartOffset != null) {
+            final deltaX = details.globalPosition.dx - _dragStartOffset!.dx;
+            final deltaY = details.globalPosition.dy - _dragStartOffset!.dy;
+            final newLeft = (100 + bed.x * _gridScale) + deltaX;
+            final newTop = (100 + bed.y * _gridScale) + deltaY;
             
             _updateBedPosition(bedWithPlanting, newLeft, newTop);
             
@@ -524,9 +521,6 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
           },
           onPanUpdate: (details) {
             if (_isResizing) {
-              final newWidth = (_resizeStartSize!.width + details.delta.dx).clamp(25.0, 250.0);
-              final newHeight = (_resizeStartSize!.height + details.delta.dy).clamp(25.0, 250.0);
-              
               // Visual feedback only
               setState(() {});
             }
