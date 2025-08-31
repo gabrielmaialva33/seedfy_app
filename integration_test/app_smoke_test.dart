@@ -152,7 +152,7 @@ void main() {
         await $.pumpAndSettle();
 
         // Test screen reader support
-        final semantics = $.tester.binding.pipelineOwner.semanticsOwner;
+        final semantics = $.tester.binding.renderView.pipelineOwner.semanticsOwner;
         expect(semantics, isNotNull);
         
         // Verify semantic tree is built
