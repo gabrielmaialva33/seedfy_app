@@ -67,7 +67,7 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
     final localeProvider = context.watch<LocaleProvider>();
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
 
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -316,7 +316,7 @@ class _PathConfigurationStepState extends State<PathConfigurationStep> {
             ),
           ),
 
-          const Spacer(),
+          const SizedBox(height: 32),
 
           // Navigation buttons
           Row(
