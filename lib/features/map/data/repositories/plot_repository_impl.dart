@@ -25,9 +25,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final plots = await remoteDataSource.getFarmPlots(farmId);
         return Right(plots);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -41,9 +41,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final plot = await remoteDataSource.getPlot(plotId);
         return Right(plot);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -57,9 +57,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final createdPlot = await remoteDataSource.createPlot(plot);
         return Right(createdPlot);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -73,9 +73,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final updatedPlot = await remoteDataSource.updatePlot(plot);
         return Right(updatedPlot);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -89,9 +89,9 @@ class PlotRepositoryImpl implements PlotRepository {
         await remoteDataSource.deletePlot(plotId);
         return const Right(null);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -105,9 +105,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final beds = await remoteDataSource.getPlotBeds(plotId);
         return Right(beds);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -121,9 +121,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final createdBed = await remoteDataSource.createBed(bed);
         return Right(createdBed);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -137,9 +137,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final updatedBed = await remoteDataSource.updateBed(bed);
         return Right(updatedBed);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -153,9 +153,9 @@ class PlotRepositoryImpl implements PlotRepository {
         await remoteDataSource.deleteBed(bedId);
         return const Right(null);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
@@ -169,9 +169,9 @@ class PlotRepositoryImpl implements PlotRepository {
         final plantings = await remoteDataSource.getBedPlantings(bedId);
         return Right(plantings);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));

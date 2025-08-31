@@ -36,8 +36,9 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<List<Plot>> getFarmPlots(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null)
-        throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final response = await supabaseClient
           .from('plots')
@@ -61,8 +62,9 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<Plot> getPlot(String plotId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null)
-        throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final response = await supabaseClient.from('plots').select('''
             *,
@@ -79,8 +81,9 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<Plot> createPlot(Plot plot) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null)
-        throw const core_exceptions.AuthException('User not authenticated');
+      if (user == null) {
+        throw core_exceptions.AuthException('User not authenticated');
+      }
 
       final plotData = plot.toJson();
       plotData.remove('id');

@@ -17,46 +17,46 @@ class TaskRepositoryImpl implements TaskRepository {
   });
 
   @override
-  Future<Either<Failure, List<Task>>> getUserTasks() async {
+  Future<Either<Failure, List<entities.Task>>> getUserTasks() async {
     return await _getTasks(() => remoteDataSource.getUserTasks());
   }
 
   @override
-  Future<Either<Failure, List<Task>>> getFarmTasks(String farmId) async {
+  Future<Either<Failure, List<entities.Task>>> getFarmTasks(String farmId) async {
     return await _getTasks(() => remoteDataSource.getFarmTasks(farmId));
   }
 
   @override
-  Future<Either<Failure, List<Task>>> getPlantingTasks(
+  Future<Either<Failure, List<entities.Task>>> getPlantingTasks(
       String plantingId) async {
     return await _getTasks(() => remoteDataSource.getPlantingTasks(plantingId));
   }
 
   @override
-  Future<Either<Failure, List<Task>>> getPendingTasks() async {
+  Future<Either<Failure, List<entities.Task>>> getPendingTasks() async {
     return await _getTasks(() => remoteDataSource.getPendingTasks());
   }
 
   @override
-  Future<Either<Failure, List<Task>>> getTodayTasks() async {
+  Future<Either<Failure, List<entities.Task>>> getTodayTasks() async {
     return await _getTasks(() => remoteDataSource.getTodayTasks());
   }
 
   @override
-  Future<Either<Failure, List<Task>>> getOverdueTasks() async {
+  Future<Either<Failure, List<entities.Task>>> getOverdueTasks() async {
     return await _getTasks(() => remoteDataSource.getOverdueTasks());
   }
 
   @override
-  Future<Either<Failure, Task>> createTask(Task task) async {
+  Future<Either<Failure, entities.Task>> createTask(entities.Task task) async {
     if (await networkInfo.isConnected) {
       try {
         final createdTask = await remoteDataSource.createTask(task);
         return Right(createdTask);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -66,15 +66,15 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, Task>> updateTask(Task task) async {
+  Future<Either<Failure, entities.Task>> updateTask(entities.Task task) async {
     if (await networkInfo.isConnected) {
       try {
         final updatedTask = await remoteDataSource.updateTask(task);
         return Right(updatedTask);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -84,7 +84,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, Task>> completeTask(String taskId,
+  Future<Either<Failure, entities.Task>> completeTask(String taskId,
       {String? notes, int? actualMinutes}) async {
     if (await networkInfo.isConnected) {
       try {
@@ -95,9 +95,9 @@ class TaskRepositoryImpl implements TaskRepository {
         );
         return Right(completedTask);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -113,9 +113,9 @@ class TaskRepositoryImpl implements TaskRepository {
         await remoteDataSource.deleteTask(taskId);
         return const Right(null);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -131,9 +131,9 @@ class TaskRepositoryImpl implements TaskRepository {
         final stats = await remoteDataSource.getTaskStats();
         return Right(stats);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
@@ -143,16 +143,16 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   /// Helper method to reduce code duplication for getting tasks
-  Future<Either<Failure, List<Task>>> _getTasks(
+  Future<Either<Failure, List<entities.Task>>> _getTasks(
       Future<List<Task>> Function() getTasksFunction) async {
     if (await networkInfo.isConnected) {
       try {
         final tasks = await getTasksFunction();
         return Right(tasks);
       } on AuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
+        return Left(AuthFailure(e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
+        return Left(ServerFailure(e.message));
       } catch (e) {
         return Left(ServerFailure('Unknown error: ${e.toString()}'));
       }
