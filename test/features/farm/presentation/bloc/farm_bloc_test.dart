@@ -242,6 +242,14 @@ void main() {
     });
 
     group('Multiple events', () {
+      final farmDetails = FarmDetailsResult(
+        farm: testFarm,
+        plots: [],
+        beds: [],
+        plantings: [],
+        stats: {},
+      );
+
       blocTest<FarmBloc, FarmState>(
         'handles multiple events correctly',
         build: () {
