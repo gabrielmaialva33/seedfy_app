@@ -92,7 +92,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, tasksLoaded] when getUserTasks succeeds',
         build: () {
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
         },
@@ -109,7 +109,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, error] when getUserTasks fails',
         build: () {
-          when(() => mockGetUserTasks(NoParams())).thenAnswer(
+          when(() => mockGetUserTasks(any())).thenAnswer(
               (_) async => const Left(ServerFailure('Server error')));
           return taskBloc;
         },
@@ -210,7 +210,7 @@ void main() {
         build: () {
           when(() => mockCreateTask(CreateTaskParams(task: testTask)))
               .thenAnswer((_) async => Right(testTask));
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
         },
@@ -264,7 +264,7 @@ void main() {
                   )))
               .thenAnswer((_) async => Right(
                   testTask.copyWith(status: entities.TaskStatus.completed)));
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
         },
@@ -372,7 +372,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [tasksLoaded] when refreshTasks succeeds (no loading state)',
         build: () {
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
         },
@@ -450,7 +450,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'handles rapid sequential events correctly',
         build: () {
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right(testTasks));
           when(() => mockTaskRepository.getPendingTasks())
               .thenAnswer((_) async => Right(testTasks));

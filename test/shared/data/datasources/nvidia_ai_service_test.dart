@@ -168,7 +168,7 @@ void main() {
       test('should extract JSON from mixed content', () {
         const mixedContent =
             'Here is the analysis: {"plant_name": "Rose", "health_score": 90} and some extra text.';
-        final jsonMatch = RegExp(r'\\{.*\\}').firstMatch(mixedContent);
+        final jsonMatch = RegExp(r'\{.*?\}').firstMatch(mixedContent);
 
         expect(jsonMatch, isNotNull);
         expect(
