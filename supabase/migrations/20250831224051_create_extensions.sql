@@ -1,4 +1,3 @@
--- 00001_enable_extensions.sql
 -- Enable necessary PostgreSQL extensions for Seedfy application
 -- Must be run as superuser or database owner
 
