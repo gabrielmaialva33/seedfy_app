@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/exceptions.dart' as core_exceptions;
 import '../../../../shared/domain/entities/plot.dart';
 import '../../../../shared/domain/entities/bed.dart';
 import '../../../../shared/domain/entities/planting.dart';
@@ -27,7 +27,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<List<Plot>> getFarmPlots(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('plots')
@@ -43,7 +43,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
           .map((json) => Plot.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -51,7 +51,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<Plot> getPlot(String plotId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('plots')
@@ -65,7 +65,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
 
       return Plot.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -73,7 +73,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
   Future<Plot> createPlot(Plot plot) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final plotData = plot.toJson();
       plotData.remove('id');
@@ -86,7 +86,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
 
       return Plot.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -102,7 +102,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
 
       return Plot.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -111,7 +111,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
     try {
       await supabaseClient.from('plots').delete().eq('id', plotId);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -128,7 +128,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
           .map((json) => Bed.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -146,7 +146,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
 
       return Bed.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -162,7 +162,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
 
       return Bed.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -171,7 +171,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
     try {
       await supabaseClient.from('beds').delete().eq('id', bedId);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 
@@ -191,7 +191,7 @@ class PlotRemoteDataSourceImpl implements PlotRemoteDataSource {
           .map((json) => Planting.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     }
   }
 }
