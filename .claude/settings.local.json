@@ -69,7 +69,8 @@
       "Bash(gzip:*)",
       "Bash(mkdir:*)",
       "Bash(git log:*)",
-      "mcp__playwright__browser_fill_form"
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_resize"
     ],
     "deny": [],
     "ask": []
