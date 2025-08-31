@@ -5,23 +5,22 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'core/di/injection_container.dart' as di;
-import 'core/providers/auth_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 import 'features/analytics/screens/analytics_screen.dart';
-import 'features/auth/screens/login_screen.dart';
-import 'features/auth/screens/signup_screen.dart';
+import 'features/auth/presentation/screens/login_screen.dart';
+import 'features/auth/presentation/screens/signup_screen.dart';
 import 'features/home/screens/home_screen.dart';
 import 'features/map/screens/map_screen.dart';
 import 'features/onboarding/screens/onboarding_wizard.dart';
 import 'features/profile/screens/profile_screen.dart';
 import 'features/settings/screens/settings_screen.dart';
 import 'firebase_options.dart';
-import 'services/firebase_service.dart';
-import 'services/supabase_service.dart';
+import 'shared/data/datasources/firebase_service.dart';
+import 'shared/data/datasources/supabase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +47,6 @@ void main() async {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => LocaleProvider()),
-          ChangeNotifierProvider(create: (_) => AuthProvider()),
         ],
         child: const SeedfyApp(),
       ),

@@ -45,7 +45,8 @@
       "mcp__playwright__browser_take_screenshot",
       "Bash(npx supabase:*)",
       "Bash(dart run:*)",
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []
