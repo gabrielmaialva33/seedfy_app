@@ -650,32 +650,55 @@ class _MapScreenState extends State<MapScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _handleAddBed(const Offset(100, 100)),
-        icon: const Icon(Icons.add),
-        label: Text(isPortuguese ? 'Canteiro' : 'Add Bed'),
+      floatingActionButton: ResponsiveBuilder(
+        builder: (context, screenSize) {
+          if (screenSize == ScreenSize.mobile) {
+            return FloatingActionButton(
+              onPressed: () => _handleAddBed(const Offset(100, 100)),
+              child: const Icon(Icons.add),
+              tooltip: isPortuguese ? 'Adicionar Canteiro' : 'Add Bed',
+            );
+          } else {
+            return FloatingActionButton.extended(
+              onPressed: () => _handleAddBed(const Offset(100, 100)),
+              icon: const Icon(Icons.add),
+              label: Text(isPortuguese ? 'Canteiro' : 'Add Bed'),
+            );
+          }
+        },
       ),
     );
   }
 
   Widget _buildStatusLegend(String label, Color color) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
-        ),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-        ),
-      ],
+    return ResponsiveBuilder(
+      builder: (context, screenSize) {
+        final iconSize = context.responsiveValue(mobile: 16, tablet: 14, desktop: 12);
+        final textSize = context.responsiveValue(mobile: 14, tablet: 13, desktop: 12);
+        final spacing = context.responsiveValue(mobile: 8, tablet: 6, desktop: 4);
+        
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: iconSize,
+              height: iconSize,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+              ),
+            ),
+            SizedBox(width: spacing),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: textSize,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
