@@ -63,7 +63,8 @@
       "Bash(rm:*)",
       "Bash(psql:*)",
       "Bash(supabase:*)",
-      "Bash(brew install:*)"
+      "Bash(brew install:*)",
+      "mcp__playwright__browser_type"
     ],
     "deny": [],
     "ask": []
