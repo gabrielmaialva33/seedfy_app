@@ -143,49 +143,48 @@ ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.plots (
   id,
   farm_id,
-  name,
+  label,
   description,
-  area_m2,
-  soil_type,
-  sun_exposure,
-  water_source,
+  length_m,
+  width_m,
+  path_gap_m,
   created_at
 ) VALUES
   -- Maria's plots (Urban Garden)
   ('bbbb0001-1111-1111-1111-111111111111', 'aaaa0001-1111-1111-1111-111111111111',
-   'Canteiros de Folhosas', 'Área principal com alface, rúcula e couve', 20.0, 'clay_loam', 'full_sun', 'drip_irrigation', NOW() - INTERVAL '6 months'),
+   'Canteiros de Folhosas', 'Área principal com alface, rúcula e couve', 5.0, 4.0, 0.3, NOW() - INTERVAL '6 months'),
   ('bbbb0002-1111-1111-1111-111111111111', 'aaaa0001-1111-1111-1111-111111111111', 
-   'Jardim de Ervas', 'Canteiro com manjericão, salsa e coentro', 15.0, 'sandy_loam', 'partial_sun', 'manual_watering', NOW() - INTERVAL '5 months'),
+   'Jardim de Ervas', 'Canteiro com manjericão, salsa e coentro', 4.0, 3.5, 0.3, NOW() - INTERVAL '5 months'),
   ('bbbb0003-1111-1111-1111-111111111111', 'aaaa0001-1111-1111-1111-111111111111',
-   'Área de Tomates', 'Estufa para tomates cereja', 10.0, 'potting_mix', 'full_sun', 'drip_irrigation', NOW() - INTERVAL '4 months'),
+   'Área de Tomates', 'Estufa para tomates cereja', 3.0, 3.0, 0.4, NOW() - INTERVAL '4 months'),
 
   -- João's plots (Small Farm)
   ('bbbb0004-2222-2222-2222-222222222222', 'aaaa0002-2222-2222-2222-222222222222',
-   'Canteiro Principal', 'Área grande para rotação de culturas', 1000.0, 'clay_loam', 'full_sun', 'sprinkler', NOW() - INTERVAL '2 years'),
+   'Canteiro Principal', 'Área grande para rotação de culturas', 50.0, 20.0, 0.5, NOW() - INTERVAL '2 years'),
   ('bbbb0005-2222-2222-2222-222222222222', 'aaaa0002-2222-2222-2222-222222222222',
-   'Estufa de Mudas', 'Local protegido para produção de mudas', 150.0, 'potting_mix', 'partial_sun', 'manual_watering', NOW() - INTERVAL '18 months'),
+   'Estufa de Mudas', 'Local protegido para produção de mudas', 15.0, 10.0, 0.4, NOW() - INTERVAL '18 months'),
   ('bbbb0006-2222-2222-2222-222222222222', 'aaaa0002-2222-2222-2222-222222222222',
-   'Área de Raízes', 'Especializada em cenoura e beterraba', 200.0, 'sandy_loam', 'full_sun', 'drip_irrigation', NOW() - INTERVAL '1 year'),
+   'Área de Raízes', 'Especializada em cenoura e beterraba', 20.0, 10.0, 0.4, NOW() - INTERVAL '1 year'),
 
   -- Ana's plots (Community Garden)  
   ('bbbb0007-3333-3333-3333-333333333333', 'aaaa0003-3333-3333-3333-333333333333',
-   'Canteiros das Famílias', 'Área dividida entre as famílias participantes', 80.0, 'clay_loam', 'full_sun', 'manual_watering', NOW() - INTERVAL '1 year'),
+   'Canteiros das Famílias', 'Área dividida entre as famílias participantes', 10.0, 8.0, 0.4, NOW() - INTERVAL '1 year'),
   ('bbbb0008-3333-3333-3333-333333333333', 'aaaa0003-3333-3333-3333-333333333333',
-   'Jardim Educativo', 'Espaço para atividades com crianças', 40.0, 'sandy_loam', 'partial_sun', 'manual_watering', NOW() - INTERVAL '10 months'),
+   'Jardim Educativo', 'Espaço para atividades com crianças', 8.0, 5.0, 0.5, NOW() - INTERVAL '10 months'),
 
   -- Pedro's plots (Backyard)
   ('bbbb0009-4444-4444-4444-444444444444', 'aaaa0004-4444-4444-4444-444444444444',
-   'Canteiro de Temperos', 'Primeiro canteiro com ervas básicas', 15.0, 'potting_mix', 'partial_sun', 'manual_watering', NOW() - INTERVAL '3 months'),
+   'Canteiro de Temperos', 'Primeiro canteiro com ervas básicas', 3.0, 2.0, 0.3, NOW() - INTERVAL '3 months'),
   ('bbbb0010-4444-4444-4444-444444444444', 'aaaa0004-4444-4444-4444-444444444444',
-   'Experimento de Folhosas', 'Teste com alface e rúcula', 10.0, 'sandy_loam', 'full_sun', 'manual_watering', NOW() - INTERVAL '2 months'),
+   'Experimento de Folhosas', 'Teste com alface e rúcula', 2.5, 2.0, 0.3, NOW() - INTERVAL '2 months'),
 
   -- Lúcia's plots (Tech Farm)
   ('bbbb0011-5555-5555-5555-555555555555', 'aaaa0005-5555-5555-5555-555555555555',
-   'Setor A - Automatizado', 'Área com sensores IoT e irrigação inteligente', 300.0, 'clay_loam', 'full_sun', 'automated', NOW() - INTERVAL '8 months'),
+   'Setor A - Automatizado', 'Área com sensores IoT e irrigação inteligente', 20.0, 15.0, 0.5, NOW() - INTERVAL '8 months'),
   ('bbbb0012-5555-5555-5555-555555555555', 'aaaa0005-5555-5555-5555-555555555555',
-   'Setor B - Hidroponia', 'Sistema hidropônico experimental', 200.0, 'hydroponic', 'controlled', 'hydroponic', NOW() - INTERVAL '6 months'),
+   'Setor B - Hidroponia', 'Sistema hidropônico experimental', 15.0, 12.0, 0.4, NOW() - INTERVAL '6 months'),
   ('bbbb0013-5555-5555-5555-555555555555', 'aaaa0005-5555-5555-5555-555555555555',
-   'Área de Pesquisa', 'Testes com novas variedades e técnicas', 300.0, 'sandy_loam', 'full_sun', 'drip_irrigation', NOW() - INTERVAL '4 months')
+   'Área de Pesquisa', 'Testes com novas variedades e técnicas', 25.0, 12.0, 0.5, NOW() - INTERVAL '4 months')
 ON CONFLICT (id) DO NOTHING;
 
 -- Add some beds to the plots
