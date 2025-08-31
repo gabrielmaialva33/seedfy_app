@@ -43,7 +43,8 @@
       "Bash(pkill:*)",
       "mcp__playwright__browser_console_messages",
       "mcp__playwright__browser_take_screenshot",
-      "Bash(npx supabase:*)"
+      "Bash(npx supabase:*)",
+      "Bash(dart run:*)"
     ],
     "deny": [],
     "ask": []
