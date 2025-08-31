@@ -142,7 +142,8 @@ class FarmRepositoryImpl implements FarmRepository {
 
   @override
   Future<Either<Failure, List<Bed>>> getFarmBeds(String farmId) async {
-    if (await networkInfo.isConnected) {
+    try {
+      if (await networkInfo.isConnected) {
       try {
         final beds = await remoteDataSource.getFarmBeds(farmId);
         return Right(beds);
