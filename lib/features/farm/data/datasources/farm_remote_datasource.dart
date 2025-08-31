@@ -39,7 +39,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .map((json) => Farm.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to get user farms: ${e.toString()}');
     }
@@ -60,7 +60,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
 
       return Farm.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to get farm: ${e.toString()}');
     }
@@ -84,7 +84,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
 
       return Farm.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to create farm: ${e.toString()}');
     }
@@ -106,7 +106,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
 
       return Farm.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to update farm: ${e.toString()}');
     }
@@ -124,7 +124,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .eq('id', farmId)
           .eq('owner_id', user.id);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to delete farm: ${e.toString()}');
     }
@@ -146,7 +146,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .map((json) => Plot.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to get farm plots: ${e.toString()}');
     }
@@ -171,7 +171,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .map((json) => Bed.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to get farm beds: ${e.toString()}');
     }
@@ -201,7 +201,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .map((json) => Planting.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to get farm plantings: ${e.toString()}');
     }
@@ -261,7 +261,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
         'pending_tasks': pendingTasks.count ?? 0,
       };
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to get farm stats: ${e.toString()}');
     }
