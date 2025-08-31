@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/gabrielmaialva33/seedfy_app/master/.github/assets/seedfy.png" alt="Seedfy" width="200">
+  <img src="https://raw.githubusercontent.com/gabrielmaialva33/seedfy_app/master/.github/assets/seed.png" alt="Seedfy" width="200">
   <br>
   Seedfy 🌱
   <br>
