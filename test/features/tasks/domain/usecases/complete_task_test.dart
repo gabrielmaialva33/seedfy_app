@@ -20,13 +20,13 @@ void main() {
   group('CompleteTask UseCase', () {
     final testTask = entities.Task(
       id: 'task123',
+      plantingId: 'planting1',
       title: 'Water plants',
       description: 'Water all vegetables',
-      dueDate: DateTime(2023, 1, 15),
-      priority: entities.TaskPriority.high,
-      category: entities.TaskCategory.watering,
-      farmId: 'farm1',
+      type: entities.TaskType.water,
       status: entities.TaskStatus.pending,
+      dueDate: DateTime(2023, 1, 15),
+      done: false,
       createdAt: DateTime(2023, 1, 1),
       estimatedMinutes: 30,
     );
