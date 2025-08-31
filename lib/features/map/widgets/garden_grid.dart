@@ -267,7 +267,6 @@ class _GardenGridState extends State<GardenGrid> {
                         ),
                       ),
                     ),
-                    ],
                   ],
                 ),
               ),
