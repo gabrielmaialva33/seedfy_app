@@ -190,19 +190,19 @@ class FarmRepositoryImpl implements FarmRepository {
       String farmId) async {
     try {
       if (await networkInfo.isConnected) {
-      try {
-        final stats = await remoteDataSource.getFarmStats(farmId);
-        return Right(stats);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
+        try {
+          final stats = await remoteDataSource.getFarmStats(farmId);
+          return Right(stats);
+        } on AuthException catch (e) {
+          return Left(AuthFailure(e.message));
+        } on ServerException catch (e) {
+          return Left(ServerFailure(e.message ?? 'Server error'));
+        } catch (e) {
+          return Left(ServerFailure('Unknown error: ${e.toString()}'));
+        }
+      } else {
+        return const Left(NetworkFailure('No internet connection'));
       }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
     } catch (e) {
       return Left(ServerFailure('Network check failed: ${e.toString()}'));
     }
