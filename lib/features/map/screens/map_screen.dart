@@ -321,124 +321,258 @@ class _MapScreenState extends State<MapScreen> {
       );
     }
 
-    return Scaffold(
+    return AdaptiveScaffold(
       appBar: AppBar(
         title: Text(
             _currentFarm?.name ?? (isPortuguese ? 'Minha Horta' : 'My Garden')),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.camera_alt),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AICameraScreen()),
-              );
-            },
-            tooltip: isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition',
-          ),
-          IconButton(
-            icon: const Icon(Icons.chat),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AIChatScreen()),
-              );
-            },
-            tooltip: isPortuguese ? 'Assistente IA' : 'AI Assistant',
-          ),
-          IconButton(
-            icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
-            onPressed: () {
-              setState(() {
-                _useInteractiveEditor = !_useInteractiveEditor;
-              });
-            },
-            tooltip: _useInteractiveEditor 
-                ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
-                : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
-          ),
-          PopupMenuButton(
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'tasks',
-                child: Row(
-                  children: [
-                    const Icon(Icons.task_alt),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Tarefas' : 'Tasks'),
-                  ],
+        actions: ResponsiveBuilder(
+          builder: (context, screenSize) {
+            if (screenSize == ScreenSize.mobile) {
+              // On mobile, show only essential buttons and use popup menu for rest
+              return [
+                IconButton(
+                  icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
+                  onPressed: () {
+                    setState(() {
+                      _useInteractiveEditor = !_useInteractiveEditor;
+                    });
+                  },
+                  tooltip: _useInteractiveEditor 
+                      ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
+                      : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
                 ),
-              ),
-              PopupMenuItem(
-                value: 'ai-recommendations',
-                child: Row(
-                  children: [
-                    const Icon(Icons.auto_awesome),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Recomendações IA' : 'AI Recommendations'),
+                PopupMenuButton(
+                  icon: const Icon(Icons.more_vert),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 'camera',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.camera_alt),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'chat',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.chat),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Assistente IA' : 'AI Assistant'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'tasks',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.task_alt),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Tarefas' : 'Tasks'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'ai-recommendations',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.auto_awesome),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Recomendações IA' : 'AI Recommendations'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'export',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.download),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Exportar CSV' : 'Export CSV'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'refresh',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.refresh),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Atualizar' : 'Refresh'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'logout',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.logout),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Sair' : 'Logout'),
+                        ],
+                      ),
+                    ),
                   ],
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'camera':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AICameraScreen()),
+                        );
+                        break;
+                      case 'chat':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AIChatScreen()),
+                        );
+                        break;
+                      case 'tasks':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TasksScreen()),
+                        );
+                        break;
+                      case 'ai-recommendations':
+                        Navigator.pushNamed(context, '/ai-recommendations');
+                        break;
+                      case 'export':
+                        _exportToCsv();
+                        break;
+                      case 'refresh':
+                        _refreshData();
+                        break;
+                      case 'logout':
+                        context
+                            .read<AuthBloc>()
+                            .add(const AuthEvent.logoutRequested());
+                        break;
+                    }
+                  },
                 ),
-              ),
-              PopupMenuItem(
-                value: 'export',
-                child: Row(
-                  children: [
-                    const Icon(Icons.download),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Exportar CSV' : 'Export CSV'),
+              ];
+            } else {
+              // On tablet/desktop, show all buttons individually
+              return [
+                IconButton(
+                  icon: const Icon(Icons.camera_alt),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AICameraScreen()),
+                    );
+                  },
+                  tooltip: isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition',
+                ),
+                IconButton(
+                  icon: const Icon(Icons.chat),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AIChatScreen()),
+                    );
+                  },
+                  tooltip: isPortuguese ? 'Assistente IA' : 'AI Assistant',
+                ),
+                IconButton(
+                  icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
+                  onPressed: () {
+                    setState(() {
+                      _useInteractiveEditor = !_useInteractiveEditor;
+                    });
+                  },
+                  tooltip: _useInteractiveEditor 
+                      ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
+                      : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
+                ),
+                PopupMenuButton(
+                  icon: const Icon(Icons.more_vert),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 'tasks',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.task_alt),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Tarefas' : 'Tasks'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'ai-recommendations',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.auto_awesome),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Recomendações IA' : 'AI Recommendations'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'export',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.download),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Exportar CSV' : 'Export CSV'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'refresh',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.refresh),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Atualizar' : 'Refresh'),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'logout',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.logout),
+                          const SizedBox(width: 8),
+                          Text(isPortuguese ? 'Sair' : 'Logout'),
+                        ],
+                      ),
+                    ),
                   ],
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'tasks':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TasksScreen()),
+                        );
+                        break;
+                      case 'ai-recommendations':
+                        Navigator.pushNamed(context, '/ai-recommendations');
+                        break;
+                      case 'export':
+                        _exportToCsv();
+                        break;
+                      case 'refresh':
+                        _refreshData();
+                        break;
+                      case 'logout':
+                        context
+                            .read<AuthBloc>()
+                            .add(const AuthEvent.logoutRequested());
+                        break;
+                    }
+                  },
                 ),
-              ),
-              PopupMenuItem(
-                value: 'refresh',
-                child: Row(
-                  children: [
-                    const Icon(Icons.refresh),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Atualizar' : 'Refresh'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'logout',
-                child: Row(
-                  children: [
-                    const Icon(Icons.logout),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Sair' : 'Logout'),
-                  ],
-                ),
-              ),
-            ],
-            onSelected: (value) {
-              switch (value) {
-                case 'tasks':
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const TasksScreen()),
-                  );
-                  break;
-                case 'ai-recommendations':
-                  Navigator.pushNamed(context, '/ai-recommendations');
-                  break;
-                case 'export':
-                  _exportToCsv();
-                  break;
-                case 'refresh':
-                  _refreshData();
-                  break;
-                case 'logout':
-                  context
-                      .read<AuthBloc>()
-                      .add(const AuthEvent.logoutRequested());
-                  break;
-              }
-            },
-          ),
-        ],
+              ];
+            }
+          },
+        ),
       ),
       body: Column(
         children: [
