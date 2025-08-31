@@ -21,19 +21,23 @@ class FarmRepositoryImpl implements FarmRepository {
 
   @override
   Future<Either<Failure, List<Farm>>> getUserFarms() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final farms = await remoteDataSource.getUserFarms();
-        return Right(farms);
-      } on AuthException catch (e) {
-        return Left(AuthFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message ?? 'Server error'));
-      } catch (e) {
-        return Left(ServerFailure('Unknown error: ${e.toString()}'));
+    try {
+      if (await networkInfo.isConnected) {
+        try {
+          final farms = await remoteDataSource.getUserFarms();
+          return Right(farms);
+        } on AuthException catch (e) {
+          return Left(AuthFailure(e.message));
+        } on ServerException catch (e) {
+          return Left(ServerFailure(e.message ?? 'Server error'));
+        } catch (e) {
+          return Left(ServerFailure('Unknown error: ${e.toString()}'));
+        }
+      } else {
+        return const Left(NetworkFailure('No internet connection'));
       }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
+    } catch (e) {
+      return Left(ServerFailure('Network check failed: ${e.toString()}'));
     }
   }
 

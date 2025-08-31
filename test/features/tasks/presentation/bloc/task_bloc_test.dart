@@ -244,7 +244,7 @@ void main() {
         verify: (_) {
           verify(() => mockCreateTask(CreateTaskParams(task: testTask)))
               .called(1);
-          verifyNever(() => mockGetUserTasks(NoParams()));
+          verifyNever(() => mockGetUserTasks(any()));
         },
       );
     });
@@ -316,7 +316,7 @@ void main() {
         build: () {
           when(() => mockTaskRepository.updateTask(updatedTask))
               .thenAnswer((_) async => Right(updatedTask));
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right([updatedTask]));
           return taskBloc;
         },
@@ -338,7 +338,7 @@ void main() {
         build: () {
           when(() => mockTaskRepository.deleteTask(taskId))
               .thenAnswer((_) async => const Right(null));
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => const Right([]));
           return taskBloc;
         },
@@ -385,7 +385,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [error] when refreshTasks fails',
         build: () {
-          when(() => mockGetUserTasks(NoParams())).thenAnswer(
+          when(() => mockGetUserTasks(any())).thenAnswer(
               (_) async => const Left(NetworkFailure('No internet')));
           return taskBloc;
         },
@@ -400,7 +400,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'handles empty tasks list correctly',
         build: () {
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => const Right([]));
           return taskBloc;
         },
@@ -420,7 +420,7 @@ void main() {
           );
           when(() => mockCreateTask(CreateTaskParams(task: taskWithNulls)))
               .thenAnswer((_) async => Right(taskWithNulls));
-          when(() => mockGetUserTasks(NoParams()))
+          when(() => mockGetUserTasks(any()))
               .thenAnswer((_) async => Right([taskWithNulls]));
           return taskBloc;
         },
