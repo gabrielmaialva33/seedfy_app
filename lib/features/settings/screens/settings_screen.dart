@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/domain/entities/planting.dart';
@@ -23,7 +22,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final localeProvider = context.watch<LocaleProvider>();
-    final authProvider = context.watch<AuthBloc>();
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
 
     return Scaffold(
@@ -39,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildProfileSection(authProvider, isPortuguese),
+            _buildProfileSection(isPortuguese),
             const SizedBox(height: 24),
             _buildLanguageSection(localeProvider, isPortuguese),
             const SizedBox(height: 24),
@@ -54,8 +52,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildProfileSection(AuthProvider authProvider, bool isPortuguese) {
-    final profile = authProvider.profile;
+  Widget _buildProfileSection(bool isPortuguese) {
+    final profile = SupabaseService.currentUser;
 
     return _buildSection(
       title: isPortuguese ? 'Perfil' : 'Profile',
@@ -64,16 +62,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           leading: CircleAvatar(
             backgroundColor: AppTheme.primaryPurple,
             child: Text(
-              profile != null && profile.name.isNotEmpty
-                  ? profile.name.substring(0, 1).toUpperCase()
-                  : 'U',
+              profile?.email?.substring(0, 1).toUpperCase() ?? 'U',
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          title: Text(profile?.name ?? 'Usuário'),
+          title: Text(profile?.email?.split('@')[0] ?? 'Usuário'),
           subtitle: Text(profile?.email ?? 'email@exemplo.com'),
           trailing: const Icon(Icons.edit),
           onTap: () {
@@ -266,8 +262,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
 
     try {
-      final authProvider = context.read<AuthBloc>();
-      final userId = authProvider.profile?.id;
+      final userId = SupabaseService.currentUser?.id;
 
       if (userId == null) {
         throw Exception('User not authenticated');

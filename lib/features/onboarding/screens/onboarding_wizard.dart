@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../shared/domain/entities/crop.dart';
 import '../../../shared/data/datasources/supabase_service.dart';
@@ -71,8 +70,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
     setState(() => _isLoading = true);
 
     try {
-      final authProvider = context.read<AuthBloc>();
-      final userId = authProvider.profile?.id;
+      final userId = SupabaseService.currentUser?.id;
 
       if (userId == null) {
         throw Exception('User not authenticated');

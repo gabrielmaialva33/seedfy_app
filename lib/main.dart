@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'core/di/injection_container.dart' as di;
 import 'core/providers/locale_provider.dart';
 import 'core/theme/app_theme.dart';
-import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 import 'features/analytics/screens/analytics_screen.dart';
@@ -59,19 +58,19 @@ class SeedfyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<LocaleProvider, AuthProvider>(
-      builder: (context, localeProvider, authProvider, child) {
+    return Consumer<LocaleProvider>(
+      builder: (context, localeProvider, child) {
         return MaterialApp.router(
           title: 'Seedfy',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          routerConfig: _createRouter(authProvider),
+          routerConfig: _createRouter(),
         );
       },
     );
   }
 
-  GoRouter _createRouter(AuthProvider authProvider) {
+  GoRouter _createRouter() {
     return GoRouter(
       initialLocation: '/login',
       debugLogDiagnostics: true,

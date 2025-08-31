@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
-import '../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -77,14 +76,15 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authProvider = context.read<AuthBloc>();
-      await authProvider.signUp(
-        name: _nameController.text.trim(),
-        email: _emailController.text.trim(),
-        phone: _phoneController.text.trim(),
-        password: _passwordController.text,
-        city: _cityController.text.trim(),
-        state: _selectedState ?? _stateController.text.trim(),
+      context.read<AuthBloc>().add(
+        AuthEvent.signupRequested(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          name: _nameController.text.trim(),
+          phone: _phoneController.text.trim(),
+          city: _cityController.text.trim(),
+          state: _selectedState ?? _stateController.text.trim(),
+        ),
       );
     } catch (e) {
       if (mounted) {

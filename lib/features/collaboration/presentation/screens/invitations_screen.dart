@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/providers/locale_provider.dart';
-import '../../../shared/domain/entities/invitation.dart';
-import '../../../shared/data/datasources/collaboration_service.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../shared/domain/entities/invitation.dart';
+import '../../../../shared/data/datasources/collaboration_service.dart';
 
 class InvitationsScreen extends StatefulWidget {
   const InvitationsScreen({super.key});

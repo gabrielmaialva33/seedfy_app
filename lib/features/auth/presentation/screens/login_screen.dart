@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/providers/locale_provider.dart';
-import '../bloc/auth_bloc.dart';
 import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
 

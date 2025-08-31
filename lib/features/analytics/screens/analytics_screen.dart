@@ -2,7 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../shared/data/datasources/supabase_service.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/domain/entities/planting.dart';
@@ -71,8 +72,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         _error = null;
       });
 
-      final authProvider = context.read<AuthBloc>();
-      final userId = authProvider.profile?.id;
+      final userId = SupabaseService.currentUser?.id;
 
       if (userId == null) {
         throw Exception('User not authenticated');

@@ -47,7 +47,13 @@
       "Bash(dart run:*)",
       "mcp__sequential-thinking__sequentialthinking",
       "Bash(tree:*)",
-      "Bash({} ;)"
+      "Bash({} ;)",
+      "Read(/Users/gabrielmaia/.claude/agents/universal/**)",
+      "Read(/Users/gabrielmaia/.claude/agents/core/**)",
+      "Read(/Users/gabrielmaia/.claude/agents/core/**)",
+      "Read(/Users/gabrielmaia/.claude/agents/**)",
+      "Read(/Users/gabrielmaia/.claude/agents/universal/**)",
+      "Bash('/^import.*auth_bloc\\.dart.*\\/\\/ unused$/d; /^import.*auth_bloc\\.dart.*$/d' )"
     ],
     "deny": [],
     "ask": []

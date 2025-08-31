@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../shared/domain/entities/bed.dart';
 import '../../../shared/domain/entities/crop.dart';
@@ -37,8 +36,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _loadData() async {
     try {
-      final authProvider = context.read<AuthBloc>();
-      final userId = authProvider.profile?.id;
+      final userId = SupabaseService.currentUser?.id;
 
       if (userId == null) {
         throw Exception('User not authenticated');
@@ -404,7 +402,7 @@ class _MapScreenState extends State<MapScreen> {
                   _refreshData();
                   break;
                 case 'logout':
-                  context.read<AuthBloc>().signOut();
+                  context.read<AuthBloc>().add(const AuthEvent.logoutRequested());
                   break;
               }
             },

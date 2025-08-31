@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
-import '../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
 import 'login_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -30,8 +29,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authProvider = context.read<AuthBloc>();
-      await authProvider.resetPassword(_emailController.text.trim());
+      context.read<AuthBloc>().add(
+        AuthEvent.resetPasswordRequested(
+          email: _emailController.text.trim(),
+        ),
+      );
 
       setState(() {
         _emailSent = true;

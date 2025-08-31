@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/providers/locale_provider.dart';
-import '../../../shared/domain/entities/collaborator.dart';
-import '../../../shared/domain/entities/invitation.dart';
-import '../../../shared/data/datasources/collaboration_service.dart';
-import '../../../shared/data/datasources/supabase_service.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../shared/domain/entities/collaborator.dart';
+import '../../../../shared/domain/entities/invitation.dart';
+import '../../../../shared/data/datasources/collaboration_service.dart';
+import '../../../../shared/data/datasources/supabase_service.dart';
 
 class ManageCollaboratorsScreen extends StatefulWidget {
   final String farmId;
