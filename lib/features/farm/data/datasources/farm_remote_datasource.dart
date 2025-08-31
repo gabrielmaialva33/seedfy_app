@@ -225,8 +225,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .select('''
             id,
             plots!inner(farm_id)
-          ''', const FetchOptions(count: CountOption.exact))
-          .eq('plots.farm_id', farmId);
+          ''')
+          .eq('plots.farm_id', farmId)
+          .count(CountOption.exact);
 
       final activePlantings = await supabaseClient
           .from('plantings')
@@ -236,9 +237,10 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
               plot_id,
               plots!inner(farm_id)
             )
-          ''', const FetchOptions(count: CountOption.exact))
+          ''')
           .eq('beds.plots.farm_id', farmId)
-          .eq('status', 'growing');
+          .eq('status', 'growing')
+          .count(CountOption.exact);
 
       final pendingTasks = await supabaseClient
           .from('tasks')
