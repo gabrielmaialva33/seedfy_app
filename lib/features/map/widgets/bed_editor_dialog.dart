@@ -622,9 +622,11 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                                   onPressed: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) =>
-                                          _buildCycleCustomizationDialog(
-                                              isPortuguese),
+                                      builder: (context) {
+                                        final localeProvider = context.read<LocaleProvider>();
+                                        final isPortuguese = localeProvider.locale.languageCode == 'pt';
+                                        return _buildCycleCustomizationDialog(isPortuguese);
+                                      },
                                     );
                                   },
                                   child: Text(isPortuguese
