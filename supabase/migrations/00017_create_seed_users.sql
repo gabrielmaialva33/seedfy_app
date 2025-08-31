@@ -199,28 +199,28 @@ INSERT INTO public.beds (
   notes,
   created_at
 ) VALUES
-  -- Maria's beds
-  ('cccc0001-1111-1111-1111-111111111111', 'bbbb0001-1111-1111-1111-111111111111', 'Canteiro 1', 4.0, 1.2, NOW() - INTERVAL '6 months'),
-  ('cccc0002-1111-1111-1111-111111111111', 'bbbb0001-1111-1111-1111-111111111111', 'Canteiro 2', 4.0, 1.2, NOW() - INTERVAL '6 months'),
-  ('cccc0003-1111-1111-1111-111111111111', 'bbbb0002-1111-1111-1111-111111111111', 'Jardim Circular', 2.0, 2.0, NOW() - INTERVAL '5 months'),
+  -- Maria's beds (Urban Garden)
+  ('cccc0001-1111-1111-1111-111111111111', 'bbbb0001-1111-1111-1111-111111111111', 0, 0, 2.0, 1.2, 'clay_loam', 'Canteiro principal de folhosas', NOW() - INTERVAL '6 months'),
+  ('cccc0002-1111-1111-1111-111111111111', 'bbbb0001-1111-1111-1111-111111111111', 1, 0, 2.0, 1.2, 'clay_loam', 'Segundo canteiro de folhosas', NOW() - INTERVAL '6 months'),
+  ('cccc0003-1111-1111-1111-111111111111', 'bbbb0002-1111-1111-1111-111111111111', 0, 0, 2.0, 2.0, 'sandy_loam', 'Jardim circular de ervas', NOW() - INTERVAL '5 months'),
   
-  -- João's beds
-  ('cccc0004-2222-2222-2222-222222222222', 'bbbb0004-2222-2222-2222-222222222222', 'Fileira Norte', 50.0, 1.5, NOW() - INTERVAL '2 years'),
-  ('cccc0005-2222-2222-2222-222222222222', 'bbbb0004-2222-2222-2222-222222222222', 'Fileira Sul', 50.0, 1.5, NOW() - INTERVAL '2 years'),
-  ('cccc0006-2222-2222-2222-222222222222', 'bbbb0006-2222-2222-2222-222222222222', 'Canteiro de Raízes', 20.0, 1.0, NOW() - INTERVAL '1 year'),
+  -- João's beds (Small Farm)
+  ('cccc0004-2222-2222-2222-222222222222', 'bbbb0004-2222-2222-2222-222222222222', 0, 0, 25.0, 1.5, 'clay_loam', 'Fileira norte do canteiro principal', NOW() - INTERVAL '2 years'),
+  ('cccc0005-2222-2222-2222-222222222222', 'bbbb0004-2222-2222-2222-222222222222', 0, 1, 25.0, 1.5, 'clay_loam', 'Fileira sul do canteiro principal', NOW() - INTERVAL '2 years'),
+  ('cccc0006-2222-2222-2222-222222222222', 'bbbb0006-2222-2222-2222-222222222222', 0, 0, 20.0, 1.0, 'sandy_loam', 'Canteiro especializado em raízes', NOW() - INTERVAL '1 year'),
   
-  -- Ana's beds
-  ('cccc0007-3333-3333-3333-333333333333', 'bbbb0007-3333-3333-3333-333333333333', 'Canteiro Familiar A', 8.0, 1.5, NOW() - INTERVAL '1 year'),
-  ('cccc0008-3333-3333-3333-333333333333', 'bbbb0007-3333-3333-3333-333333333333', 'Canteiro Familiar B', 8.0, 1.5, NOW() - INTERVAL '1 year'),
+  -- Ana's beds (Community Garden)
+  ('cccc0007-3333-3333-3333-333333333333', 'bbbb0007-3333-3333-3333-333333333333', 0, 0, 4.0, 1.5, 'clay_loam', 'Canteiro das famílias A', NOW() - INTERVAL '1 year'),
+  ('cccc0008-3333-3333-3333-333333333333', 'bbbb0007-3333-3333-3333-333333333333', 1, 0, 4.0, 1.5, 'clay_loam', 'Canteiro das famílias B', NOW() - INTERVAL '1 year'),
   
-  -- Pedro's beds
-  ('cccc0009-4444-4444-4444-444444444444', 'bbbb0009-4444-4444-4444-444444444444', 'Vaso Grande', 1.0, 0.8, NOW() - INTERVAL '3 months'),
-  ('cccc0010-4444-4444-4444-444444444444', 'bbbb0010-4444-4444-4444-444444444444', 'Jardineira', 3.0, 0.6, NOW() - INTERVAL '2 months'),
+  -- Pedro's beds (Beginner)
+  ('cccc0009-4444-4444-4444-444444444444', 'bbbb0009-4444-4444-4444-444444444444', 0, 0, 1.0, 0.8, 'potting_mix', 'Vaso grande para temperos', NOW() - INTERVAL '3 months'),
+  ('cccc0010-4444-4444-4444-444444444444', 'bbbb0010-4444-4444-4444-444444444444', 0, 0, 1.5, 0.6, 'sandy_loam', 'Jardineira para folhosas', NOW() - INTERVAL '2 months'),
   
-  -- Lúcia's beds
-  ('cccc0011-5555-5555-5555-555555555555', 'bbbb0011-5555-5555-5555-555555555555', 'Setor A1', 20.0, 1.5, NOW() - INTERVAL '8 months'),
-  ('cccc0012-5555-5555-5555-555555555555', 'bbbb0011-5555-5555-5555-555555555555', 'Setor A2', 20.0, 1.5, NOW() - INTERVAL '8 months'),
-  ('cccc0013-5555-5555-5555-555555555555', 'bbbb0012-5555-5555-5555-555555555555', 'Torre Hidropônica 1', 2.0, 2.0, NOW() - INTERVAL '6 months')
+  -- Lúcia's beds (Tech Farm)
+  ('cccc0011-5555-5555-5555-555555555555', 'bbbb0011-5555-5555-5555-555555555555', 0, 0, 10.0, 1.5, 'clay_loam', 'Setor A1 com sensores IoT', NOW() - INTERVAL '8 months'),
+  ('cccc0012-5555-5555-5555-555555555555', 'bbbb0011-5555-5555-5555-555555555555', 1, 0, 10.0, 1.5, 'clay_loam', 'Setor A2 com sensores IoT', NOW() - INTERVAL '8 months'),
+  ('cccc0013-5555-5555-5555-555555555555', 'bbbb0012-5555-5555-5555-555555555555', 0, 0, 3.0, 2.0, 'hydroponic', 'Torre hidropônica experimental', NOW() - INTERVAL '6 months')
 ON CONFLICT (id) DO NOTHING;
 
 COMMENT ON TABLE public.profiles IS 'Demo user profiles with realistic agricultural scenarios';
