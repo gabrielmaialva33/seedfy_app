@@ -1,11 +1,22 @@
-name: Build APK
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
+  release:
+    types: [ published ]
   workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build type'
+        required: false
+        default: 'debug'
+        type: choice
+        options:
+        - debug
+        - release
 
 jobs:
   build:
@@ -34,8 +45,10 @@ jobs:
           path: |
             ~/.pub-cache
             .dart_tool
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+            build
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}-${{ hashFiles('**/*.dart') }}
           restore-keys: |
+            ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}-
             ${{ runner.os }}-flutter-
 
       - name: Get Flutter dependencies
@@ -57,12 +70,48 @@ jobs:
             echo "Warning: GOOGLE_SERVICES_JSON_BASE64 secret not found, using existing file"
           fi
 
-      - name: Build Debug APK
-        run: flutter build apk --debug
+      - name: Determine build type
+        id: build_type
+        run: |
+          if [ "${{ github.event_name }}" == "release" ] || [ "${{ github.event.inputs.build_type }}" == "release" ]; then
+            echo "type=release" >> $GITHUB_OUTPUT
+            echo "Building release version"
+          else
+            echo "type=debug" >> $GITHUB_OUTPUT
+            echo "Building debug version"
+          fi
 
-      - name: Upload Debug APK
+      - name: Setup keystore (for release builds)
+        if: steps.build_type.outputs.type == 'release'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "Warning: No keystore configured, building unsigned release"
+          else
+            echo $KEYSTORE_BASE64 | base64 -d > android/app/keystore.jks
+            cat > android/key.properties << EOF
+          storePassword=$STORE_PASSWORD
+          keyPassword=$KEY_PASSWORD
+          keyAlias=$KEY_ALIAS
+          storeFile=keystore.jks
+          EOF
+          fi
+
+      - name: Build APK
+        run: |
+          if [ "${{ steps.build_type.outputs.type }}" == "release" ]; then
+            flutter build apk --release
+          else
+            flutter build apk --debug
+          fi
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: seedfy-debug-apk-${{ github.run_number }}
-          path: build/app/outputs/flutter-apk/app-debug.apk
-          retention-days: 30
+          name: seedfy-${{ steps.build_type.outputs.type }}-apk-${{ github.run_number }}
+          path: build/app/outputs/flutter-apk/app-${{ steps.build_type.outputs.type }}.apk
+          retention-days: ${{ steps.build_type.outputs.type == 'release' && 90 || 30 }}
