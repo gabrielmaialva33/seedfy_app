@@ -302,15 +302,14 @@ Users can switch languages in their profile settings, with preferences stored in
    ```
 
 3. **Configure Supabase**
-   ```bash
-   # Create .env file with your Supabase credentials
-   cp .env.example .env
-   ```
+   - Update `lib/core/app_config.dart` with your Supabase URL and anon key
+   - Or use environment variables for production
 
 4. **Set up database**
    ```bash
-   # Run the SQL setup script in your Supabase dashboard
-   cat supabase_setup.sql
+   # Run all migrations in order in your Supabase SQL editor
+   cd supabase/migrations
+   # Execute each file in numerical order (00001 to 00016)
    ```
 
 5. **Run the app**
