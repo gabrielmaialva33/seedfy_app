@@ -130,7 +130,7 @@ void main() {
         'emits [loading, error] when getFarmTasks fails',
         build: () {
           when(() => mockTaskRepository.getFarmTasks(farmId)).thenAnswer(
-              (_) async => const Left(NotFoundFailure('Farm not found')));
+              (_) async => const Left(ValidationFailure('Farm not found')));
           return taskBloc;
         },
         act: (bloc) => bloc.add(const TaskEvent.getFarmTasks(farmId)),
@@ -281,7 +281,7 @@ void main() {
                     actualMinutes: actualMinutes,
                   )))
               .thenAnswer(
-                  (_) async => const Left(NotFoundFailure('Task not found')));
+                  (_) async => const Left(ValidationFailure('Task not found')));
           return taskBloc;
         },
         act: (bloc) => bloc
