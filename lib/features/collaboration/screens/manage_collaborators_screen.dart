@@ -101,7 +101,7 @@ class _ManageCollaboratorsScreenState
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                initialValue: selectedRole,
+                value: selectedRole,
                 decoration: InputDecoration(
                   labelText: isPortuguese ? 'Permissão' : 'Permission',
                   prefixIcon: const Icon(Icons.security),
