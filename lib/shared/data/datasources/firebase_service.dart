@@ -16,9 +16,16 @@ class FirebaseService {
 
   /// Initialize Firebase
   static Future<void> initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (e) {
+      // Firebase is already initialized, which is fine
+      if (!e.toString().contains('duplicate-app')) {
+        rethrow;
+      }
+    }
   }
 
   /// Authentication Methods
