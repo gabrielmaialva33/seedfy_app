@@ -96,6 +96,22 @@ CREATE TABLE IF NOT EXISTS collaborators (
   UNIQUE(farm_id, profile_id)
 );
 
+-- Create invitations table for collaboration system
+CREATE TABLE IF NOT EXISTS invitations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  farm_id UUID REFERENCES farms(id) ON DELETE CASCADE NOT NULL,
+  farm_name TEXT NOT NULL,
+  inviter_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
+  inviter_name TEXT NOT NULL,
+  inviter_email TEXT NOT NULL,
+  invitee_email TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('editor', 'viewer')),
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'declined', 'expired')),
+  token TEXT UNIQUE,
+  expires_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Create map templates table (for future use)
 CREATE TABLE IF NOT EXISTS map_templates (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
