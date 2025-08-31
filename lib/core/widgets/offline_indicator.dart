@@ -28,7 +28,7 @@ class OfflineIndicator extends StatelessWidget {
         return MobileOptimizedCard(
           color: isOnline 
               ? Theme.of(context).colorScheme.surface 
-              : Theme.of(context).colorScheme.errorContainer.withOpacity(0.1),
+              : Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.1),
           child: InkWell(
             onTap: onStatusPressed,
             child: Row(
@@ -40,8 +40,8 @@ class OfflineIndicator extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: isOnline 
-                        ? Colors.green.withOpacity(0.2)
-                        : Colors.orange.withOpacity(0.2),
+                        ? Colors.green.withValues(alpha: 0.2)
+                        : Colors.orange.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -158,8 +158,8 @@ class OfflineStatusBar extends StatelessWidget implements PreferredSizeWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: isOnline 
-          ? Theme.of(context).primaryColor.withOpacity(0.1)
-          : Colors.orange.withOpacity(0.1),
+          ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+          : Colors.orange.withValues(alpha: 0.1),
       child: ResponsiveBuilder(
         builder: (context, screenSize) {
           return Row(
