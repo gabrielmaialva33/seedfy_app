@@ -28,6 +28,21 @@ void main() {
   late MockCompleteTask mockCompleteTask;
   late MockTaskRepository mockTaskRepository;
 
+  setUpAll(() {
+    registerFallbackValue(NoParams());
+    registerFallbackValue(const CreateTaskParams(task: entities.Task(
+      id: '',
+      plantingId: '',
+      title: '',
+      type: entities.TaskType.other,
+      status: entities.TaskStatus.pending,
+      dueDate: const DateTimeHelper().now(),
+      done: false,
+      createdAt: const DateTimeHelper().now(),
+    )));
+    registerFallbackValue(const CompleteTaskParams(taskId: ''));
+  });
+
   setUp(() {
     mockGetUserTasks = MockGetUserTasks();
     mockCreateTask = MockCreateTask();
