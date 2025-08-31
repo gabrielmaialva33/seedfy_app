@@ -35,7 +35,7 @@ void main() {
       status: entities.TaskStatus.completed,
       completedAt: DateTime(2023, 1, 15),
       actualMinutes: 45,
-      completionNotes: 'Task completed successfully',
+      notes: 'Task completed successfully',
     );
 
     group('Successful completion', () {
@@ -99,7 +99,7 @@ void main() {
         const notes = 'Completed with no issues';
         final taskWithNotes = testTask.copyWith(
           status: entities.TaskStatus.completed,
-          completionNotes: notes,
+          notes: notes,
         );
 
         when(() => mockTaskRepository.completeTask(
