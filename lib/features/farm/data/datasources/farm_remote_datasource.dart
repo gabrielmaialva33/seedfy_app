@@ -41,7 +41,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get user farms: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get user farms: ${e.toString()}');
     }
   }
 
@@ -62,7 +62,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get farm: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get farm: ${e.toString()}');
     }
   }
 
@@ -86,7 +86,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to create farm: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to create farm: ${e.toString()}');
     }
   }
 
@@ -108,7 +108,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to update farm: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to update farm: ${e.toString()}');
     }
   }
 
@@ -126,7 +126,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to delete farm: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to delete farm: ${e.toString()}');
     }
   }
 
@@ -148,7 +148,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get farm plots: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get farm plots: ${e.toString()}');
     }
   }
 
@@ -173,7 +173,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get farm beds: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get farm beds: ${e.toString()}');
     }
   }
 
@@ -203,7 +203,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get farm plantings: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get farm plantings: ${e.toString()}');
     }
   }
 
@@ -216,8 +216,9 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
       // Get stats using database functions or aggregations
       final plotsCount = await supabaseClient
           .from('plots')
-          .select('id', const FetchOptions(count: CountOption.exact))
-          .eq('farm_id', farmId);
+          .select('id')
+          .eq('farm_id', farmId)
+          .count(CountOption.exact);
 
       final bedsCount = await supabaseClient
           .from('beds')
@@ -263,7 +264,7 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get farm stats: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get farm stats: ${e.toString()}');
     }
   }
 }
