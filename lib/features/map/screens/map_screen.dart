@@ -15,6 +15,7 @@ import '../../ai_chat/screens/ai_chat_screen.dart';
 import '../../tasks/screens/tasks_screen.dart';
 import '../widgets/bed_editor_dialog.dart';
 import '../widgets/garden_grid.dart';
+import '../widgets/interactive_garden_grid.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -29,6 +30,7 @@ class _MapScreenState extends State<MapScreen> {
   List<BedWithPlanting> _beds = [];
   bool _isLoading = true;
   String? _error;
+  bool _useInteractiveEditor = true;
 
   @override
   void initState() {
