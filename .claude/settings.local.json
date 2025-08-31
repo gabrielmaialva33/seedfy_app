@@ -53,7 +53,9 @@
       "Read(/Users/gabrielmaia/.claude/agents/core/**)",
       "Read(/Users/gabrielmaia/.claude/agents/**)",
       "Read(/Users/gabrielmaia/.claude/agents/universal/**)",
-      "Bash('/^import.*auth_bloc\\.dart.*\\/\\/ unused$/d; /^import.*auth_bloc\\.dart.*$/d' )"
+      "Bash('/^import.*auth_bloc\\.dart.*\\/\\/ unused$/d; /^import.*auth_bloc\\.dart.*$/d' )",
+      "Read(/Users/gabrielmaia/.claude/**)",
+      "Read(/Users/gabrielmaia/.claude/agents/**)"
     ],
     "deny": [],
     "ask": []
