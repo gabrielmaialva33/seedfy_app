@@ -282,10 +282,10 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
           .count(CountOption.exact);
 
       return {
-        'plots_count': plotsCount.count ?? 0,
-        'beds_count': bedsCount.count ?? 0,
-        'active_plantings': activePlantings.count ?? 0,
-        'pending_tasks': pendingTasks.count ?? 0,
+        'plots_count': plotsCount.count,
+        'beds_count': bedsCount.count,
+        'active_plantings': activePlantings.count,
+        'pending_tasks': pendingTasks.count,
       };
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
