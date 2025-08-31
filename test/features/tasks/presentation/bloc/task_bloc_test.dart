@@ -15,8 +15,11 @@ import 'package:seedfy_app/features/tasks/presentation/bloc/task_state.dart';
 import 'package:seedfy_app/shared/domain/entities/task.dart';
 
 class MockGetUserTasks extends Mock implements GetUserTasks {}
+
 class MockCreateTask extends Mock implements CreateTask {}
+
 class MockCompleteTask extends Mock implements CompleteTask {}
+
 class MockTaskRepository extends Mock implements TaskRepository {}
 
 void main() {
@@ -31,7 +34,7 @@ void main() {
     mockCreateTask = MockCreateTask();
     mockCompleteTask = MockCompleteTask();
     mockTaskRepository = MockTaskRepository();
-    
+
     taskBloc = TaskBloc(
       getUserTasks: mockGetUserTasks,
       createTask: mockCreateTask,
@@ -92,8 +95,8 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, error] when getUserTasks fails',
         build: () {
-          when(() => mockGetUserTasks(NoParams()))
-              .thenAnswer((_) async => const Left(ServerFailure('Server error')));
+          when(() => mockGetUserTasks(NoParams())).thenAnswer(
+              (_) async => const Left(ServerFailure('Server error')));
           return taskBloc;
         },
         act: (bloc) => bloc.add(const TaskEvent.getUserTasks()),
@@ -127,8 +130,8 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, error] when getFarmTasks fails',
         build: () {
-          when(() => mockTaskRepository.getFarmTasks(farmId))
-              .thenAnswer((_) async => const Left(NotFoundFailure('Farm not found')));
+          when(() => mockTaskRepository.getFarmTasks(farmId)).thenAnswer(
+              (_) async => const Left(NotFoundFailure('Farm not found')));
           return taskBloc;
         },
         act: (bloc) => bloc.add(const TaskEvent.getFarmTasks(farmId)),
@@ -205,7 +208,8 @@ void main() {
           TaskState.tasksLoaded(testTasks),
         ],
         verify: (_) {
-          verify(() => mockCreateTask(CreateTaskParams(task: testTask))).called(1);
+          verify(() => mockCreateTask(CreateTaskParams(task: testTask)))
+              .called(1);
           verify(() => mockGetUserTasks(NoParams())).called(1);
         },
       );
@@ -214,7 +218,8 @@ void main() {
         'emits [loading, error] when createTask fails',
         build: () {
           when(() => mockCreateTask(CreateTaskParams(task: testTask)))
-              .thenAnswer((_) async => const Left(ValidationFailure('Invalid task data')));
+              .thenAnswer((_) async =>
+                  const Left(ValidationFailure('Invalid task data')));
           return taskBloc;
         },
         act: (bloc) => bloc.add(TaskEvent.createTask(testTask)),
@@ -223,7 +228,8 @@ void main() {
           const TaskState.error('Invalid task data'),
         ],
         verify: (_) {
-          verify(() => mockCreateTask(CreateTaskParams(task: testTask))).called(1);
+          verify(() => mockCreateTask(CreateTaskParams(task: testTask)))
+              .called(1);
           verifyNever(() => mockGetUserTasks(NoParams()));
         },
       );
@@ -238,27 +244,31 @@ void main() {
         'emits [loading, taskCompleted, loading, tasksLoaded] when completeTask succeeds',
         build: () {
           when(() => mockCompleteTask(const CompleteTaskParams(
-            taskId: taskId,
-            notes: notes,
-            actualMinutes: actualMinutes,
-          ))).thenAnswer((_) async => Right(testTask.copyWith(status: TaskStatus.completed)));
+                    taskId: taskId,
+                    notes: notes,
+                    actualMinutes: actualMinutes,
+                  )))
+              .thenAnswer((_) async =>
+                  Right(testTask.copyWith(status: TaskStatus.completed)));
           when(() => mockGetUserTasks(NoParams()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
         },
-        act: (bloc) => bloc.add(const TaskEvent.completeTask(taskId, notes, actualMinutes)),
+        act: (bloc) => bloc
+            .add(const TaskEvent.completeTask(taskId, notes, actualMinutes)),
         expect: () => [
           const TaskState.loading(),
-          TaskState.taskCompleted(testTask.copyWith(status: TaskStatus.completed)),
+          TaskState.taskCompleted(
+              testTask.copyWith(status: TaskStatus.completed)),
           const TaskState.loading(),
           TaskState.tasksLoaded(testTasks),
         ],
         verify: (_) {
           verify(() => mockCompleteTask(const CompleteTaskParams(
-            taskId: taskId,
-            notes: notes,
-            actualMinutes: actualMinutes,
-          ))).called(1);
+                taskId: taskId,
+                notes: notes,
+                actualMinutes: actualMinutes,
+              ))).called(1);
           verify(() => mockGetUserTasks(NoParams())).called(1);
         },
       );
@@ -267,13 +277,16 @@ void main() {
         'emits [loading, error] when completeTask fails',
         build: () {
           when(() => mockCompleteTask(const CompleteTaskParams(
-            taskId: taskId,
-            notes: notes,
-            actualMinutes: actualMinutes,
-          ))).thenAnswer((_) async => const Left(NotFoundFailure('Task not found')));
+                    taskId: taskId,
+                    notes: notes,
+                    actualMinutes: actualMinutes,
+                  )))
+              .thenAnswer(
+                  (_) async => const Left(NotFoundFailure('Task not found')));
           return taskBloc;
         },
-        act: (bloc) => bloc.add(const TaskEvent.completeTask(taskId, notes, actualMinutes)),
+        act: (bloc) => bloc
+            .add(const TaskEvent.completeTask(taskId, notes, actualMinutes)),
         expect: () => [
           const TaskState.loading(),
           const TaskState.error('Task not found'),
@@ -358,8 +371,8 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [error] when refreshTasks fails',
         build: () {
-          when(() => mockGetUserTasks(NoParams()))
-              .thenAnswer((_) async => const Left(NetworkFailure('No internet')));
+          when(() => mockGetUserTasks(NoParams())).thenAnswer(
+              (_) async => const Left(NetworkFailure('No internet')));
           return taskBloc;
         },
         act: (bloc) => bloc.add(const TaskEvent.refreshTasks()),

@@ -126,7 +126,7 @@ void main() {
         // Arrange
         final longName = 'A' * 1000; // Very long name
         final longNameFarm = testFarm.copyWith(name: longName);
-        
+
         const failure = ValidationFailure('Farm name too long');
         when(() => mockFarmRepository.createFarm(longNameFarm))
             .thenAnswer((_) async => const Left(failure));

@@ -12,6 +12,7 @@ import 'package:seedfy_app/shared/domain/entities/planting.dart';
 import 'package:seedfy_app/shared/domain/entities/plot.dart';
 
 class MockFarmRemoteDataSource extends Mock implements FarmRemoteDataSource {}
+
 class MockNetworkInfo extends Mock implements NetworkInfo {}
 
 void main() {
@@ -39,7 +40,8 @@ void main() {
     final testFarms = [testFarm];
 
     group('getUserFarms', () {
-      test('should return farms when device is online and call succeeds', () async {
+      test('should return farms when device is online and call succeeds',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
@@ -64,7 +66,8 @@ void main() {
         // Assert
         verify(() => mockNetworkInfo.isConnected);
         verifyZeroInteractions(mockRemoteDataSource);
-        expect(result, equals(const Left(NetworkFailure('No internet connection'))));
+        expect(result,
+            equals(const Left(NetworkFailure('No internet connection'))));
       });
 
       test('should return AuthFailure when AuthException is thrown', () async {
@@ -78,10 +81,12 @@ void main() {
 
         // Assert
         verify(() => mockRemoteDataSource.getUserFarms());
-        expect(result, equals(const Left(AuthFailure('User not authenticated'))));
+        expect(
+            result, equals(const Left(AuthFailure('User not authenticated'))));
       });
 
-      test('should return ServerFailure when ServerException is thrown', () async {
+      test('should return ServerFailure when ServerException is thrown',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
@@ -95,7 +100,9 @@ void main() {
         expect(result, equals(const Left(ServerFailure('Server error'))));
       });
 
-      test('should return ServerFailure when ServerException with null message is thrown', () async {
+      test(
+          'should return ServerFailure when ServerException with null message is thrown',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
@@ -109,7 +116,8 @@ void main() {
         expect(result, equals(const Left(ServerFailure('Server error'))));
       });
 
-      test('should return ServerFailure when unknown exception is thrown', () async {
+      test('should return ServerFailure when unknown exception is thrown',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
@@ -131,7 +139,8 @@ void main() {
     group('getFarm', () {
       const farmId = 'farm123';
 
-      test('should return farm when device is online and call succeeds', () async {
+      test('should return farm when device is online and call succeeds',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getFarm(farmId))
@@ -156,12 +165,14 @@ void main() {
         // Assert
         verify(() => mockNetworkInfo.isConnected);
         verifyZeroInteractions(mockRemoteDataSource);
-        expect(result, equals(const Left(NetworkFailure('No internet connection'))));
+        expect(result,
+            equals(const Left(NetworkFailure('No internet connection'))));
       });
     });
 
     group('createFarm', () {
-      test('should return created farm when device is online and call succeeds', () async {
+      test('should return created farm when device is online and call succeeds',
+          () async {
         // Arrange
         final createdFarm = testFarm.copyWith(id: 'new123');
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
@@ -187,12 +198,14 @@ void main() {
         // Assert
         verify(() => mockNetworkInfo.isConnected);
         verifyZeroInteractions(mockRemoteDataSource);
-        expect(result, equals(const Left(NetworkFailure('No internet connection'))));
+        expect(result,
+            equals(const Left(NetworkFailure('No internet connection'))));
       });
     });
 
     group('updateFarm', () {
-      test('should return updated farm when device is online and call succeeds', () async {
+      test('should return updated farm when device is online and call succeeds',
+          () async {
         // Arrange
         final updatedFarm = testFarm.copyWith(name: 'Updated Farm');
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
@@ -218,14 +231,16 @@ void main() {
         // Assert
         verify(() => mockNetworkInfo.isConnected);
         verifyZeroInteractions(mockRemoteDataSource);
-        expect(result, equals(const Left(NetworkFailure('No internet connection'))));
+        expect(result,
+            equals(const Left(NetworkFailure('No internet connection'))));
       });
     });
 
     group('deleteFarm', () {
       const farmId = 'farm123';
 
-      test('should return success when device is online and call succeeds', () async {
+      test('should return success when device is online and call succeeds',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.deleteFarm(farmId))
@@ -250,7 +265,8 @@ void main() {
         // Assert
         verify(() => mockNetworkInfo.isConnected);
         verifyZeroInteractions(mockRemoteDataSource);
-        expect(result, equals(const Left(NetworkFailure('No internet connection'))));
+        expect(result,
+            equals(const Left(NetworkFailure('No internet connection'))));
       });
     });
 
@@ -268,7 +284,8 @@ void main() {
         ),
       ];
 
-      test('should return plots when device is online and call succeeds', () async {
+      test('should return plots when device is online and call succeeds',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getFarmPlots(farmId))
@@ -293,7 +310,8 @@ void main() {
         // Assert
         verify(() => mockNetworkInfo.isConnected);
         verifyZeroInteractions(mockRemoteDataSource);
-        expect(result, equals(const Left(NetworkFailure('No internet connection'))));
+        expect(result,
+            equals(const Left(NetworkFailure('No internet connection'))));
       });
     });
 
@@ -311,7 +329,8 @@ void main() {
         ),
       ];
 
-      test('should return beds when device is online and call succeeds', () async {
+      test('should return beds when device is online and call succeeds',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getFarmBeds(farmId))
@@ -340,7 +359,8 @@ void main() {
         ),
       ];
 
-      test('should return plantings when device is online and call succeeds', () async {
+      test('should return plantings when device is online and call succeeds',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getFarmPlantings(farmId))
@@ -365,7 +385,8 @@ void main() {
         'completedTasks': 25,
       };
 
-      test('should return stats when device is online and call succeeds', () async {
+      test('should return stats when device is online and call succeeds',
+          () async {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getFarmStats(farmId))
@@ -390,7 +411,8 @@ void main() {
         // Assert
         verify(() => mockNetworkInfo.isConnected);
         verifyZeroInteractions(mockRemoteDataSource);
-        expect(result, equals(const Left(NetworkFailure('No internet connection'))));
+        expect(result,
+            equals(const Left(NetworkFailure('No internet connection'))));
       });
     });
 
@@ -440,9 +462,11 @@ void main() {
 
       test('should handle very large farm lists', () async {
         // Arrange
-        final largeFarmList = List.generate(1000, (index) => 
-          testFarm.copyWith(id: 'farm_$index', name: 'Farm $index'));
-        
+        final largeFarmList = List.generate(
+            1000,
+            (index) =>
+                testFarm.copyWith(id: 'farm_$index', name: 'Farm $index'));
+
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
             .thenAnswer((_) async => largeFarmList);
@@ -469,7 +493,8 @@ void main() {
         // Assert
         expect(result.isLeft(), true);
         result.fold(
-          (failure) => expect(failure.message.contains('Network check failed'), true),
+          (failure) =>
+              expect(failure.message.contains('Network check failed'), true),
           (_) => fail('Should return failure'),
         );
       });

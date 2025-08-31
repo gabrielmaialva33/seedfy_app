@@ -7,16 +7,15 @@ import 'package:seedfy_app/core/usecases/usecase.dart';
 import 'package:seedfy_app/features/farm/domain/usecases/create_farm.dart';
 import 'package:seedfy_app/features/farm/domain/usecases/get_farm_details.dart';
 import 'package:seedfy_app/features/farm/domain/usecases/get_user_farms.dart';
-import 'package:seedfy_app/shared/domain/entities/bed.dart';
-import 'package:seedfy_app/shared/domain/entities/planting.dart';
-import 'package:seedfy_app/shared/domain/entities/plot.dart';
 import 'package:seedfy_app/features/farm/presentation/bloc/farm_bloc.dart';
 import 'package:seedfy_app/features/farm/presentation/bloc/farm_event.dart';
 import 'package:seedfy_app/features/farm/presentation/bloc/farm_state.dart';
 import 'package:seedfy_app/shared/domain/entities/farm.dart';
 
 class MockGetUserFarms extends Mock implements GetUserFarms {}
+
 class MockCreateFarm extends Mock implements CreateFarm {}
+
 class MockGetFarmDetails extends Mock implements GetFarmDetails {}
 
 void main() {
@@ -29,7 +28,7 @@ void main() {
     mockGetUserFarms = MockGetUserFarms();
     mockCreateFarm = MockCreateFarm();
     mockGetFarmDetails = MockGetFarmDetails();
-    
+
     farmBloc = FarmBloc(
       getUserFarms: mockGetUserFarms,
       createFarm: mockCreateFarm,
@@ -76,8 +75,8 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'emits [loading, error] when getUserFarms fails',
         build: () {
-          when(() => mockGetUserFarms(NoParams()))
-              .thenAnswer((_) async => const Left(ServerFailure('Server error')));
+          when(() => mockGetUserFarms(NoParams())).thenAnswer(
+              (_) async => const Left(ServerFailure('Server error')));
           return farmBloc;
         },
         act: (bloc) => bloc.add(const FarmEvent.getUserFarms()),
@@ -104,7 +103,8 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'emits [loading, farmDetailsLoaded] when getFarmDetails succeeds',
         build: () {
-          when(() => mockGetFarmDetails(const GetFarmDetailsParams(farmId: farmId)))
+          when(() => mockGetFarmDetails(
+                  const GetFarmDetailsParams(farmId: farmId)))
               .thenAnswer((_) async => Right(farmDetails));
           return farmBloc;
         },
@@ -114,16 +114,18 @@ void main() {
           FarmState.farmDetailsLoaded(farmDetails),
         ],
         verify: (_) {
-          verify(() => mockGetFarmDetails(const GetFarmDetailsParams(farmId: farmId)))
-              .called(1);
+          verify(() => mockGetFarmDetails(
+              const GetFarmDetailsParams(farmId: farmId))).called(1);
         },
       );
 
       blocTest<FarmBloc, FarmState>(
         'emits [loading, error] when getFarmDetails fails',
         build: () {
-          when(() => mockGetFarmDetails(const GetFarmDetailsParams(farmId: farmId)))
-              .thenAnswer((_) async => const Left(ServerFailure('Farm not found')));
+          when(() => mockGetFarmDetails(
+                  const GetFarmDetailsParams(farmId: farmId)))
+              .thenAnswer(
+                  (_) async => const Left(ServerFailure('Farm not found')));
           return farmBloc;
         },
         act: (bloc) => bloc.add(const FarmEvent.getFarmDetails(farmId)),
@@ -132,8 +134,8 @@ void main() {
           const FarmState.error('Farm not found'),
         ],
         verify: (_) {
-          verify(() => mockGetFarmDetails(const GetFarmDetailsParams(farmId: farmId)))
-              .called(1);
+          verify(() => mockGetFarmDetails(
+              const GetFarmDetailsParams(farmId: farmId))).called(1);
         },
       );
     });
@@ -156,7 +158,8 @@ void main() {
           FarmState.farmsLoaded(testFarms),
         ],
         verify: (_) {
-          verify(() => mockCreateFarm(CreateFarmParams(farm: testFarm))).called(1);
+          verify(() => mockCreateFarm(CreateFarmParams(farm: testFarm)))
+              .called(1);
           verify(() => mockGetUserFarms(NoParams())).called(1);
         },
       );
@@ -165,7 +168,8 @@ void main() {
         'emits [loading, error] when createFarm fails',
         build: () {
           when(() => mockCreateFarm(CreateFarmParams(farm: testFarm)))
-              .thenAnswer((_) async => const Left(ServerFailure('Create failed')));
+              .thenAnswer(
+                  (_) async => const Left(ServerFailure('Create failed')));
           return farmBloc;
         },
         act: (bloc) => bloc.add(FarmEvent.createFarm(testFarm)),
@@ -174,7 +178,8 @@ void main() {
           const FarmState.error('Create failed'),
         ],
         verify: (_) {
-          verify(() => mockCreateFarm(CreateFarmParams(farm: testFarm))).called(1);
+          verify(() => mockCreateFarm(CreateFarmParams(farm: testFarm)))
+              .called(1);
           verifyNever(() => mockGetUserFarms(NoParams()));
         },
       );
@@ -200,8 +205,8 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'emits [error] when refreshFarms fails',
         build: () {
-          when(() => mockGetUserFarms(NoParams()))
-              .thenAnswer((_) async => const Left(NetworkFailure('No internet')));
+          when(() => mockGetUserFarms(NoParams())).thenAnswer(
+              (_) async => const Left(NetworkFailure('No internet')));
           return farmBloc;
         },
         act: (bloc) => bloc.add(const FarmEvent.refreshFarms()),
@@ -242,7 +247,8 @@ void main() {
         build: () {
           when(() => mockGetUserFarms(NoParams()))
               .thenAnswer((_) async => Right(testFarms));
-          when(() => mockGetFarmDetails(const GetFarmDetailsParams(farmId: '1')))
+          when(() =>
+                  mockGetFarmDetails(const GetFarmDetailsParams(farmId: '1')))
               .thenAnswer((_) async => Right(testFarm));
           return farmBloc;
         },
@@ -277,8 +283,10 @@ void main() {
       blocTest<FarmBloc, FarmState>(
         'handles invalid farm ID gracefully',
         build: () {
-          when(() => mockGetFarmDetails(const GetFarmDetailsParams(farmId: 'invalid')))
-              .thenAnswer((_) async => const Left(ServerFailure('Farm not found')));
+          when(() => mockGetFarmDetails(
+                  const GetFarmDetailsParams(farmId: 'invalid')))
+              .thenAnswer(
+                  (_) async => const Left(ServerFailure('Farm not found')));
           return farmBloc;
         },
         act: (bloc) => bloc.add(const FarmEvent.getFarmDetails('invalid')),

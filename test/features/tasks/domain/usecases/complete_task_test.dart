@@ -46,10 +46,10 @@ void main() {
         const actualMinutes = 45;
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: notes,
-          actualMinutes: actualMinutes,
-        )).thenAnswer((_) async => Right(completedTask));
+              taskId,
+              notes: notes,
+              actualMinutes: actualMinutes,
+            )).thenAnswer((_) async => Right(completedTask));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(
@@ -61,34 +61,36 @@ void main() {
         // Assert
         expect(result, equals(Right(completedTask)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: notes,
-          actualMinutes: actualMinutes,
-        )).called(1);
+              taskId,
+              notes: notes,
+              actualMinutes: actualMinutes,
+            )).called(1);
         verifyNoMoreInteractions(mockTaskRepository);
       });
 
       test('should complete task without notes or actual minutes', () async {
         // Arrange
         const taskId = 'task123';
-        final basicCompletedTask = testTask.copyWith(status: TaskStatus.completed);
+        final basicCompletedTask =
+            testTask.copyWith(status: TaskStatus.completed);
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).thenAnswer((_) async => Right(basicCompletedTask));
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).thenAnswer((_) async => Right(basicCompletedTask));
 
         // Act
-        final result = await completeTask(const CompleteTaskParams(taskId: taskId));
+        final result =
+            await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
         expect(result, equals(Right(basicCompletedTask)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).called(1);
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).called(1);
       });
 
       test('should complete task with only notes', () async {
@@ -101,10 +103,10 @@ void main() {
         );
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: notes,
-          actualMinutes: null,
-        )).thenAnswer((_) async => Right(taskWithNotes));
+              taskId,
+              notes: notes,
+              actualMinutes: null,
+            )).thenAnswer((_) async => Right(taskWithNotes));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(
@@ -115,10 +117,10 @@ void main() {
         // Assert
         expect(result, equals(Right(taskWithNotes)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: notes,
-          actualMinutes: null,
-        )).called(1);
+              taskId,
+              notes: notes,
+              actualMinutes: null,
+            )).called(1);
       });
 
       test('should complete task with only actual minutes', () async {
@@ -131,10 +133,10 @@ void main() {
         );
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: actualMinutes,
-        )).thenAnswer((_) async => Right(taskWithMinutes));
+              taskId,
+              notes: null,
+              actualMinutes: actualMinutes,
+            )).thenAnswer((_) async => Right(taskWithMinutes));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(
@@ -145,10 +147,10 @@ void main() {
         // Assert
         expect(result, equals(Right(taskWithMinutes)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: actualMinutes,
-        )).called(1);
+              taskId,
+              notes: null,
+              actualMinutes: actualMinutes,
+            )).called(1);
       });
     });
 
@@ -159,44 +161,47 @@ void main() {
         const failure = NotFoundFailure('Task not found');
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).thenAnswer((_) async => const Left(failure));
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
-        final result = await completeTask(const CompleteTaskParams(taskId: taskId));
+        final result =
+            await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
         expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).called(1);
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).called(1);
       });
 
-      test('should return ValidationFailure when task is already completed', () async {
+      test('should return ValidationFailure when task is already completed',
+          () async {
         // Arrange
         const taskId = 'completed_task';
         const failure = ValidationFailure('Task is already completed');
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).thenAnswer((_) async => const Left(failure));
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
-        final result = await completeTask(const CompleteTaskParams(taskId: taskId));
+        final result =
+            await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
         expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).called(1);
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).called(1);
       });
 
       test('should return ServerFailure when server error occurs', () async {
@@ -205,44 +210,47 @@ void main() {
         const failure = ServerFailure('Server error occurred');
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).thenAnswer((_) async => const Left(failure));
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
-        final result = await completeTask(const CompleteTaskParams(taskId: taskId));
+        final result =
+            await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
         expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).called(1);
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).called(1);
       });
 
-      test('should return NetworkFailure when network is unavailable', () async {
+      test('should return NetworkFailure when network is unavailable',
+          () async {
         // Arrange
         const taskId = 'task123';
         const failure = NetworkFailure('No internet connection');
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).thenAnswer((_) async => const Left(failure));
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
-        final result = await completeTask(const CompleteTaskParams(taskId: taskId));
+        final result =
+            await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
         expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: null,
-        )).called(1);
+              taskId,
+              notes: null,
+              actualMinutes: null,
+            )).called(1);
       });
     });
 
@@ -257,10 +265,10 @@ void main() {
         );
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: longNotes,
-          actualMinutes: null,
-        )).thenAnswer((_) async => Right(taskWithLongNotes));
+              taskId,
+              notes: longNotes,
+              actualMinutes: null,
+            )).thenAnswer((_) async => Right(taskWithLongNotes));
 
         // Act
         final result = await completeTask(CompleteTaskParams(
@@ -279,10 +287,10 @@ void main() {
         const failure = ValidationFailure('Actual minutes cannot be negative');
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: negativeMinutes,
-        )).thenAnswer((_) async => const Left(failure));
+              taskId,
+              notes: null,
+              actualMinutes: negativeMinutes,
+            )).thenAnswer((_) async => const Left(failure));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(
@@ -304,10 +312,10 @@ void main() {
         );
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: null,
-          actualMinutes: zeroMinutes,
-        )).thenAnswer((_) async => Right(taskWithZeroMinutes));
+              taskId,
+              notes: null,
+              actualMinutes: zeroMinutes,
+            )).thenAnswer((_) async => Right(taskWithZeroMinutes));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(
@@ -329,10 +337,10 @@ void main() {
         );
 
         when(() => mockTaskRepository.completeTask(
-          taskId,
-          notes: emptyNotes,
-          actualMinutes: null,
-        )).thenAnswer((_) async => Right(taskWithEmptyNotes));
+              taskId,
+              notes: emptyNotes,
+              actualMinutes: null,
+            )).thenAnswer((_) async => Right(taskWithEmptyNotes));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(
@@ -353,10 +361,10 @@ void main() {
         );
 
         when(() => mockTaskRepository.completeTask(
-          specialTaskId,
-          notes: null,
-          actualMinutes: null,
-        )).thenAnswer((_) async => Right(taskWithSpecialId));
+              specialTaskId,
+              notes: null,
+              actualMinutes: null,
+            )).thenAnswer((_) async => Right(taskWithSpecialId));
 
         // Act
         final result = await completeTask(const CompleteTaskParams(

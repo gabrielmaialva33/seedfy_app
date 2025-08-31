@@ -58,6 +58,7 @@ export functionality.
 - **[PostgreSQL](https://www.postgresql.org/)** with Row Level Security
 -
     *
+
 *[Flutter Localizations](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
 ** (pt-BR, en-US)
 
