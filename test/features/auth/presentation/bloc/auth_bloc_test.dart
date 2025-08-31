@@ -125,6 +125,7 @@ void main() {
             email: TestData.validEmail,
             password: TestData.validPassword,
             name: TestData.validName,
+            phone: '11999999999',
             city: 'São Paulo',
             state: 'SP',
             locale: 'pt-BR',
