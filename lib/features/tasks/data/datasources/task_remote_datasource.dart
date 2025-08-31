@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/exceptions.dart' as core_exceptions;
 import '../../../../shared/domain/entities/task.dart';
 
 abstract class TaskRemoteDataSource {
@@ -26,7 +26,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<List<Task>> getUserTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('tasks')
@@ -51,9 +51,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .map((json) => Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get user tasks: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get user tasks: ${e.toString()}');
     }
   }
 
@@ -61,7 +61,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<List<Task>> getFarmTasks(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('tasks')
@@ -87,9 +87,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .map((json) => Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get farm tasks: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get farm tasks: ${e.toString()}');
     }
   }
 
@@ -97,7 +97,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<List<Task>> getPlantingTasks(String plantingId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('tasks')
@@ -123,9 +123,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .map((json) => Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get planting tasks: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get planting tasks: ${e.toString()}');
     }
   }
 
@@ -133,7 +133,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<List<Task>> getPendingTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('tasks')
@@ -159,9 +159,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .map((json) => Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get pending tasks: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get pending tasks: ${e.toString()}');
     }
   }
 
@@ -169,7 +169,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<List<Task>> getTodayTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final today = DateTime.now();
       final todayStart = DateTime(today.year, today.month, today.day);
@@ -200,9 +200,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .map((json) => Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get today tasks: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get today tasks: ${e.toString()}');
     }
   }
 
@@ -210,7 +210,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<List<Task>> getOverdueTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final now = DateTime.now();
 
@@ -239,9 +239,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .map((json) => Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get overdue tasks: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get overdue tasks: ${e.toString()}');
     }
   }
 
@@ -249,7 +249,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<Task> createTask(Task task) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final taskData = task.toJson();
       taskData.remove('id'); // Let database generate ID
@@ -275,9 +275,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
       return Task.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to create task: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to create task: ${e.toString()}');
     }
   }
 
@@ -285,7 +285,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<Task> updateTask(Task task) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final response = await supabaseClient
           .from('tasks')
@@ -309,9 +309,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
       return Task.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to update task: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to update task: ${e.toString()}');
     }
   }
 
@@ -319,7 +319,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<Task> completeTask(String taskId, {String? notes, int? actualMinutes}) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final updateData = {
         'done': true,
@@ -352,9 +352,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
       return Task.fromJson(response);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to complete task: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to complete task: ${e.toString()}');
     }
   }
 
@@ -362,16 +362,16 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<void> deleteTask(String taskId) async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       await supabaseClient
           .from('tasks')
           .delete()
           .eq('id', taskId);
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to delete task: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to delete task: ${e.toString()}');
     }
   }
 
@@ -379,7 +379,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   Future<Map<String, dynamic>> getTaskStats() async {
     try {
       final user = supabaseClient.auth.currentUser;
-      if (user == null) throw const AuthException('User not authenticated');
+      if (user == null) throw const core_exceptions.AuthException('User not authenticated');
 
       final totalTasks = await supabaseClient
           .from('tasks')
@@ -392,8 +392,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
                 )
               )
             )
-          ''', const FetchOptions(count: CountOption.exact))
-          .eq('plantings.beds.plots.farms.owner_id', user.id);
+          ''')
+          .eq('plantings.beds.plots.farms.owner_id', user.id)
+          .count(CountOption.exact);
 
       final completedTasks = await supabaseClient
           .from('tasks')
@@ -406,9 +407,10 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
                 )
               )
             )
-          ''', const FetchOptions(count: CountOption.exact))
+          ''')
           .eq('plantings.beds.plots.farms.owner_id', user.id)
-          .eq('done', true);
+          .eq('done', true)
+          .count(CountOption.exact);
 
       final pendingTasks = await supabaseClient
           .from('tasks')
@@ -421,9 +423,10 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
                 )
               )
             )
-          ''', const FetchOptions(count: CountOption.exact))
+          ''')
           .eq('plantings.beds.plots.farms.owner_id', user.id)
-          .eq('done', false);
+          .eq('done', false)
+          .count(CountOption.exact);
 
       final overdueTasks = await supabaseClient
           .from('tasks')
@@ -436,10 +439,11 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
                 )
               )
             )
-          ''', const FetchOptions(count: CountOption.exact))
+          ''')
           .eq('plantings.beds.plots.farms.owner_id', user.id)
           .eq('done', false)
-          .lt('due_date', DateTime.now().toIso8601String());
+          .lt('due_date', DateTime.now().toIso8601String())
+          .count(CountOption.exact);
 
       return {
         'total_tasks': totalTasks.count ?? 0,
@@ -451,9 +455,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
             : 0,
       };
     } on PostgrestException catch (e) {
-      throw ServerException(e.message);
+      throw core_exceptions.ServerException(e.message);
     } catch (e) {
-      throw ServerException('Failed to get task stats: ${e.toString()}');
+      throw core_exceptions.ServerException('Failed to get task stats: ${e.toString()}');
     }
   }
 }
