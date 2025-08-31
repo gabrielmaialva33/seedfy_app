@@ -171,7 +171,7 @@ void main() {
             await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
-        expect(result, equals(Left(failure)));
+        expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
               taskId,
               notes: null,
@@ -196,7 +196,7 @@ void main() {
             await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
-        expect(result, equals(Left(failure)));
+        expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
               taskId,
               notes: null,
@@ -220,7 +220,7 @@ void main() {
             await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
-        expect(result, equals(Left(failure)));
+        expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
               taskId,
               notes: null,
@@ -245,7 +245,7 @@ void main() {
             await completeTask(const CompleteTaskParams(taskId: taskId));
 
         // Assert
-        expect(result, equals(Left(failure)));
+        expect(result, equals(const Left(failure)));
         verify(() => mockTaskRepository.completeTask(
               taskId,
               notes: null,
@@ -299,7 +299,7 @@ void main() {
         ));
 
         // Assert
-        expect(result, equals(Left(failure)));
+        expect(result, equals(const Left(failure)));
       });
 
       test('should handle zero actual minutes', () async {
