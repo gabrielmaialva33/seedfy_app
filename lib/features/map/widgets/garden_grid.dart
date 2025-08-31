@@ -242,32 +242,31 @@ class _GardenGridState extends State<GardenGrid> {
                           maxLines: 2,
                         ),
                       ),
-                    if (daysUntilHarvest >= 0) ...[
-                      const SizedBox(height: 2),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4,
-                          vertical: 1,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black26,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          daysUntilHarvest == 0
-                              ? (locale.startsWith('pt') ? 'Hoje!' : 'Today!')
-                              : daysUntilHarvest < 0
-                                  ? (locale.startsWith('pt')
-                                      ? 'Atrasado'
-                                      : 'Overdue')
-                                  : '${daysUntilHarvest}d',
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+                    const SizedBox(height: 2),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 1,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        daysUntilHarvest == 0
+                            ? (locale.startsWith('pt') ? 'Hoje!' : 'Today!')
+                            : daysUntilHarvest < 0
+                                ? (locale.startsWith('pt')
+                                    ? 'Atrasado'
+                                    : 'Overdue')
+                                : '${daysUntilHarvest}d',
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
+                    ),
                     ],
                   ],
                 ),
