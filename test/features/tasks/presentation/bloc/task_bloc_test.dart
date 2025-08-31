@@ -247,14 +247,14 @@ void main() {
                     notes: notes,
                     actualMinutes: actualMinutes,
                   )))
-              .thenAnswer((_) async =>
-                  Right(testTask.copyWith(status: entities.TaskStatus.completed)));
+              .thenAnswer((_) async => Right(
+                  testTask.copyWith(status: entities.TaskStatus.completed)));
           when(() => mockGetUserTasks(NoParams()))
               .thenAnswer((_) async => Right(testTasks));
           return taskBloc;
         },
-        act: (bloc) => bloc
-            .add(const TaskEvent.completeTask(taskId: taskId, notes: notes, actualMinutes: actualMinutes)),
+        act: (bloc) => bloc.add(const TaskEvent.completeTask(
+            taskId: taskId, notes: notes, actualMinutes: actualMinutes)),
         expect: () => [
           const TaskState.loading(),
           TaskState.taskCompleted(
@@ -284,8 +284,8 @@ void main() {
                   (_) async => const Left(ValidationFailure('Task not found')));
           return taskBloc;
         },
-        act: (bloc) => bloc
-            .add(const TaskEvent.completeTask(taskId: taskId, notes: notes, actualMinutes: actualMinutes)),
+        act: (bloc) => bloc.add(const TaskEvent.completeTask(
+            taskId: taskId, notes: notes, actualMinutes: actualMinutes)),
         expect: () => [
           const TaskState.loading(),
           const TaskState.error('Task not found'),
