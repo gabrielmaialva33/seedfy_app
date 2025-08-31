@@ -254,7 +254,7 @@ void main() {
           return taskBloc;
         },
         act: (bloc) => bloc
-            .add(const TaskEvent.completeTask(taskId, notes, actualMinutes)),
+            .add(const TaskEvent.completeTask(taskId: taskId, notes: notes, actualMinutes: actualMinutes)),
         expect: () => [
           const TaskState.loading(),
           TaskState.taskCompleted(
@@ -285,7 +285,7 @@ void main() {
           return taskBloc;
         },
         act: (bloc) => bloc
-            .add(const TaskEvent.completeTask(taskId, notes, actualMinutes)),
+            .add(const TaskEvent.completeTask(taskId: taskId, notes: notes, actualMinutes: actualMinutes)),
         expect: () => [
           const TaskState.loading(),
           const TaskState.error('Task not found'),
