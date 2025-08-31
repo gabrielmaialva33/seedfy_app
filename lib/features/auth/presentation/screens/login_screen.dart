@@ -225,16 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     TextButton(
-                      onPressed: () {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignupScreen(),
-                            ),
-                          );
-                        });
-                      },
+                      onPressed: () => context.go('/signup'),
                       child: Text(
                         isPortuguese ? 'Cadastre-se' : 'Sign Up',
                         style: const TextStyle(fontWeight: FontWeight.w600),
