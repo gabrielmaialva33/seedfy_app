@@ -333,7 +333,7 @@ void main() {
         const emptyNotes = '';
         final taskWithEmptyNotes = testTask.copyWith(
           status: entities.TaskStatus.completed,
-          completionNotes: emptyNotes,
+          notes: emptyNotes,
         );
 
         when(() => mockTaskRepository.completeTask(
