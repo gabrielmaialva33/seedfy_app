@@ -12,7 +12,7 @@ import 'package:seedfy_app/features/tasks/domain/usecases/get_user_tasks.dart';
 import 'package:seedfy_app/features/tasks/presentation/bloc/task_bloc.dart';
 import 'package:seedfy_app/features/tasks/presentation/bloc/task_event.dart';
 import 'package:seedfy_app/features/tasks/presentation/bloc/task_state.dart';
-import 'package:seedfy_app/shared/domain/entities/task.dart';
+import 'package:seedfy_app/shared/domain/entities/task.dart' as entities;
 
 class MockGetUserTasks extends Mock implements GetUserTasks {}
 
@@ -48,15 +48,15 @@ void main() {
   });
 
   group('TaskBloc', () {
-    final testTask = Task(
+    final testTask = entities.Task(
       id: '1',
       title: 'Water plants',
       description: 'Water all vegetables',
       dueDate: DateTime(2023, 1, 15),
-      priority: TaskPriority.high,
-      category: TaskCategory.watering,
+      priority: entities.TaskPriority.high,
+      category: entities.TaskCategory.watering,
       farmId: 'farm1',
-      status: TaskStatus.pending,
+      status: entities.TaskStatus.pending,
       createdAt: DateTime(2023, 1, 1),
       estimatedMinutes: 30,
     );
