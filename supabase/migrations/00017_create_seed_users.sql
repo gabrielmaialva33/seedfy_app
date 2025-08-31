@@ -8,45 +8,62 @@
 -- Note: In production, users would be created through the app's signup flow
 
 -- Create auth users first (these would normally be created via Supabase Auth API)
-INSERT INTO auth.users (
-  id,
-  instance_id,
-  aud,
-  role,
-  email,
-  encrypted_password,
-  email_confirmed_at,
-  recovery_sent_at,
-  last_sign_in_at,
-  raw_app_meta_data,
-  raw_user_meta_data,
-  created_at,
-  updated_at,
-  confirmation_token,
-  email_change,
-  email_change_token_new,
-  recovery_token
-) VALUES
-  ('11111111-1111-1111-1111-111111111111', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 
-   'maria.silva@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
-   '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
-  
-  ('22222222-2222-2222-2222-222222222222', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-   'joao.santos@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
-   '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
-   
-  ('33333333-3333-3333-3333-333333333333', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-   'ana.costa@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
-   '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
-   
-  ('44444444-4444-4444-4444-444444444444', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-   'pedro.oliveira@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
-   '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
-   
-  ('55555555-5555-5555-5555-555555555555', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-   'lucia.fernandes@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
-   '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', '')
-ON CONFLICT (id) DO NOTHING;
+-- Get the current instance_id from auth.instances table
+DO $$
+DECLARE
+    current_instance_id uuid;
+BEGIN
+    -- Try to get the instance_id from auth.instances
+    SELECT id INTO current_instance_id FROM auth.instances LIMIT 1;
+    
+    -- If no instance found, create a default one
+    IF current_instance_id IS NULL THEN
+        current_instance_id := gen_random_uuid();
+        INSERT INTO auth.instances (id, uuid, raw_base_config) 
+        VALUES (current_instance_id, current_instance_id, '{}');
+    END IF;
+    
+    -- Insert demo users
+    INSERT INTO auth.users (
+        id,
+        instance_id,
+        aud,
+        role,
+        email,
+        encrypted_password,
+        email_confirmed_at,
+        recovery_sent_at,
+        last_sign_in_at,
+        raw_app_meta_data,
+        raw_user_meta_data,
+        created_at,
+        updated_at,
+        confirmation_token,
+        email_change,
+        email_change_token_new,
+        recovery_token
+    ) VALUES
+        ('11111111-1111-1111-1111-111111111111', current_instance_id, 'authenticated', 'authenticated', 
+         'maria.silva@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
+         '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
+        
+        ('22222222-2222-2222-2222-222222222222', current_instance_id, 'authenticated', 'authenticated',
+         'joao.santos@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
+         '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
+         
+        ('33333333-3333-3333-3333-333333333333', current_instance_id, 'authenticated', 'authenticated',
+         'ana.costa@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
+         '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
+         
+        ('44444444-4444-4444-4444-444444444444', current_instance_id, 'authenticated', 'authenticated',
+         'pedro.oliveira@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
+         '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', ''),
+         
+        ('55555555-5555-5555-5555-555555555555', current_instance_id, 'authenticated', 'authenticated',
+         'lucia.fernandes@seedfy.com', crypt('seedfy123', gen_salt('bf')), NOW(), NULL, NOW(),
+         '{"provider": "email", "providers": ["email"]}', '{}', NOW(), NOW(), '', '', '', '')
+    ON CONFLICT (id) DO NOTHING;
+END $$;
 
 -- Create profiles for demo users
 INSERT INTO public.profiles (
