@@ -79,17 +79,21 @@ export functionality.
 
 ## 📊 Database Schema
 
+### Entity Relationship Diagram
+
 ```mermaid
 erDiagram
     profiles ||--o{ farms : owns
     profiles ||--o{ collaborators : collaborates
     farms ||--o{ plots : contains
     farms ||--o{ collaborators : has
+    farms ||--o{ invitations : sends
     plots ||--o{ beds : divided_into
     beds ||--o{ plantings : planted_with
     crops_catalog ||--o{ plantings : used_in
     plantings ||--o{ tasks : generates
     plantings ||--o{ plantings : intercrop_with
+    farms ||--o{ map_templates : saves
 
     profiles {
         uuid id PK
@@ -100,13 +104,19 @@ erDiagram
         text city
         text state
         timestamptz created_at
+        timestamptz updated_at
     }
     
     farms {
         uuid id PK
         uuid owner_id FK
         text name
+        text description
+        decimal latitude
+        decimal longitude
+        text address
         timestamptz created_at
+        timestamptz updated_at
     }
     
     collaborators {
@@ -117,6 +127,17 @@ erDiagram
         timestamptz created_at
     }
     
+    invitations {
+        uuid id PK
+        uuid farm_id FK
+        text email
+        text role
+        text status
+        uuid invited_by FK
+        timestamptz expires_at
+        timestamptz created_at
+    }
+    
     plots {
         uuid id PK
         uuid farm_id FK
@@ -124,7 +145,10 @@ erDiagram
         numeric length_m
         numeric width_m
         numeric path_gap_m
+        integer grid_rows
+        integer grid_columns
         timestamptz created_at
+        timestamptz updated_at
     }
     
     beds {
@@ -134,18 +158,32 @@ erDiagram
         integer y
         numeric width_m
         numeric height_m
+        text label
         timestamptz created_at
+        timestamptz updated_at
     }
     
     crops_catalog {
         uuid id PK
         text name_pt
         text name_en
+        text scientific_name
+        text family
+        text group_name
         text image_url
         numeric row_spacing_m
         numeric plant_spacing_m
         integer cycle_days
+        integer days_to_germinate
+        integer days_to_transplant
         numeric yield_per_m2
+        text planting_season
+        text sun_requirement
+        text water_requirement
+        text soil_type
+        jsonb companion_plants
+        jsonb antagonist_plants
+        timestamptz created_at
     }
     
     plantings {
@@ -156,22 +194,77 @@ erDiagram
         numeric custom_row_spacing_m
         numeric custom_plant_spacing_m
         date sowing_date
+        date transplant_date
         date harvest_estimate
+        date actual_harvest_date
         integer quantity
+        numeric expected_yield
+        numeric actual_yield
         uuid intercrop_of FK
+        boolean is_companion
+        text status
+        text health_status
         text notes
         timestamptz created_at
+        timestamptz updated_at
     }
     
     tasks {
         uuid id PK
         uuid planting_id FK
+        uuid assigned_to FK
         text type
+        text title
+        text description
         date due_date
         boolean done
+        date completed_at
+        text priority
         timestamptz created_at
+        timestamptz updated_at
+    }
+    
+    map_templates {
+        uuid id PK
+        uuid farm_id FK
+        text name
+        text description
+        jsonb template_data
+        boolean is_public
+        timestamptz created_at
+        timestamptz updated_at
     }
 ```
+
+### Table Descriptions
+
+#### Core Tables
+
+- **profiles**: User profiles extending Supabase authentication with personal information and preferences
+- **farms**: Farm or garden entities owned by users with location and descriptive data
+- **collaborators**: Many-to-many relationship for farm access control (owner, editor, viewer roles)
+- **invitations**: Pending collaboration invitations with expiration and status tracking
+
+#### Spatial Organization
+
+- **plots**: Physical cultivation areas within farms with dimensions and grid layout
+- **beds**: Individual planting beds within plots with exact positioning and dimensions
+- **map_templates**: Reusable bed layout templates for quick farm setup
+
+#### Agricultural Data
+
+- **crops_catalog**: Comprehensive crop database with cultivation parameters, spacing requirements, and companion planting information
+- **plantings**: Active crop instances in beds with customizable parameters and intercropping support
+- **tasks**: Agricultural tasks linked to plantings with assignment and priority management
+
+### Database Features
+
+- **Row Level Security (RLS)**: All tables protected with appropriate access policies
+- **Automatic Timestamps**: Updated via triggers for audit trails
+- **Referential Integrity**: Foreign key constraints ensure data consistency
+- **Check Constraints**: Business rule validation at database level
+- **Indexes**: Optimized for common query patterns
+- **JSONB Fields**: Flexible storage for companion plants and template data
 
 ## 🔄 User Flow
 
