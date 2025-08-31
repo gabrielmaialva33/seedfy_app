@@ -26,14 +26,9 @@ import 'shared/data/datasources/supabase_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  // Initialize other services
-  await SupabaseService.initialize();
+  // Initialize services
   await FirebaseService.initialize();
+  await SupabaseService.initialize();
 
   // Initialize dependency injection
   await di.init();
