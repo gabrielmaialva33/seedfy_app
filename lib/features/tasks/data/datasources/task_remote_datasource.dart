@@ -1,26 +1,26 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/errors/exceptions.dart' as core_exceptions;
-import '../../../../shared/domain/entities/task.dart';
+import '../../../../shared/domain/entities/task.dart' as entities;
 
 abstract class TaskRemoteDataSource {
-  Future<List<Task>> getUserTasks();
+  Future<List<entities.Task>> getUserTasks();
 
-  Future<List<Task>> getFarmTasks(String farmId);
+  Future<List<entities.Task>> getFarmTasks(String farmId);
 
-  Future<List<Task>> getPlantingTasks(String plantingId);
+  Future<List<entities.Task>> getPlantingTasks(String plantingId);
 
-  Future<List<Task>> getPendingTasks();
+  Future<List<entities.Task>> getPendingTasks();
 
-  Future<List<Task>> getTodayTasks();
+  Future<List<entities.Task>> getTodayTasks();
 
-  Future<List<Task>> getOverdueTasks();
+  Future<List<entities.Task>> getOverdueTasks();
 
-  Future<Task> createTask(Task task);
+  Future<entities.Task> createTask(entities.Task task);
 
-  Future<Task> updateTask(Task task);
+  Future<entities.Task> updateTask(entities.Task task);
 
-  Future<Task> completeTask(String taskId, {String? notes, int? actualMinutes});
+  Future<entities.Task> completeTask(String taskId, {String? notes, int? actualMinutes});
 
   Future<void> deleteTask(String taskId);
 
@@ -33,7 +33,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   const TaskRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<List<Task>> getUserTasks() async {
+  Future<List<entities.Task>> getUserTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -60,7 +60,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .order('due_date', ascending: true);
 
       return (response as List<dynamic>)
-          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .map((json) => entities.Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
@@ -71,7 +71,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<List<Task>> getFarmTasks(String farmId) async {
+  Future<List<entities.Task>> getFarmTasks(String farmId) async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -99,7 +99,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .order('due_date', ascending: true);
 
       return (response as List<dynamic>)
-          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .map((json) => entities.Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
@@ -110,7 +110,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<List<Task>> getPlantingTasks(String plantingId) async {
+  Future<List<entities.Task>> getPlantingTasks(String plantingId) async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -138,7 +138,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .order('due_date', ascending: true);
 
       return (response as List<dynamic>)
-          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .map((json) => entities.Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
@@ -149,7 +149,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<List<Task>> getPendingTasks() async {
+  Future<List<entities.Task>> getPendingTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -177,7 +177,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .order('due_date', ascending: true);
 
       return (response as List<dynamic>)
-          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .map((json) => entities.Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
@@ -188,7 +188,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<List<Task>> getTodayTasks() async {
+  Future<List<entities.Task>> getTodayTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -221,7 +221,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .order('due_date', ascending: true);
 
       return (response as List<dynamic>)
-          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .map((json) => entities.Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
@@ -232,7 +232,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<List<Task>> getOverdueTasks() async {
+  Future<List<entities.Task>> getOverdueTasks() async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -263,7 +263,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
           .order('due_date', ascending: true);
 
       return (response as List<dynamic>)
-          .map((json) => Task.fromJson(json as Map<String, dynamic>))
+          .map((json) => entities.Task.fromJson(json as Map<String, dynamic>))
           .toList();
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
@@ -274,7 +274,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<Task> createTask(Task task) async {
+  Future<entities.Task> createTask(entities.Task task) async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -300,7 +300,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
             )
           ''').single();
 
-      return Task.fromJson(response);
+      return entities.Task.fromJson(response);
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
@@ -310,7 +310,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<Task> updateTask(Task task) async {
+  Future<entities.Task> updateTask(entities.Task task) async {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user == null) {
@@ -336,7 +336,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
             )
           ''').single();
 
-      return Task.fromJson(response);
+      return entities.Task.fromJson(response);
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {
@@ -346,7 +346,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<Task> completeTask(String taskId,
+  Future<entities.Task> completeTask(String taskId,
       {String? notes, int? actualMinutes}) async {
     try {
       final user = supabaseClient.auth.currentUser;
@@ -382,7 +382,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
             )
           ''').single();
 
-      return Task.fromJson(response);
+      return entities.Task.fromJson(response);
     } on PostgrestException catch (e) {
       throw core_exceptions.ServerException(e.message);
     } catch (e) {

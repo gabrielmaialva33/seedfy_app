@@ -144,7 +144,7 @@ class TaskRepositoryImpl implements TaskRepository {
 
   /// Helper method to reduce code duplication for getting tasks
   Future<Either<Failure, List<entities.Task>>> _getTasks(
-      Future<List<Task>> Function() getTasksFunction) async {
+      Future<List<entities.Task>> Function() getTasksFunction) async {
     if (await networkInfo.isConnected) {
       try {
         final tasks = await getTasksFunction();
