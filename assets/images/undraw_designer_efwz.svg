@@ -1,5 +1,5 @@
-<svg artist="Katerina Limpitsouni" height="533.577" role="img"
-    source="https://undraw.co/" viewBox="0 0 800.117 533.577" width="800.117" xmlns="http://www.w3.org/2000/svg">
+<svg artist="Katerina Limpitsouni" height="533.577" role="img" source="https://undraw.co/"
+    viewBox="0 0 800.117 533.577" width="800.117" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(-561.1 -255.53)">
         <path
             d="M227.085,491.32a20.667,20.667,0,0,1-25.842-6.955c-.56-.819.685-1.728,1.246-.908a19.137,19.137,0,0,0,24.052,6.421c.895-.428,1.434,1.017.544,1.443Z"
@@ -73,12 +73,12 @@
         <path
             d="M918.264,410.146a18.9,18.9,0,0,1-18.541-15.236,18.9,18.9,0,1,0,22.292,14.862A18.983,18.983,0,0,1,918.264,410.146Z"
             fill="#3f3d56" transform="translate(368.342 1.705)" />
-        <circle cx="28.203" cy="28.203" fill="#3f3d56" opacity="0.74"
-            r="28.203" transform="translate(688.196 356.857)" />
-        <circle cx="28.203" cy="28.203" fill="#ff6584" opacity="0.74"
-            r="28.203" transform="translate(716.399 356.857)" />
-        <circle cx="28.203" cy="28.203" fill="#059669" opacity="0.74"
-            r="28.203" transform="translate(702.536 334.379)" />
+        <circle cx="28.203" cy="28.203" fill="#3f3d56" opacity="0.74" r="28.203"
+            transform="translate(688.196 356.857)" />
+        <circle cx="28.203" cy="28.203" fill="#ff6584" opacity="0.74" r="28.203"
+            transform="translate(716.399 356.857)" />
+        <circle cx="28.203" cy="28.203" fill="#059669" opacity="0.74" r="28.203"
+            transform="translate(702.536 334.379)" />
         <rect fill="#3f3d56" height="1.643" transform="translate(732.045 377.26) rotate(-17.441)"
             width="75.934" />
         <path

@@ -1,5 +1,5 @@
-<svg artist="Katerina Limpitsouni" height="767.246" role="img"
-    source="https://undraw.co/" viewBox="0 0 740.981 767.246" width="740.981" xmlns="http://www.w3.org/2000/svg">
+<svg artist="Katerina Limpitsouni" height="767.246" role="img" source="https://undraw.co/"
+    viewBox="0 0 740.981 767.246" width="740.981" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(-440.646 -84.879)">
         <g transform="translate(691.645 336.975)">
             <path
@@ -36,8 +36,8 @@
                 transform="matrix(-0.99, -0.141, 0.141, -0.99, 1123.775, 800.49)" width="14.765" />
             <rect fill="#d6d6e3" height="8.613" transform="translate(1031.117 931.512)"
                 width="239.934" />
-            <path d="M127.7,367.87l71.218,286.1,8.318-2.215L136.018,365.67Z"
-                fill="#d6d6e3" transform="translate(1026.682 285.734)" />
+            <path d="M127.7,367.87l71.218,286.1,8.318-2.215L136.018,365.67Z" fill="#d6d6e3"
+                transform="translate(1026.682 285.734)" />
             <circle cx="12.304" cy="12.304" fill="#090814" r="12.304"
                 transform="translate(1141.857 641.129)" />
         </g>
@@ -80,10 +80,10 @@
             <path
                 d="M956.806,358.931s-8.178-5.622-21.466,9.711l32.711,59.288,10.989-16.589S955.784,365.575,956.806,358.931Z"
                 fill="#9f616a" transform="translate(-917.435 -167.201)" />
-            <path d="M947.874,304.78s-1.022,36.8,3.067,50.6"
-                opacity="0.1" transform="translate(-903.137 -173.105)" />
-            <path d="M882.133,311.935S876,309.891,876,304.78"
-                opacity="0.1" transform="translate(-754.596 -173.105)" />
+            <path d="M947.874,304.78s-1.022,36.8,3.067,50.6" opacity="0.1"
+                transform="translate(-903.137 -173.105)" />
+            <path d="M882.133,311.935S876,309.891,876,304.78" opacity="0.1"
+                transform="translate(-754.596 -173.105)" />
         </g>
         <path
             d="M213.069,311.743l6.9-4.454c-2.832,5.382-5.273,13.788-6.579,20.477-2.212-6.231-5.778-13.855-9.308-18.409l7.3,2.557c-4.5-30.012-21.411-51.558-40.78-51.558v-2.285C190.837,258.071,208.478,280.519,213.069,311.743Z"

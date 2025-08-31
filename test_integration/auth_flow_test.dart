@@ -65,7 +65,7 @@ void main() {
       // Find and tap "Criar conta" button/link
       final signupLink = find.text('Criar conta');
       expect(signupLink, findsOneWidget);
-      
+
       await tester.tap(signupLink);
       await tester.pumpAndSettle();
 
@@ -113,7 +113,7 @@ void main() {
 
       // Assuming we can get past authentication (mocked or test account)
       // This would test the main navigation flow
-      
+
       // For now, just verify the app starts correctly
       expect(find.byType(MaterialApp), findsOneWidget);
     });
@@ -121,7 +121,7 @@ void main() {
     testWidgets('should handle deep links correctly', (tester) async {
       // Test deep link navigation
       // This would require setting up proper route testing
-      
+
       app.main();
       await tester.pumpAndSettle();
 
@@ -168,14 +168,15 @@ void main() {
   });
 
   group('Performance Tests', () {
-    testWidgets('should load main screens within acceptable time', (tester) async {
+    testWidgets('should load main screens within acceptable time',
+        (tester) async {
       final stopwatch = Stopwatch()..start();
-      
+
       app.main();
       await tester.pumpAndSettle();
-      
+
       stopwatch.stop();
-      
+
       // Verify app starts within 3 seconds
       expect(stopwatch.elapsedMilliseconds, lessThan(3000));
       expect(find.byType(MaterialApp), findsOneWidget);
@@ -216,7 +217,7 @@ void main() {
 
       // Verify semantic labels are present
       expect(find.byType(MaterialApp), findsOneWidget);
-      
+
       // This would require checking for Semantics widgets
       // and proper accessibility labels
     });
@@ -229,7 +230,8 @@ void main() {
       expect(find.byType(MaterialApp), findsOneWidget);
     });
 
-    testWidgets('should meet WCAG guidelines for color contrast', (tester) async {
+    testWidgets('should meet WCAG guidelines for color contrast',
+        (tester) async {
       app.main();
       await tester.pumpAndSettle();
 

@@ -56,9 +56,10 @@ export functionality.
 - **[Supabase](https://supabase.com/)** (Auth, PostgreSQL, Storage, RLS)
 - **[Provider](https://pub.dev/packages/provider)** for State Management
 - **[PostgreSQL](https://www.postgresql.org/)** with Row Level Security
-- *
-  *[Flutter Localizations](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
-  ** (pt-BR, en-US)
+-
+    *
+*[Flutter Localizations](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
+** (pt-BR, en-US)
 
 <br>
 

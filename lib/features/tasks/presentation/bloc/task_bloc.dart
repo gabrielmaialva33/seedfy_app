@@ -32,7 +32,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         getOverdueTasks: () => _onGetOverdueTasks(emit),
         createTask: (task) => _onCreateTask(task, emit),
         updateTask: (task) => _onUpdateTask(task, emit),
-        completeTask: (taskId, notes, actualMinutes) => _onCompleteTask(taskId, notes, actualMinutes, emit),
+        completeTask: (taskId, notes, actualMinutes) =>
+            _onCompleteTask(taskId, notes, actualMinutes, emit),
         deleteTask: (taskId) => _onDeleteTask(taskId, emit),
         getTaskStats: () => _onGetTaskStats(emit),
         refreshTasks: () => _onRefreshTasks(emit),

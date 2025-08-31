@@ -437,7 +437,7 @@ class _TasksLoaded implements TaskState {
   final List<Task> _tasks;
   List<Task> get tasks {
     if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tasks);
   }
 
@@ -506,7 +506,7 @@ class _PendingTasksLoaded implements TaskState {
   final List<Task> _tasks;
   List<Task> get tasks {
     if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tasks);
   }
 
@@ -576,7 +576,7 @@ class _TodayTasksLoaded implements TaskState {
   final List<Task> _tasks;
   List<Task> get tasks {
     if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tasks);
   }
 
@@ -646,7 +646,7 @@ class _OverdueTasksLoaded implements TaskState {
   final List<Task> _tasks;
   List<Task> get tasks {
     if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tasks);
   }
 
@@ -926,7 +926,7 @@ class _StatsLoaded implements TaskState {
   final Map<String, dynamic> _stats;
   Map<String, dynamic> get stats {
     if (_stats is EqualUnmodifiableMapView) return _stats;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_stats);
   }
 

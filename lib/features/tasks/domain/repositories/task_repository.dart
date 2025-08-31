@@ -11,7 +11,8 @@ abstract class TaskRepository {
   Future<Either<Failure, List<entities.Task>>> getFarmTasks(String farmId);
 
   /// Get tasks for a specific planting
-  Future<Either<Failure, List<entities.Task>>> getPlantingTasks(String plantingId);
+  Future<Either<Failure, List<entities.Task>>> getPlantingTasks(
+      String plantingId);
 
   /// Get pending tasks (not done)
   Future<Either<Failure, List<entities.Task>>> getPendingTasks();

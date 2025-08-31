@@ -186,17 +186,27 @@ class Task {
       description: json['description'],
       type: type,
       status: status,
-      dueDate: DateTime.parse(json['due_date'] ?? DateTime.now().toIso8601String()),
-      sowingDate: json['sowing_date'] != null ? DateTime.parse(json['sowing_date']) : null,
-      harvestDate: json['harvest_date'] != null ? DateTime.parse(json['harvest_date']) : null,
+      dueDate:
+          DateTime.parse(json['due_date'] ?? DateTime.now().toIso8601String()),
+      sowingDate: json['sowing_date'] != null
+          ? DateTime.parse(json['sowing_date'])
+          : null,
+      harvestDate: json['harvest_date'] != null
+          ? DateTime.parse(json['harvest_date'])
+          : null,
       done: json['done'] ?? false,
-      completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at']) : null,
+      completedAt: json['completed_at'] != null
+          ? DateTime.parse(json['completed_at'])
+          : null,
       completedBy: json['completed_by'],
       notes: json['notes'],
       estimatedMinutes: json['estimated_minutes'],
       actualMinutes: json['actual_minutes'],
-      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toIso8601String()),
-      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null,
+      createdAt: DateTime.parse(
+          json['created_at'] ?? DateTime.now().toIso8601String()),
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null,
     );
   }
 

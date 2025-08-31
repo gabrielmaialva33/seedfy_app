@@ -22,7 +22,8 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, List<entities.Task>>> getFarmTasks(String farmId) async {
+  Future<Either<Failure, List<entities.Task>>> getFarmTasks(
+      String farmId) async {
     return await _getTasks(() => remoteDataSource.getFarmTasks(farmId));
   }
 

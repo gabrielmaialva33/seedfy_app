@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -7,12 +8,13 @@ import 'package:seedfy_app/shared/data/datasources/nvidia_ai_service.dart';
 
 // Mock classes
 class MockDio extends Mock implements Dio {}
+
 class MockResponse extends Mock implements Response {}
+
 class MockFile extends Mock implements File {}
 
 void main() {
   group('NvidiaAIService', () {
-
     group('PlantAnalysisResult', () {
       test('should create PlantAnalysisResult from valid JSON', () {
         final json = {
@@ -113,7 +115,8 @@ void main() {
         final recommendation = GardenRecommendation.fromJson(json);
 
         expect(recommendation.title, 'Plant winter vegetables');
-        expect(recommendation.description, 'Now is the perfect time to plant cool-season crops');
+        expect(recommendation.description,
+            'Now is the perfect time to plant cool-season crops');
         expect(recommendation.plantSuggestions, ['lettuce', 'spinach', 'kale']);
         expect(recommendation.priority, 'high');
         expect(recommendation.category, 'planting');
@@ -151,7 +154,7 @@ void main() {
       test('should handle invalid JSON in analysis response', () {
         // This test would require mocking the actual HTTP calls
         // For now, we'll test the JSON parsing logic
-        
+
         const invalidJson = 'This is not valid JSON';
         expect(() => json.decode(invalidJson), throwsFormatException);
       });
@@ -163,18 +166,20 @@ void main() {
       });
 
       test('should extract JSON from mixed content', () {
-        const mixedContent = 'Here is the analysis: {"plant_name": "Rose", "health_score": 90} and some extra text.';
+        const mixedContent =
+            'Here is the analysis: {"plant_name": "Rose", "health_score": 90} and some extra text.';
         final jsonMatch = RegExp(r'\\{.*\\}').firstMatch(mixedContent);
-        
+
         expect(jsonMatch, isNotNull);
-        expect(jsonMatch!.group(0), '{"plant_name": "Rose", "health_score": 90}');
+        expect(
+            jsonMatch!.group(0), '{"plant_name": "Rose", "health_score": 90}');
       });
     });
 
     group('Input Validation', () {
       test('should handle various experience levels', () {
         const validLevels = ['beginner', 'intermediate', 'expert'];
-        
+
         for (final level in validLevels) {
           expect(level, isA<String>());
           expect(level.isNotEmpty, isTrue);
@@ -183,7 +188,7 @@ void main() {
 
       test('should handle various seasons', () {
         const seasons = ['Verão', 'Outono', 'Inverno', 'Primavera'];
-        
+
         for (final season in seasons) {
           expect(season, isA<String>());
           expect(season.isNotEmpty, isTrue);
@@ -199,7 +204,7 @@ void main() {
       test('should handle plant list with special characters', () {
         const plants = ['Tomate 🍅', 'Alface & Rúcula', 'Pimentão-doce'];
         final joinedPlants = plants.join(', ');
-        
+
         expect(joinedPlants, 'Tomate 🍅, Alface & Rúcula, Pimentão-doce');
       });
     });
@@ -264,10 +269,10 @@ Pergunta: $message
       test('should handle base64 image encoding', () {
         const sampleBytes = [137, 80, 78, 71, 13, 10, 26, 10]; // PNG header
         final base64String = base64Encode(sampleBytes);
-        
+
         expect(base64String, isA<String>());
         expect(base64String.isNotEmpty, isTrue);
-        
+
         // Verify we can decode it back
         final decodedBytes = base64Decode(base64String);
         expect(decodedBytes, equals(sampleBytes));
@@ -276,7 +281,7 @@ Pergunta: $message
       test('should generate correct data URL format', () {
         const base64Image = 'iVBORw0KGgoAAAANSUhEUg';
         final dataUrl = 'data:image/jpeg;base64,$base64Image';
-        
+
         expect(dataUrl, 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUg');
         expect(dataUrl.startsWith('data:image/jpeg;base64,'), isTrue);
       });

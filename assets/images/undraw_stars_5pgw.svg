@@ -95,8 +95,8 @@
             transform="translate(1220.532 391.387)" />
         <path d="M592.558,467.994l64.805-53.987-62.957,56.15a1.5,1.5,0,1,1-1.848-2.162Z"
             fill="#f0f0f0" opacity="0.3" transform="translate(216.024 -127.383)" />
-        <path d="M77.89,64.887,0,0,75.669,67.486a1.806,1.806,0,1,0,2.221-2.6Z"
-            fill="#f0f0f0" opacity="0.3" transform="translate(731.38 743.189) rotate(-84)" />
+        <path d="M77.89,64.887,0,0,75.669,67.486a1.806,1.806,0,1,0,2.221-2.6Z" fill="#f0f0f0"
+            opacity="0.3" transform="translate(731.38 743.189) rotate(-84)" />
         <circle cx="3.46" cy="3.46" fill="#059669" r="3.46"
             transform="translate(872.769 785.846)" />
         <circle cx="4.008" cy="4.008" fill="#059669" r="4.008"

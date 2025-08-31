@@ -1,5 +1,5 @@
-<svg artist="Katerina Limpitsouni" height="618.112" role="img"
-    source="https://undraw.co/" viewBox="0 0 799.031 618.112" width="799.031" xmlns="http://www.w3.org/2000/svg">
+<svg artist="Katerina Limpitsouni" height="618.112" role="img" source="https://undraw.co/"
+    viewBox="0 0 799.031 618.112" width="799.031" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(-893 -197)">
         <path
             d="M15.18,488.763c0,.872.478,1.573,1.073,1.573h535.1c.6,0,1.073-.7,1.073-1.573s-.478-1.573-1.073-1.573H16.253C15.658,487.191,15.18,487.891,15.18,488.763Z"
@@ -22,15 +22,15 @@
                 fill="#059669" transform="translate(811.648 85.826)" />
             <rect fill="#fff" height="8.645" rx="2" transform="translate(1165.4 380.374)"
                 width="76.078" />
-            <ellipse cx="5.187" cy="5.187" fill="#090814" rx="5.187"
-                ry="5.187" transform="translate(1336.576 380.374)" />
-            <ellipse cx="5.187" cy="5.187" fill="#090814" rx="5.187"
-                ry="5.187" transform="translate(1353.865 380.374)" />
-            <ellipse cx="5.187" cy="5.187" fill="#090814" rx="5.187"
-                ry="5.187" transform="translate(1371.156 380.374)" />
+            <ellipse cx="5.187" cy="5.187" fill="#090814" rx="5.187" ry="5.187"
+                transform="translate(1336.576 380.374)" />
+            <ellipse cx="5.187" cy="5.187" fill="#090814" rx="5.187" ry="5.187"
+                transform="translate(1353.865 380.374)" />
+            <ellipse cx="5.187" cy="5.187" fill="#090814" rx="5.187" ry="5.187"
+                transform="translate(1371.156 380.374)" />
         </g>
-        <ellipse cx="40.952" cy="40.952" fill="#090814" rx="40.952"
-            ry="40.952" transform="translate(1404.281 440.452)" />
+        <ellipse cx="40.952" cy="40.952" fill="#090814" rx="40.952" ry="40.952"
+            transform="translate(1404.281 440.452)" />
         <path
             d="M10.863-57.7l-.524-29.6h8.246l-.554,29.6Zm3.613,14.307a4.7,4.7,0,0,1-3.409-1.3,4.368,4.368,0,0,1-1.34-3.278,4.39,4.39,0,0,1,1.34-3.322,4.732,4.732,0,0,1,3.409-1.282,4.732,4.732,0,0,1,3.409,1.282,4.39,4.39,0,0,1,1.34,3.322,4.368,4.368,0,0,1-1.34,3.278A4.7,4.7,0,0,1,14.476-43.394Z"
             fill="#fff" transform="translate(1430.76 546.754)" />

@@ -91,7 +91,8 @@ void main() {
       );
     }
 
-    testWidgets('should render GardenGrid with plot information', (tester) async {
+    testWidgets('should render GardenGrid with plot information',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
       // Verify plot information is displayed
@@ -100,13 +101,15 @@ void main() {
       expect(find.text('80.0 m²'), findsOneWidget);
     });
 
-    testWidgets('should render InteractiveViewer for pan and zoom', (tester) async {
+    testWidgets('should render InteractiveViewer for pan and zoom',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(InteractiveViewer), findsOneWidget);
     });
 
-    testWidgets('should render CustomPaint for background grid', (tester) async {
+    testWidgets('should render CustomPaint for background grid',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(CustomPaint), findsOneWidget);
@@ -165,12 +168,13 @@ void main() {
 
     testWidgets('should display different bed status colors', (tester) async {
       final now = DateTime.now();
-      
+
       // Create beds with different harvest dates for different statuses
       final healthyBed = BedWithPlanting(
         bed: testBeds.first.bed,
         planting: testBeds.first.planting!.copyWith(
-          harvestEstimate: now.add(const Duration(days: 30)), // More than 7 days = healthy
+          harvestEstimate:
+              now.add(const Duration(days: 30)), // More than 7 days = healthy
         ),
         crop: testBeds.first.crop,
       );
@@ -188,7 +192,8 @@ void main() {
         bed: testBeds.first.bed.copyWith(id: 'bed-3', x: 6),
         planting: testBeds.first.planting!.copyWith(
           id: 'planting-3',
-          harvestEstimate: now.subtract(const Duration(days: 2)), // Past due = critical
+          harvestEstimate:
+              now.subtract(const Duration(days: 2)), // Past due = critical
         ),
         crop: testBeds.first.crop,
       );
@@ -236,12 +241,13 @@ void main() {
 
       // Plot info should still be visible
       expect(find.text('Test Garden Plot'), findsOneWidget);
-      
+
       // No bed widgets should be rendered
       expect(find.text('Tomate'), findsNothing);
     });
 
-    testWidgets('should handle different crop names based on locale', (tester) async {
+    testWidgets('should handle different crop names based on locale',
+        (tester) async {
       // Create widget with English locale
       final widget = MaterialApp(
         home: Scaffold(
@@ -269,7 +275,8 @@ void main() {
       final overdueBed = BedWithPlanting(
         bed: testBeds.first.bed,
         planting: testBeds.first.planting!.copyWith(
-          harvestEstimate: now.subtract(const Duration(days: 5)), // 5 days overdue
+          harvestEstimate:
+              now.subtract(const Duration(days: 5)), // 5 days overdue
         ),
         crop: testBeds.first.crop,
       );
@@ -279,14 +286,16 @@ void main() {
       expect(find.text('Atrasado'), findsOneWidget);
     });
 
-    testWidgets('should center view on garden on initialization', (tester) async {
+    testWidgets('should center view on garden on initialization',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
-      
+
       // Allow animation to complete
       await tester.pumpAndSettle();
 
       // Verify InteractiveViewer is present and functional
-      final interactiveViewer = tester.widget<InteractiveViewer>(find.byType(InteractiveViewer));
+      final interactiveViewer =
+          tester.widget<InteractiveViewer>(find.byType(InteractiveViewer));
       expect(interactiveViewer, isNotNull);
       expect(interactiveViewer.minScale, 0.3);
       expect(interactiveViewer.maxScale, 5.0);

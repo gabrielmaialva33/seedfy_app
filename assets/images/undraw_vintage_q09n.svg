@@ -18,9 +18,9 @@
     <path
         d="m900.91283,611.7391c0,5.52285-392.53958,12.2609-573.41283,12.2609S0,619.52285,0,614s146.62674-10,327.5-10,573.41283,2.21626,573.41283,7.7391Z"
         fill="#e6e6e6" stroke-width="0" />
-    <polygon
-        fill="#2f2e43"
-        points="69.4789 509.48252 78 543 161.68325 557.5 161.68325 493.59697 69.4789 489.5 69.4789 509.48252" stroke-width="0" />
+    <polygon fill="#2f2e43"
+        points="69.4789 509.48252 78 543 161.68325 557.5 161.68325 493.59697 69.4789 489.5 69.4789 509.48252"
+        stroke-width="0" />
     <rect fill="#2f2e43" height="100" stroke-width="0" width="427" x="155" y="473" />
     <path
         d="m176,560c0,28.16652-10.83333,51-47.5,51-31.66667,0-42.5-22.83348-42.5-51s16.26647-51,42.5-51,47.5,22.83348,47.5,51Z"
@@ -44,17 +44,17 @@
     <path
         d="m128.06664,428.77963c-2.37891,0-4.63672-1.0835-6.12402-2.96436-1.59912-2.02197-2.09521-4.69922-1.32764-7.16162,6.13428-19.66797,17.43262-53.11084,24.18213-56.11084,6.72168-2.9873,41.37256-5.64746,61.42969-6.96729,2.39648-.1543,4.69434.7749,6.30273,2.55811,1.61084,1.78564,2.30273,4.16992,1.89893,6.54199l-8.97217,52.74463c-.60596,3.56299-3.54736,6.22705-7.15283,6.47852l-69.69092,4.8623c-.18213.0127-.36475.01855-.5459.01855Z"
         fill="#fff" stroke-width="0" />
-    <polygon
-        fill="none"
-        points="197 550 197 450.84003 211.85346 429 306.20602 429 293 455 296.04498 550 197 550" stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" />
-    <line fill="none" stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" x1="166.7412" x2="197"
-        y1="550" y2="550" />
+    <polygon fill="none"
+        points="197 550 197 450.84003 211.85346 429 306.20602 429 293 455 296.04498 550 197 550"
+        stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" />
+    <line fill="none" stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" x1="166.7412"
+        x2="197" y1="550" y2="550" />
     <path d="m102.25489,509.48252s5.74511-67.47928,15.74511-70.9809l84-6.50162" fill="none"
         stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" />
-    <line fill="none" stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" x1="123" x2="136.3714"
-        y1="462" y2="462" />
-    <rect fill="none" height="7.88576" stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" width="17.22707"
-        x="206.77293" y="450.11424" />
+    <line fill="none" stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" x1="123"
+        x2="136.3714" y1="462" y2="462" />
+    <rect fill="none" height="7.88576" stroke="#2f2e43" stroke-linecap="round"
+        stroke-miterlimit="10" width="17.22707" x="206.77293" y="450.11424" />
     <path
         d="m306.20602,429l176.29398-6.5s21.4023,11.48252,26.20115,48.24126l118.79885,4.75874s11-27,3.5-42.5"
         fill="none" stroke="#2f2e43" stroke-linecap="round" stroke-miterlimit="10" />

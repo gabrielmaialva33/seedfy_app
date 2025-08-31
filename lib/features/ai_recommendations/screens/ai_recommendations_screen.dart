@@ -10,7 +10,8 @@ class AIRecommendationsScreen extends StatefulWidget {
   const AIRecommendationsScreen({super.key});
 
   @override
-  State<AIRecommendationsScreen> createState() => _AIRecommendationsScreenState();
+  State<AIRecommendationsScreen> createState() =>
+      _AIRecommendationsScreenState();
 }
 
 class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
@@ -46,9 +47,7 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
       }
 
       // Load current plants from user's beds
-      final bedsResponse = await SupabaseService.client
-          .from('beds')
-          .select('''
+      final bedsResponse = await SupabaseService.client.from('beds').select('''
             plantings(
               crops_catalog(name_pt, name_en)
             )
@@ -129,7 +128,9 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _generateRecommendations,
-            tooltip: isPortuguese ? 'Atualizar recomendações' : 'Refresh recommendations',
+            tooltip: isPortuguese
+                ? 'Atualizar recomendações'
+                : 'Refresh recommendations',
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.tune),
@@ -145,7 +146,10 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
                 value: 'beginner',
                 child: Row(
                   children: [
-                    Icon(Icons.school, color: _experienceLevel == 'beginner' ? Colors.green : null),
+                    Icon(Icons.school,
+                        color: _experienceLevel == 'beginner'
+                            ? Colors.green
+                            : null),
                     const SizedBox(width: 8),
                     Text(isPortuguese ? 'Iniciante' : 'Beginner'),
                   ],
@@ -155,7 +159,10 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
                 value: 'intermediate',
                 child: Row(
                   children: [
-                    Icon(Icons.trending_up, color: _experienceLevel == 'intermediate' ? Colors.green : null),
+                    Icon(Icons.trending_up,
+                        color: _experienceLevel == 'intermediate'
+                            ? Colors.green
+                            : null),
                     const SizedBox(width: 8),
                     Text(isPortuguese ? 'Intermediário' : 'Intermediate'),
                   ],
@@ -165,7 +172,9 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
                 value: 'expert',
                 child: Row(
                   children: [
-                    Icon(Icons.emoji_events, color: _experienceLevel == 'expert' ? Colors.green : null),
+                    Icon(Icons.emoji_events,
+                        color:
+                            _experienceLevel == 'expert' ? Colors.green : null),
                     const SizedBox(width: 8),
                     Text(isPortuguese ? 'Especialista' : 'Expert'),
                   ],
@@ -202,8 +211,8 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
             ).animate().scale(),
             const SizedBox(height: 24),
             Text(
-              isPortuguese 
-                  ? '🧠 Gerando recomendações personalizadas...' 
+              isPortuguese
+                  ? '🧠 Gerando recomendações personalizadas...'
                   : '🧠 Generating personalized recommendations...',
               style: TextStyle(
                 fontSize: 16,
@@ -239,7 +248,9 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
             ).animate().scale(),
             const SizedBox(height: 16),
             Text(
-              isPortuguese ? 'Erro ao gerar recomendações' : 'Error generating recommendations',
+              isPortuguese
+                  ? 'Erro ao gerar recomendações'
+                  : 'Error generating recommendations',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -273,12 +284,14 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
             ).animate().scale(),
             const SizedBox(height: 16),
             Text(
-              isPortuguese ? 'Nenhuma recomendação disponível' : 'No recommendations available',
+              isPortuguese
+                  ? 'Nenhuma recomendação disponível'
+                  : 'No recommendations available',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
-              isPortuguese 
+              isPortuguese
                   ? 'Adicione algumas plantas ao seu jardim primeiro'
                   : 'Add some plants to your garden first',
               style: TextStyle(color: Colors.grey[600]),
@@ -296,14 +309,14 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
           // Context card
           _buildContextCard(isPortuguese, theme),
           const SizedBox(height: 16),
-          
+
           // Recommendations header
           Row(
             children: [
               Icon(Icons.auto_awesome, color: theme.colorScheme.primary),
               const SizedBox(width: 8),
               Text(
-                isPortuguese 
+                isPortuguese
                     ? 'Recomendações Personalizadas'
                     : 'Personalized Recommendations',
                 style: TextStyle(
@@ -320,7 +333,8 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
           ..._recommendations.asMap().entries.map((entry) {
             final index = entry.key;
             final recommendation = entry.value;
-            return _buildRecommendationCard(recommendation, isPortuguese, theme, index);
+            return _buildRecommendationCard(
+                recommendation, isPortuguese, theme, index);
           }),
         ],
       ),
@@ -342,7 +356,8 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
         children: [
           Row(
             children: [
-              Icon(Icons.info_outline, color: theme.colorScheme.primary, size: 20),
+              Icon(Icons.info_outline,
+                  color: theme.colorScheme.primary, size: 20),
               const SizedBox(width: 8),
               Text(
                 isPortuguese ? 'Contexto da Análise' : 'Analysis Context',
@@ -358,7 +373,9 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
           _buildContextItem(
             Icons.location_on,
             isPortuguese ? 'Localização' : 'Location',
-            _location.isNotEmpty ? _location : (isPortuguese ? 'Não informado' : 'Not specified'),
+            _location.isNotEmpty
+                ? _location
+                : (isPortuguese ? 'Não informado' : 'Not specified'),
             theme,
           ),
           _buildContextItem(
@@ -370,8 +387,10 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
           _buildContextItem(
             Icons.local_florist,
             isPortuguese ? 'Plantas atuais' : 'Current plants',
-            _currentPlants.isEmpty 
-                ? (isPortuguese ? 'Nenhuma planta cadastrada' : 'No plants registered')
+            _currentPlants.isEmpty
+                ? (isPortuguese
+                    ? 'Nenhuma planta cadastrada'
+                    : 'No plants registered')
                 : '${_currentPlants.length} ${isPortuguese ? "espécies" : "species"}',
             theme,
           ),
@@ -386,12 +405,15 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
     ).animate().fadeIn().slideY();
   }
 
-  Widget _buildContextItem(IconData icon, String label, String value, ThemeData theme) {
+  Widget _buildContextItem(
+      IconData icon, String label, String value, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
+          Icon(icon,
+              size: 16,
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
           const SizedBox(width: 8),
           Text(
             '$label: ',
@@ -415,7 +437,8 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
     );
   }
 
-  Widget _buildRecommendationCard(GardenRecommendation recommendation, bool isPortuguese, ThemeData theme, int index) {
+  Widget _buildRecommendationCard(GardenRecommendation recommendation,
+      bool isPortuguese, ThemeData theme, int index) {
     final priorityColor = _getPriorityColor(recommendation.priority);
     final categoryIcon = _getCategoryIcon(recommendation.category);
     final difficultyIcon = _getDifficultyIcon(recommendation.difficulty);
@@ -441,7 +464,8 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: priorityColor.withValues(alpha: 0.1),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -467,7 +491,8 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: priorityColor,
                         borderRadius: BorderRadius.circular(12),
@@ -501,11 +526,13 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
                     height: 1.4,
                   ),
                 ),
-                
+
                 if (recommendation.plantSuggestions.isNotEmpty) ...[
                   const SizedBox(height: 16),
                   Text(
-                    isPortuguese ? '🌱 Plantas sugeridas:' : '🌱 Suggested plants:',
+                    isPortuguese
+                        ? '🌱 Plantas sugeridas:'
+                        : '🌱 Suggested plants:',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -515,48 +542,58 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: recommendation.plantSuggestions.map((plant) => 
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Text(
-                          plant,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: theme.colorScheme.onPrimaryContainer,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      )
-                    ).toList(),
+                    children: recommendation.plantSuggestions
+                        .map((plant) => Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Text(
+                                plant,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.colorScheme.onPrimaryContainer,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ))
+                        .toList(),
                   ),
                 ],
 
                 const SizedBox(height: 16),
-                
+
                 // Footer info
                 Row(
                   children: [
-                    Icon(Icons.access_time, size: 16, color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
+                    Icon(Icons.access_time,
+                        size: 16,
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                     const SizedBox(width: 4),
                     Text(
                       recommendation.estimatedTime,
                       style: TextStyle(
                         fontSize: 12,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                     const Spacer(),
-                    Icon(difficultyIcon, size: 16, color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
+                    Icon(difficultyIcon,
+                        size: 16,
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                     const SizedBox(width: 4),
                     Text(
-                      _getDifficultyText(recommendation.difficulty, isPortuguese),
+                      _getDifficultyText(
+                          recommendation.difficulty, isPortuguese),
                       style: TextStyle(
                         fontSize: 12,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                   ],
@@ -566,9 +603,10 @@ class _AIRecommendationsScreenState extends State<AIRecommendationsScreen> {
           ),
         ],
       ),
-    ).animate(delay: Duration(milliseconds: index * 100))
-     .fadeIn()
-     .slideY(begin: 0.3);
+    )
+        .animate(delay: Duration(milliseconds: index * 100))
+        .fadeIn()
+        .slideY(begin: 0.3);
   }
 
   String _getExperienceLevelText(bool isPortuguese) {

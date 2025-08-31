@@ -365,7 +365,7 @@ class _FarmsLoaded implements FarmState {
   final List<Farm> _farms;
   List<Farm> get farms {
     if (_farms is EqualUnmodifiableListView) return _farms;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_farms);
   }
 

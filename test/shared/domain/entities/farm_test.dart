@@ -34,7 +34,8 @@ void main() {
       expect(farmFromJson.id, 'json-farm-123');
       expect(farmFromJson.ownerId, 'json-user-456');
       expect(farmFromJson.name, 'Test Garden from JSON');
-      expect(farmFromJson.createdAt, DateTime.parse('2023-12-20T10:30:00.000Z'));
+      expect(
+          farmFromJson.createdAt, DateTime.parse('2023-12-20T10:30:00.000Z'));
     });
 
     test('toJson should convert farm to JSON correctly', () {
@@ -62,7 +63,7 @@ void main() {
     test('should be immutable', () {
       final originalName = farm.name;
       final originalId = farm.id;
-      
+
       // Farm should be immutable, these properties should not be modifiable
       expect(farm.id, originalId);
       expect(farm.name, originalName);
@@ -88,7 +89,7 @@ void main() {
     test('should handle different date formats in JSON', () {
       final jsonWithIsoDate = {
         'id': 'iso-farm-123',
-        'owner_id': 'iso-user-456', 
+        'owner_id': 'iso-user-456',
         'name': 'ISO Date Farm',
         'created_at': '2023-12-20T15:30:45.123Z',
       };

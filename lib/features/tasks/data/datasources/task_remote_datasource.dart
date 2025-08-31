@@ -20,7 +20,8 @@ abstract class TaskRemoteDataSource {
 
   Future<entities.Task> updateTask(entities.Task task);
 
-  Future<entities.Task> completeTask(String taskId, {String? notes, int? actualMinutes});
+  Future<entities.Task> completeTask(String taskId,
+      {String? notes, int? actualMinutes});
 
   Future<void> deleteTask(String taskId);
 
@@ -486,8 +487,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
         'pending_tasks': pendingTasks.count,
         'overdue_tasks': overdueTasks.count,
         'completion_rate': totalTasks.count > 0
-            ? (completedTasks.count / totalTasks.count * 100)
-                .round()
+            ? (completedTasks.count / totalTasks.count * 100).round()
             : 0,
       };
     } on PostgrestException catch (e) {

@@ -325,7 +325,8 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
             ),
             body: _buildContent(context, isPortuguese, isNewBed, screenSize),
             bottomNavigationBar: Container(
-              padding: EdgeInsets.all(context.responsiveValue(mobile: 16, tablet: 12, desktop: 8)),
+              padding: EdgeInsets.all(
+                  context.responsiveValue(mobile: 16, tablet: 12, desktop: 8)),
               color: Theme.of(context).colorScheme.surface,
               child: _buildActions(context, isPortuguese, isNewBed),
             ),
@@ -344,7 +345,8 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
     );
   }
 
-  Widget _buildContent(BuildContext context, bool isPortuguese, bool isNewBed, ScreenSize screenSize) {
+  Widget _buildContent(BuildContext context, bool isPortuguese, bool isNewBed,
+      ScreenSize screenSize) {
     if (_isLoadingCrops) {
       return SizedBox(
         width: screenSize == ScreenSize.mobile ? double.infinity : 300,
@@ -378,296 +380,264 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: screenSize == ScreenSize.mobile 
-              ? context.responsivePadding 
+          padding: screenSize == ScreenSize.mobile
+              ? context.responsivePadding
               : EdgeInsets.zero,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-                          // Bed dimensions
-                          Text(
-                            isPortuguese ? 'Dimensões' : 'Dimensions',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const SizedBox(height: 12),
+              // Bed dimensions
+              Text(
+                isPortuguese ? 'Dimensões' : 'Dimensions',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 12),
 
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _widthController,
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: true),
-                                  decoration: InputDecoration(
-                                    labelText: isPortuguese
-                                        ? 'Largura (m)'
-                                        : 'Width (m)',
-                                    border: const OutlineInputBorder(),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return isPortuguese
-                                          ? 'Obrigatório'
-                                          : 'Required';
-                                    }
-                                    final number = double.tryParse(value);
-                                    if (number == null || number <= 0) {
-                                      return isPortuguese
-                                          ? 'Valor inválido'
-                                          : 'Invalid value';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _heightController,
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: true),
-                                  decoration: InputDecoration(
-                                    labelText: isPortuguese
-                                        ? 'Altura (m)'
-                                        : 'Height (m)',
-                                    border: const OutlineInputBorder(),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return isPortuguese
-                                          ? 'Obrigatório'
-                                          : 'Required';
-                                    }
-                                    final number = double.tryParse(value);
-                                    if (number == null || number <= 0) {
-                                      return isPortuguese
-                                          ? 'Valor inválido'
-                                          : 'Invalid value';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          // Position
-                          Text(
-                            isPortuguese ? 'Posição' : 'Position',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const SizedBox(height: 12),
-
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _xController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    labelText: 'X',
-                                    border: const OutlineInputBorder(),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return isPortuguese
-                                          ? 'Obrigatório'
-                                          : 'Required';
-                                    }
-                                    final number = int.tryParse(value);
-                                    if (number == null) {
-                                      return isPortuguese
-                                          ? 'Valor inválido'
-                                          : 'Invalid value';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _yController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    labelText: 'Y',
-                                    border: const OutlineInputBorder(),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return isPortuguese
-                                          ? 'Obrigatório'
-                                          : 'Required';
-                                    }
-                                    final number = int.tryParse(value);
-                                    if (number == null) {
-                                      return isPortuguese
-                                          ? 'Valor inválido'
-                                          : 'Invalid value';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          // Crop selection
-                          Text(
-                            isPortuguese ? 'Cultivo' : 'Crop',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const SizedBox(height: 12),
-
-                          DropdownButtonFormField<Crop>(
-                            decoration: InputDecoration(
-                              labelText: isPortuguese
-                                  ? 'Selecione uma cultura'
-                                  : 'Select a crop',
-                              border: const OutlineInputBorder(),
-                            ),
-                            items: [
-                              DropdownMenuItem<Crop>(
-                                value: null,
-                                child: Text(isPortuguese
-                                    ? 'Nenhuma (canteiro vazio)'
-                                    : 'None (empty bed)'),
-                              ),
-                              ..._availableCrops.map((crop) => DropdownMenuItem(
-                                    value: crop,
-                                    child: Text(crop.getName(
-                                        isPortuguese ? 'pt' : 'en')),
-                                  )),
-                            ],
-                            onChanged: (crop) {
-                              setState(() {
-                                _selectedCrop = crop;
-                                _customCycleDays =
-                                    null; // Reset custom cycle when crop changes
-                              });
-                            },
-                            onSaved: (crop) {
-                              _selectedCrop = crop;
-                            },
-                            validator: (value) {
-                              // Optional validation if needed
-                              return null;
-                            },
-                          ),
-
-                          if (_selectedCrop != null) ...[
-                            const SizedBox(height: 16),
-
-                            // Sowing date
-                            ListTile(
-                              title: Text(isPortuguese
-                                  ? 'Data do plantio'
-                                  : 'Sowing date'),
-                              subtitle: Text(
-                                '${_sowingDate.day}/${_sowingDate.month}/${_sowingDate.year}',
-                              ),
-                              trailing: const Icon(Icons.calendar_today),
-                              onTap: () async {
-                                final date = await showDatePicker(
-                                  context: context,
-                                  initialDate: _sowingDate,
-                                  firstDate: DateTime.now()
-                                      .subtract(const Duration(days: 365)),
-                                  lastDate: DateTime.now()
-                                      .add(const Duration(days: 365)),
-                                );
-                                if (date != null) {
-                                  setState(() => _sowingDate = date);
-                                }
-                              },
-                            ),
-
-                            const SizedBox(height: 16),
-
-                            // Cycle customization
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    isPortuguese
-                                        ? 'Ciclo: ${_customCycleDays ?? _selectedCrop!.cycleDays} dias'
-                                        : 'Cycle: ${_customCycleDays ?? _selectedCrop!.cycleDays} days',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (dialogContext) {
-                                        return _buildCycleCustomizationDialog(isPortuguese);
-                                      },
-                                    );
-                                  },
-                                  child: Text(isPortuguese
-                                      ? 'Personalizar'
-                                      : 'Customize'),
-                                ),
-                              ],
-                            ),
-
-                            // Estimated quantity
-                            Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.local_florist,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    isPortuguese
-                                        ? 'Mudas estimadas: ${_calculateQuantity()}'
-                                        : 'Estimated seedlings: ${_calculateQuantity()}',
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ],
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _widthController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      decoration: InputDecoration(
+                        labelText: isPortuguese ? 'Largura (m)' : 'Width (m)',
+                        border: const OutlineInputBorder(),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return isPortuguese ? 'Obrigatório' : 'Required';
+                        }
+                        final number = double.tryParse(value);
+                        if (number == null || number <= 0) {
+                          return isPortuguese
+                              ? 'Valor inválido'
+                              : 'Invalid value';
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                );
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _heightController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      decoration: InputDecoration(
+                        labelText: isPortuguese ? 'Altura (m)' : 'Height (m)',
+                        border: const OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return isPortuguese ? 'Obrigatório' : 'Required';
+                        }
+                        final number = double.tryParse(value);
+                        if (number == null || number <= 0) {
+                          return isPortuguese
+                              ? 'Valor inválido'
+                              : 'Invalid value';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // Position
+              Text(
+                isPortuguese ? 'Posição' : 'Position',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 12),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _xController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'X',
+                        border: const OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return isPortuguese ? 'Obrigatório' : 'Required';
+                        }
+                        final number = int.tryParse(value);
+                        if (number == null) {
+                          return isPortuguese
+                              ? 'Valor inválido'
+                              : 'Invalid value';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _yController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Y',
+                        border: const OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return isPortuguese ? 'Obrigatório' : 'Required';
+                        }
+                        final number = int.tryParse(value);
+                        if (number == null) {
+                          return isPortuguese
+                              ? 'Valor inválido'
+                              : 'Invalid value';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // Crop selection
+              Text(
+                isPortuguese ? 'Cultivo' : 'Crop',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 12),
+
+              DropdownButtonFormField<Crop>(
+                decoration: InputDecoration(
+                  labelText:
+                      isPortuguese ? 'Selecione uma cultura' : 'Select a crop',
+                  border: const OutlineInputBorder(),
+                ),
+                items: [
+                  DropdownMenuItem<Crop>(
+                    value: null,
+                    child: Text(isPortuguese
+                        ? 'Nenhuma (canteiro vazio)'
+                        : 'None (empty bed)'),
+                  ),
+                  ..._availableCrops.map((crop) => DropdownMenuItem(
+                        value: crop,
+                        child: Text(crop.getName(isPortuguese ? 'pt' : 'en')),
+                      )),
+                ],
+                onChanged: (crop) {
+                  setState(() {
+                    _selectedCrop = crop;
+                    _customCycleDays =
+                        null; // Reset custom cycle when crop changes
+                  });
+                },
+                onSaved: (crop) {
+                  _selectedCrop = crop;
+                },
+                validator: (value) {
+                  // Optional validation if needed
+                  return null;
+                },
+              ),
+
+              if (_selectedCrop != null) ...[
+                const SizedBox(height: 16),
+
+                // Sowing date
+                ListTile(
+                  title: Text(isPortuguese ? 'Data do plantio' : 'Sowing date'),
+                  subtitle: Text(
+                    '${_sowingDate.day}/${_sowingDate.month}/${_sowingDate.year}',
+                  ),
+                  trailing: const Icon(Icons.calendar_today),
+                  onTap: () async {
+                    final date = await showDatePicker(
+                      context: context,
+                      initialDate: _sowingDate,
+                      firstDate:
+                          DateTime.now().subtract(const Duration(days: 365)),
+                      lastDate: DateTime.now().add(const Duration(days: 365)),
+                    );
+                    if (date != null) {
+                      setState(() => _sowingDate = date);
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 16),
+
+                // Cycle customization
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        isPortuguese
+                            ? 'Ciclo: ${_customCycleDays ?? _selectedCrop!.cycleDays} dias'
+                            : 'Cycle: ${_customCycleDays ?? _selectedCrop!.cycleDays} days',
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (dialogContext) {
+                            return _buildCycleCustomizationDialog(isPortuguese);
+                          },
+                        );
+                      },
+                      child: Text(isPortuguese ? 'Personalizar' : 'Customize'),
+                    ),
+                  ],
+                ),
+
+                // Estimated quantity
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color:
+                        Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.local_florist,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        isPortuguese
+                            ? 'Mudas estimadas: ${_calculateQuantity()}'
+                            : 'Estimated seedlings: ${_calculateQuantity()}',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildActions(BuildContext context, bool isPortuguese, bool isNewBed) {
@@ -699,7 +669,8 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                 ? const SizedBox(
                     width: 20,
                     height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2, color: Colors.white),
                   )
                 : Text(isPortuguese ? 'Salvar' : 'Save'),
           ),
@@ -708,7 +679,8 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
     );
   }
 
-  List<Widget> _buildDialogActions(BuildContext context, bool isPortuguese, bool isNewBed) {
+  List<Widget> _buildDialogActions(
+      BuildContext context, bool isPortuguese, bool isNewBed) {
     return [
       if (!isNewBed)
         TextButton(

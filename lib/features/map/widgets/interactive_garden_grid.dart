@@ -31,13 +31,13 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
   final TransformationController _transformationController =
       TransformationController();
   static const double _gridScale = 50.0; // pixels per meter
-  
+
   BedWithPlanting? _selectedBed;
   bool _isDragging = false;
   bool _isResizing = false;
   Offset? _dragStartOffset;
   Size? _resizeStartSize;
-  
+
   @override
   void initState() {
     super.initState();
@@ -93,20 +93,20 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
     return harvestDate.difference(now).inDays;
   }
 
-  Future<void> _updateBedPosition(BedWithPlanting bedWithPlanting, double x, double y) async {
+  Future<void> _updateBedPosition(
+      BedWithPlanting bedWithPlanting, double x, double y) async {
     try {
       // Convert screen coordinates to grid coordinates
-      final gridX = ((x - 100) / _gridScale).clamp(0.0, widget.plot.lengthM - bedWithPlanting.bed.widthM);
-      final gridY = ((y - 100) / _gridScale).clamp(0.0, widget.plot.widthM - bedWithPlanting.bed.heightM);
+      final gridX = ((x - 100) / _gridScale)
+          .clamp(0.0, widget.plot.lengthM - bedWithPlanting.bed.widthM);
+      final gridY = ((y - 100) / _gridScale)
+          .clamp(0.0, widget.plot.widthM - bedWithPlanting.bed.heightM);
 
-      await SupabaseService.client
-          .from('beds')
-          .update({
-            'x': gridX,
-            'y': gridY,
-            'updated_at': DateTime.now().toIso8601String(),
-          })
-          .eq('id', bedWithPlanting.bed.id);
+      await SupabaseService.client.from('beds').update({
+        'x': gridX,
+        'y': gridY,
+        'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', bedWithPlanting.bed.id);
 
       widget.onBedsUpdated();
     } catch (e) {
@@ -121,20 +121,18 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
     }
   }
 
-  Future<void> _updateBedSize(BedWithPlanting bedWithPlanting, double width, double height) async {
+  Future<void> _updateBedSize(
+      BedWithPlanting bedWithPlanting, double width, double height) async {
     try {
       // Convert screen size to meters
       final widthM = (width / _gridScale).clamp(0.5, 5.0);
       final heightM = (height / _gridScale).clamp(0.5, 5.0);
 
-      await SupabaseService.client
-          .from('beds')
-          .update({
-            'width_m': widthM,
-            'height_m': heightM,
-            'updated_at': DateTime.now().toIso8601String(),
-          })
-          .eq('id', bedWithPlanting.bed.id);
+      await SupabaseService.client.from('beds').update({
+        'width_m': widthM,
+        'height_m': heightM,
+        'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', bedWithPlanting.bed.id);
 
       widget.onBedsUpdated();
     } catch (e) {
@@ -207,7 +205,7 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
                       setState(() {
                         _selectedBed = null;
                       });
-                      
+
                       // Add new bed
                       widget.onAddBed(Offset(
                         tapPosition.dx - 100,
@@ -359,9 +357,9 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
             final deltaY = details.globalPosition.dy - _dragStartOffset!.dy;
             final newLeft = (100 + bed.x * _gridScale) + deltaX;
             final newTop = (100 + bed.y * _gridScale) + deltaY;
-            
+
             _updateBedPosition(bedWithPlanting, newLeft, newTop);
-            
+
             setState(() {
               _isDragging = false;
               _dragStartOffset = null;
@@ -391,7 +389,8 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: isSelected ? 0.4 : 0.2),
+                    color:
+                        Colors.black.withValues(alpha: isSelected ? 0.4 : 0.2),
                     blurRadius: isSelected ? 8 : 4,
                     offset: Offset(0, isSelected ? 4 : 2),
                   ),
@@ -431,7 +430,9 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
                             ),
                             child: Text(
                               daysUntilHarvest == 0
-                                  ? (locale.startsWith('pt') ? 'Hoje!' : 'Today!')
+                                  ? (locale.startsWith('pt')
+                                      ? 'Hoje!'
+                                      : 'Today!')
                                   : daysUntilHarvest < 0
                                       ? (locale.startsWith('pt')
                                           ? 'Atrasado'
@@ -503,7 +504,7 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
   List<Widget> _buildResizeHandles(BedWithPlanting bedWithPlanting) {
     final bed = bedWithPlanting.bed;
     const handleSize = 12.0;
-    
+
     return [
       // Bottom-right resize handle
       Positioned(
@@ -527,11 +528,15 @@ class _InteractiveGardenGridState extends State<InteractiveGardenGrid> {
           },
           onPanEnd: (details) {
             if (_isResizing) {
-              final newWidth = (_resizeStartSize!.width + details.velocity.pixelsPerSecond.dx / 10).clamp(25.0, 250.0);
-              final newHeight = (_resizeStartSize!.height + details.velocity.pixelsPerSecond.dy / 10).clamp(25.0, 250.0);
-              
+              final newWidth = (_resizeStartSize!.width +
+                      details.velocity.pixelsPerSecond.dx / 10)
+                  .clamp(25.0, 250.0);
+              final newHeight = (_resizeStartSize!.height +
+                      details.velocity.pixelsPerSecond.dy / 10)
+                  .clamp(25.0, 250.0);
+
               _updateBedSize(bedWithPlanting, newWidth, newHeight);
-              
+
               setState(() {
                 _isResizing = false;
                 _resizeStartSize = null;

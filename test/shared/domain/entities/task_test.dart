@@ -216,7 +216,7 @@ void main() {
         done: false,
         createdAt: DateTime(2023, 12, 20),
       );
-      
+
       final json = taskWithNulls.toJson();
 
       expect(json['description'], null);

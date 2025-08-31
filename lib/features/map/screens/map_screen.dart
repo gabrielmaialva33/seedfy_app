@@ -173,7 +173,6 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     final localeProvider = context.watch<LocaleProvider>();
@@ -223,102 +222,115 @@ class _MapScreenState extends State<MapScreen> {
         title: Text(
             _currentFarm?.name ?? (isPortuguese ? 'Minha Horta' : 'My Garden')),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        actions: context.isMobile ? [
-          IconButton(
-            icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
-            onPressed: () {
-              setState(() {
-                _useInteractiveEditor = !_useInteractiveEditor;
-              });
-            },
-            tooltip: _useInteractiveEditor 
-                ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
-                : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
-          ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'camera',
-                child: ListTile(
-                  leading: const Icon(Icons.camera_alt),
-                  title: Text(isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition'),
-                  contentPadding: EdgeInsets.zero,
+        actions: context.isMobile
+            ? [
+                IconButton(
+                  icon: Icon(
+                      _useInteractiveEditor ? Icons.edit : Icons.grid_view),
+                  onPressed: () {
+                    setState(() {
+                      _useInteractiveEditor = !_useInteractiveEditor;
+                    });
+                  },
+                  tooltip: _useInteractiveEditor
+                      ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
+                      : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
                 ),
-              ),
-              PopupMenuItem(
-                value: 'chat',
-                child: ListTile(
-                  leading: const Icon(Icons.chat),
-                  title: Text(isPortuguese ? 'Assistente IA' : 'AI Assistant'),
-                  contentPadding: EdgeInsets.zero,
+                PopupMenuButton<String>(
+                  icon: const Icon(Icons.more_vert),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 'camera',
+                      child: ListTile(
+                        leading: const Icon(Icons.camera_alt),
+                        title: Text(isPortuguese
+                            ? 'Reconhecer Planta'
+                            : 'Plant Recognition'),
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'chat',
+                      child: ListTile(
+                        leading: const Icon(Icons.chat),
+                        title: Text(
+                            isPortuguese ? 'Assistente IA' : 'AI Assistant'),
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'tasks',
+                      child: ListTile(
+                        leading: const Icon(Icons.task_alt),
+                        title: Text(isPortuguese ? 'Tarefas' : 'Tasks'),
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ],
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'camera':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AICameraScreen()),
+                        );
+                        break;
+                      case 'chat':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AIChatScreen()),
+                        );
+                        break;
+                      case 'tasks':
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TasksScreen()),
+                        );
+                        break;
+                    }
+                  },
                 ),
-              ),
-              PopupMenuItem(
-                value: 'tasks',
-                child: ListTile(
-                  leading: const Icon(Icons.task_alt),
-                  title: Text(isPortuguese ? 'Tarefas' : 'Tasks'),
-                  contentPadding: EdgeInsets.zero,
+              ]
+            : [
+                IconButton(
+                  icon: const Icon(Icons.camera_alt),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AICameraScreen()),
+                    );
+                  },
+                  tooltip:
+                      isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition',
                 ),
-              ),
-            ],
-            onSelected: (value) {
-              switch (value) {
-                case 'camera':
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AICameraScreen()),
-                  );
-                  break;
-                case 'chat':
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AIChatScreen()),
-                  );
-                  break;
-                case 'tasks':
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const TasksScreen()),
-                  );
-                  break;
-              }
-            },
-          ),
-        ] : [
-          IconButton(
-            icon: const Icon(Icons.camera_alt),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AICameraScreen()),
-              );
-            },
-            tooltip: isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition',
-          ),
-          IconButton(
-            icon: const Icon(Icons.chat),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AIChatScreen()),
-              );
-            },
-            tooltip: isPortuguese ? 'Assistente IA' : 'AI Assistant',
-          ),
-          IconButton(
-            icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
-            onPressed: () {
-              setState(() {
-                _useInteractiveEditor = !_useInteractiveEditor;
-              });
-            },
-            tooltip: _useInteractiveEditor 
-                ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
-                : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
-          ),
-        ],
+                IconButton(
+                  icon: const Icon(Icons.chat),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AIChatScreen()),
+                    );
+                  },
+                  tooltip: isPortuguese ? 'Assistente IA' : 'AI Assistant',
+                ),
+                IconButton(
+                  icon: Icon(
+                      _useInteractiveEditor ? Icons.edit : Icons.grid_view),
+                  onPressed: () {
+                    setState(() {
+                      _useInteractiveEditor = !_useInteractiveEditor;
+                    });
+                  },
+                  tooltip: _useInteractiveEditor
+                      ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
+                      : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
+                ),
+              ],
       ),
       body: Column(
         children: [
@@ -333,9 +345,11 @@ class _MapScreenState extends State<MapScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildStatusLegend(
-                                  isPortuguese ? 'Saudável' : 'Healthy', Colors.green),
+                                  isPortuguese ? 'Saudável' : 'Healthy',
+                                  Colors.green),
                               _buildStatusLegend(
-                                  isPortuguese ? 'Atenção' : 'Warning', Colors.orange),
+                                  isPortuguese ? 'Atenção' : 'Warning',
+                                  Colors.orange),
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -343,9 +357,11 @@ class _MapScreenState extends State<MapScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildStatusLegend(
-                                  isPortuguese ? 'Crítico' : 'Critical', Colors.red),
+                                  isPortuguese ? 'Crítico' : 'Critical',
+                                  Colors.red),
                               _buildStatusLegend(
-                                  isPortuguese ? 'Vazio' : 'Empty', Colors.grey),
+                                  isPortuguese ? 'Vazio' : 'Empty',
+                                  Colors.grey),
                             ],
                           ),
                         ],
@@ -354,11 +370,14 @@ class _MapScreenState extends State<MapScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           _buildStatusLegend(
-                              isPortuguese ? 'Saudável' : 'Healthy', Colors.green),
+                              isPortuguese ? 'Saudável' : 'Healthy',
+                              Colors.green),
                           _buildStatusLegend(
-                              isPortuguese ? 'Atenção' : 'Warning', Colors.orange),
+                              isPortuguese ? 'Atenção' : 'Warning',
+                              Colors.orange),
                           _buildStatusLegend(
-                              isPortuguese ? 'Crítico' : 'Critical', Colors.red),
+                              isPortuguese ? 'Crítico' : 'Critical',
+                              Colors.red),
                           _buildStatusLegend(
                               isPortuguese ? 'Vazio' : 'Empty', Colors.grey),
                         ],
@@ -417,10 +436,13 @@ class _MapScreenState extends State<MapScreen> {
   Widget _buildStatusLegend(String label, Color color) {
     return ResponsiveBuilder(
       builder: (context, screenSize) {
-        final iconSize = context.responsiveValue(mobile: 16, tablet: 14, desktop: 12);
-        final textSize = context.responsiveValue(mobile: 14, tablet: 13, desktop: 12);
-        final spacing = context.responsiveValue(mobile: 8, tablet: 6, desktop: 4);
-        
+        final iconSize =
+            context.responsiveValue(mobile: 16, tablet: 14, desktop: 12);
+        final textSize =
+            context.responsiveValue(mobile: 14, tablet: 13, desktop: 12);
+        final spacing =
+            context.responsiveValue(mobile: 8, tablet: 6, desktop: 4);
+
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [

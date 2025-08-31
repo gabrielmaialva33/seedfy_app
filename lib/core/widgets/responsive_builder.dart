@@ -59,7 +59,11 @@ class ResponsiveWidget extends StatelessWidget {
           case ScreenSize.tablet:
             return tablet ?? mobile ?? fallback ?? const SizedBox.shrink();
           case ScreenSize.desktop:
-            return desktop ?? tablet ?? mobile ?? fallback ?? const SizedBox.shrink();
+            return desktop ??
+                tablet ??
+                mobile ??
+                fallback ??
+                const SizedBox.shrink();
         }
       },
     );
@@ -102,7 +106,9 @@ extension ResponsiveExtension on BuildContext {
   }
 
   bool get isMobile => screenSize == ScreenSize.mobile;
+
   bool get isTablet => screenSize == ScreenSize.tablet;
+
   bool get isDesktop => screenSize == ScreenSize.desktop;
 
   double responsiveValue({
@@ -197,7 +203,7 @@ class AdaptiveScaffold extends StatelessWidget {
                   width: 280,
                   child: drawer!,
                 ),
-              
+
               // Main content area
               Expanded(
                 child: Column(
@@ -209,7 +215,7 @@ class AdaptiveScaffold extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               // End drawer for larger screens
               if (endDrawer != null && screenSize != ScreenSize.mobile)
                 SizedBox(
@@ -251,7 +257,7 @@ class MobileOptimizedCard extends StatelessWidget {
         final defaultPadding = EdgeInsets.all(
           context.responsiveValue(mobile: 12, tablet: 16, desktop: 20),
         );
-        
+
         final defaultMargin = EdgeInsets.all(
           context.responsiveValue(mobile: 8, tablet: 12, desktop: 16),
         );
@@ -261,9 +267,10 @@ class MobileOptimizedCard extends StatelessWidget {
           color: color,
           elevation: elevation ?? (screenSize == ScreenSize.mobile ? 2 : 4),
           shape: RoundedRectangleBorder(
-            borderRadius: borderRadius ?? BorderRadius.circular(
-              context.responsiveValue(mobile: 12, tablet: 16, desktop: 20),
-            ),
+            borderRadius: borderRadius ??
+                BorderRadius.circular(
+                  context.responsiveValue(mobile: 12, tablet: 16, desktop: 20),
+                ),
           ),
           child: Padding(
             padding: padding ?? defaultPadding,
@@ -297,11 +304,13 @@ class AdaptiveGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (context, screenSize) {
-        final crossAxisCount = context.responsiveValue(
-          mobile: 1,
-          tablet: 2,
-          desktop: 3,
-        ).round();
+        final crossAxisCount = context
+            .responsiveValue(
+              mobile: 1,
+              tablet: 2,
+              desktop: 3,
+            )
+            .round();
 
         return GridView.count(
           crossAxisCount: crossAxisCount,
@@ -338,7 +347,7 @@ class TouchOptimizedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const minTouchTarget = 48.0;
-    
+
     return ResponsiveBuilder(
       builder: (context, screenSize) {
         final buttonHeight = context.responsiveValue(
@@ -347,10 +356,13 @@ class TouchOptimizedButton extends StatelessWidget {
           desktop: 40,
         );
 
-        final buttonPadding = padding ?? EdgeInsets.symmetric(
-          horizontal: context.responsiveValue(mobile: 24, tablet: 20, desktop: 16),
-          vertical: context.responsiveValue(mobile: 12, tablet: 10, desktop: 8),
-        );
+        final buttonPadding = padding ??
+            EdgeInsets.symmetric(
+              horizontal:
+                  context.responsiveValue(mobile: 24, tablet: 20, desktop: 16),
+              vertical:
+                  context.responsiveValue(mobile: 12, tablet: 10, desktop: 8),
+            );
 
         if (isDestructive) {
           return SizedBox(

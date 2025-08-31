@@ -1,5 +1,5 @@
-<svg artist="Katerina Limpitsouni" height="623.836" role="img"
-    source="https://undraw.co/" viewBox="0 0 964.779 623.836" width="964.779" xmlns="http://www.w3.org/2000/svg">
+<svg artist="Katerina Limpitsouni" height="623.836" role="img" source="https://undraw.co/"
+    viewBox="0 0 964.779 623.836" width="964.779" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(-469.531 -212)">
         <path d="M2.609,0,19.163,1.133,21.9,19.555,0,21Z" fill="#ed9da0"
             transform="translate(619 376)" />
@@ -108,8 +108,8 @@
         <path
             d="M306.619,362.5s-3.58,3.6,5.4,9.524c7.191,4.741,39.264,28.17,50.633,31.876a7.551,7.551,0,0,0,5.033,7.77l10.294-22.622c-2.228-5.172-5.793-3.974-7.668-2.8l-12.433-9.35-30.53-30.486-18.191,13.441Z"
             fill="#059669" transform="translate(339.655 73.918)" />
-        <path d="M276.675,245.149a40.3,40.3,0,0,0-4.848,35.414"
-            fill="#fd6584" transform="translate(339.655 76.918)" />
+        <path d="M276.675,245.149a40.3,40.3,0,0,0-4.848,35.414" fill="#fd6584"
+            transform="translate(339.655 76.918)" />
         <path
             d="M129.876,760.728a1.186,1.186,0,0,0,1.19,1.19h280.29a1.19,1.19,0,1,0,0-2.38H131.066a1.187,1.187,0,0,0-1.19,1.19Z"
             fill="#e6e6e6" transform="translate(339.655 73.918)" />
