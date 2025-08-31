@@ -90,8 +90,6 @@ void main() {
         final minimalFarm = Farm(
           id: '',
           name: 'Minimal Farm',
-          description: '',
-          location: '',
           ownerId: 'user123',
           createdAt: DateTime.now(),
         );
