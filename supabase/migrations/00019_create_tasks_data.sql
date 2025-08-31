@@ -99,17 +99,17 @@ INSERT INTO public.tasks (
    NOW() - INTERVAL '1 day', true, NOW() - INTERVAL '1 day',
    'low', 10, 12, 'Solo estava um pouco seco, reguei um pouco', NOW() - INTERVAL '2 days', NOW() - INTERVAL '1 day'),
 
-  ('eeee0013-4444-4444-4444-444444444444', NULL,
+  ('eeee0013-4444-4444-4444-444444444444', 'dddd0014-4444-4444-4444-444444444444',
    '44444444-4444-4444-4444-444444444444', 'other',
-   'Estudar sobre Adubação', 'Pesquisar sobre adubos orgânicos caseiros',
+   'Estudar sobre Adubação', 'Pesquisar sobre adubos orgânicos caseiros para alface',
    NOW() + INTERVAL '1 day', false, NULL,
    'low', 30, NULL, 'Já li sobre borra de café e casca de ovo', NOW() - INTERVAL '1 day', NOW()),
 
   -- Lúcia's Tech Farm Tasks (Florianópolis)
   -- Technology and automation focused
-  ('eeee0014-5555-5555-5555-555555555555', NULL,
+  ('eeee0014-5555-5555-5555-555555555555', 'dddd0016-5555-5555-5555-555555555555',
    '55555555-5555-5555-5555-555555555555', 'other',
-   'Calibração dos Sensores IoT', 'Ajustar sensores de umidade e pH do solo',
+   'Calibração dos Sensores IoT', 'Ajustar sensores de umidade e pH do solo para pimentão',
    NOW() - INTERVAL '2 days', true, NOW() - INTERVAL '2 days',
    'high', 45, 50, 'Sensores calibrados, dados mais precisos agora', NOW() - INTERVAL '3 days', NOW() - INTERVAL '2 days'),
 
@@ -119,9 +119,9 @@ INSERT INTO public.tasks (
    NOW() + INTERVAL '1 day', false, NULL,
    'medium', 60, NULL, NULL, NOW(), NOW()),
 
-  ('eeee0016-5555-5555-5555-555555555555', NULL,
+  ('eeee0016-5555-5555-5555-555555555555', 'dddd0018-5555-5555-5555-555555555555',
    '55555555-5555-5555-5555-555555555555', 'other',
-   'Backup do Sistema', 'Fazer backup dos dados dos sensores e controles',
+   'Backup do Sistema', 'Fazer backup dos dados dos sensores e controles da alface hidropônica',
    NOW() + INTERVAL '7 days', false, NULL,
    'low', 30, NULL, NULL, NOW(), NOW()),
 
@@ -132,21 +132,21 @@ INSERT INTO public.tasks (
    'high', 90, NULL, 'Crescimento 15% mais rápido que variedade comum', NOW() - INTERVAL '2 days', NOW()),
 
   -- Recurring/Scheduled Tasks for different users
-  ('eeee0018-1111-1111-1111-111111111111', NULL,
+  ('eeee0018-1111-1111-1111-111111111111', 'dddd0001-1111-1111-1111-111111111111',
    '11111111-1111-1111-1111-111111111111', 'other',
-   'Verificação Semanal Geral', 'Inspeção geral das plantas e estruturas',
+   'Verificação Semanal Geral', 'Inspeção geral das plantas de alface e estruturas',
    NOW() + INTERVAL '7 days', false, NULL,
    'medium', 45, NULL, NULL, NOW(), NOW()),
 
-  ('eeee0019-2222-2222-2222-222222222222', NULL,
+  ('eeee0019-2222-2222-2222-222222222222', 'dddd0005-2222-2222-2222-222222222222',
    '22222222-2222-2222-2222-222222222222', 'other',
-   'Planejamento Semanal', 'Planejar atividades da próxima semana',
+   'Planejamento Semanal', 'Planejar atividades da próxima semana para couve',
    NOW() + INTERVAL '2 days', false, NULL,
    'high', 60, NULL, NULL, NOW(), NOW()),
 
-  ('eeee0020-3333-3333-3333-333333333333', NULL,
+  ('eeee0020-3333-3333-3333-333333333333', 'dddd0009-3333-3333-3333-333333333333',
    '33333333-3333-3333-3333-333333333333', 'other',
-   'Limpeza das Ferramentas', 'Limpar e organizar ferramentas compartilhadas',
+   'Limpeza das Ferramentas', 'Limpar e organizar ferramentas compartilhadas para salsa',
    NOW() + INTERVAL '3 days', false, NULL,
    'low', 30, NULL, NULL, NOW(), NOW())
 ON CONFLICT (id) DO NOTHING;
