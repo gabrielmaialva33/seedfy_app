@@ -33,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e.message.contains('Invalid login credentials')) {
         return const Left(InvalidCredentialsFailure());
       }
-      return Left(AuthFailure(e.message ?? 'Authentication error'));
+      return Left(AuthFailure(e.message));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -71,7 +71,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e.message.contains('weak')) {
         return const Left(WeakPasswordFailure());
       }
-      return Left(AuthFailure(e.message ?? 'Authentication error'));
+      return Left(AuthFailure(e.message));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
