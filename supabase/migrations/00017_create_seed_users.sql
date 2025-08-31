@@ -96,12 +96,10 @@ ON CONFLICT (id) DO NOTHING;
 -- Create farms for each user
 INSERT INTO public.farms (
   id,
-  user_id,
+  owner_id,
   name,
   description,
-  location,
-  total_area_m2,
-  farm_type,
+  address,
   created_at,
   updated_at
 ) VALUES
@@ -110,8 +108,6 @@ INSERT INTO public.farms (
    'Horta do Terraço', 
    'Horta urbana no terraço com foco em folhosas e ervas aromáticas. Utiliza sistema de irrigação por gotejamento e compostagem própria.',
    'Rua Augusta, 1000 - Vila Madalena, São Paulo/SP',
-   45.0, 
-   'urban', 
    NOW() - INTERVAL '6 months', NOW()),
   
   -- João's Small Farm  
@@ -119,17 +115,13 @@ INSERT INTO public.farms (
    'Sítio Boa Esperança',
    'Pequena propriedade rural familiar com produção diversificada de hortaliças orgânicas. Fornece para feira local e CSA.',
    'Estrada Rural, km 15 - Zona Rural, Belo Horizonte/MG',
-   2500.0,
-   'rural',
    NOW() - INTERVAL '2 years', NOW()),
    
   -- Ana's Community Garden
   ('aaaa0003-3333-3333-3333-333333333333', '33333333-3333-3333-3333-333333333333',
    'Horta Comunitária da Vila',
    'Jardim comunitário que atende 15 famílias do bairro. Foca em educação ambiental e segurança alimentar.',
-   'Praça da Vila, s/n - Copacabana, Rio de Janeiro/RJ', 
-   120.0,
-   'community',
+   'Praça da Vila, s/n - Copacabana, Rio de Janeiro/RJ',
    NOW() - INTERVAL '1 year', NOW()),
    
   -- Pedro's Backyard Garden
@@ -137,8 +129,6 @@ INSERT INTO public.farms (
    'Quintinha de Casa',
    'Primeira experiência com cultivo doméstico. Começando com temperos e algumas hortaliças fáceis.',
    'Rua das Flores, 123 - Aldeota, Fortaleza/CE',
-   25.0,
-   'home',
    NOW() - INTERVAL '3 months', NOW()),
    
   -- Lúcia's Tech Farm
@@ -146,8 +136,6 @@ INSERT INTO public.farms (
    'AgroTech Sustentável',
    'Fazenda experimental com IoT, sensores automatizados e técnicas de agricultura de precisão.',
    'SC-401, km 12 - Sambaqui, Florianópolis/SC',
-   800.0,
-   'commercial',
    NOW() - INTERVAL '8 months', NOW())
 ON CONFLICT (id) DO NOTHING;
 
