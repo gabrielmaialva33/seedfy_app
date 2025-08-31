@@ -2,11 +2,17 @@
 
 **Farm management app for small producers and urban gardens**
 
-Seedfy is a comprehensive farm management application designed specifically for small producers and urban gardening enthusiasts. It provides an intuitive interface for planning, managing, and tracking agricultural activities with guided workflows and intelligent task automation.
+Seedfy is a comprehensive farm management application designed specifically for small producers and
+urban gardening enthusiasts. It provides an intuitive interface for planning, managing, and tracking
+agricultural activities with guided workflows and intelligent task automation.
 
 ## 🎯 Project Vision
 
-Enable users to define their cultivation areas, choose crops, visualize interactive farm maps with planting estimates and harvest timelines, and interact with a beautiful, simple interface featuring traffic light status indicators for harvest proximity. The system generates basic tasks (watering/fertilizing/transplanting/harvesting) with editing and rescheduling capabilities, plus CSV export functionality.
+Enable users to define their cultivation areas, choose crops, visualize interactive farm maps with
+planting estimates and harvest timelines, and interact with a beautiful, simple interface featuring
+traffic light status indicators for harvest proximity. The system generates basic tasks (
+watering/fertilizing/transplanting/harvesting) with editing and rescheduling capabilities, plus CSV
+export functionality.
 
 ## 🏗️ Architecture Overview
 
@@ -23,11 +29,13 @@ Enable users to define their cultivation areas, choose crops, visualize interact
 ### Key Features
 
 ✅ **User Authentication & Profiles**
+
 - Registration with email, phone, location
 - Profile management with language preferences
 - Password recovery
 
 ✅ **Guided Onboarding Wizard**
+
 - Farm area dimensions setup
 - Bed corridor configuration
 - Crop selection with visual gallery
@@ -35,6 +43,7 @@ Enable users to define their cultivation areas, choose crops, visualize interact
 - Editable approval workflow
 
 ✅ **Interactive Map Editor**
+
 - Abstract grid-based bed layout
 - Pan/zoom functionality
 - Resizable rectangular beds
@@ -43,23 +52,27 @@ Enable users to define their cultivation areas, choose crops, visualize interact
 - Timeline visualization
 
 ✅ **Smart Task Management**
+
 - Auto-generated tasks based on crop cycles
 - Manual task creation and editing
 - Due date tracking and rescheduling
 - Task completion workflow
 
 ✅ **Traffic Light Status System**
+
 - 🟢 Green: >50% of cycle remaining
-- 🟡 Yellow: 20-50% remaining  
+- 🟡 Yellow: 20-50% remaining
 - 🔴 Red: <20% or overdue
 - Visual status indicators per bed
 
 ✅ **Collaboration & Sharing**
+
 - Farm owner/editor permissions
 - Read-only viewer access via shared links
 - Multi-user collaboration
 
 ✅ **Data Export**
+
 - CSV export of plantings and tasks
 - Historical data tracking
 - Report generation
@@ -327,12 +340,14 @@ SUPABASE_ANON_KEY=your_supabase_anon_key
 ## 📱 Deployment
 
 ### Web Deployment
+
 ```bash
 flutter build web --release
 # Deploy to your web hosting service
 ```
 
 ### Mobile Deployment
+
 ```bash
 # Android
 flutter build apk --release
@@ -374,6 +389,7 @@ flutter test test/widget_test.dart
 ## 📋 Roadmap
 
 ### Phase 1: MVP Core Features ✅
+
 - [x] User authentication and profiles
 - [x] Basic farm and plot management
 - [x] Crop catalog and planting system
@@ -381,6 +397,7 @@ flutter test test/widget_test.dart
 - [x] Internationalization support
 
 ### Phase 2: Advanced Features 🚧
+
 - [ ] Interactive map editor with drag-drop
 - [ ] Advanced task automation
 - [ ] Real-time collaboration
@@ -388,6 +405,7 @@ flutter test test/widget_test.dart
 - [ ] Offline functionality
 
 ### Phase 3: Analytics & Growth 📋
+
 - [ ] Advanced analytics dashboard
 - [ ] Crop yield predictions
 - [ ] Weather integration

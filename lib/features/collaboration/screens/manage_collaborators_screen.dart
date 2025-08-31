@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/providers/locale_provider.dart';
 import '../../../models/collaborator.dart';
 import '../../../models/invitation.dart';
@@ -21,8 +22,7 @@ class ManageCollaboratorsScreen extends StatefulWidget {
       _ManageCollaboratorsScreenState();
 }
 
-class _ManageCollaboratorsScreenState
-    extends State<ManageCollaboratorsScreen> {
+class _ManageCollaboratorsScreenState extends State<ManageCollaboratorsScreen> {
   List<Collaborator> _collaborators = [];
   List<Invitation> _pendingInvitations = [];
   bool _isLoading = true;
@@ -237,9 +237,7 @@ class _ManageCollaboratorsScreenState
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                isPortuguese
-                    ? 'Colaborador removido'
-                    : 'Collaborator removed',
+                isPortuguese ? 'Colaborador removido' : 'Collaborator removed',
               ),
             ),
           );
@@ -318,9 +316,8 @@ class _ManageCollaboratorsScreenState
                               Expanded(
                                 child: Text(
                                   widget.farmName,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
                                 ),
                               ),
                             ],
@@ -357,9 +354,7 @@ class _ManageCollaboratorsScreenState
                             subtitle: Text(
                               invitation.role == 'editor'
                                   ? (isPortuguese ? 'Editor' : 'Editor')
-                                  : (isPortuguese
-                                      ? 'Visualizador'
-                                      : 'Viewer'),
+                                  : (isPortuguese ? 'Visualizador' : 'Viewer'),
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -465,9 +460,7 @@ class _ManageCollaboratorsScreenState
                                       PopupMenuItem(
                                         value: 'remove',
                                         child: Text(
-                                          isPortuguese
-                                              ? 'Remover'
-                                              : 'Remove',
+                                          isPortuguese ? 'Remover' : 'Remove',
                                           style: const TextStyle(
                                               color: Colors.red),
                                         ),
@@ -477,9 +470,7 @@ class _ManageCollaboratorsScreenState
                                 : Chip(
                                     label: Text(
                                       collaborator.role == 'editor'
-                                          ? (isPortuguese
-                                              ? 'Editor'
-                                              : 'Editor')
+                                          ? (isPortuguese ? 'Editor' : 'Editor')
                                           : (isPortuguese
                                               ? 'Visualizador'
                                               : 'Viewer'),

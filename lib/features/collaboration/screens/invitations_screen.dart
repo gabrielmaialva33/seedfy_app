@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/providers/locale_provider.dart';
 import '../../../models/invitation.dart';
 import '../../../services/collaboration_service.dart';

@@ -1,7 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/invitation.dart';
+
 import '../models/collaborator.dart';
 import '../models/farm.dart';
+import '../models/invitation.dart';
 
 class CollaborationService {
   static final _supabase = Supabase.instance.client;
@@ -68,7 +69,9 @@ class CollaborationService {
           .eq('status', 'pending')
           .order('created_at', ascending: false);
 
-      return (response as List).map((json) => Invitation.fromJson(json)).toList();
+      return (response as List)
+          .map((json) => Invitation.fromJson(json))
+          .toList();
     } catch (e) {
       throw Exception('Failed to get invitations: $e');
     }
@@ -83,7 +86,9 @@ class CollaborationService {
           .eq('farm_id', farmId)
           .order('created_at', ascending: false);
 
-      return (response as List).map((json) => Invitation.fromJson(json)).toList();
+      return (response as List)
+          .map((json) => Invitation.fromJson(json))
+          .toList();
     } catch (e) {
       throw Exception('Failed to get sent invitations: $e');
     }
@@ -128,8 +133,7 @@ class CollaborationService {
       // Update invitation status
       await _supabase
           .from('invitations')
-          .update({'status': 'accepted'})
-          .eq('id', invitationId);
+          .update({'status': 'accepted'}).eq('id', invitationId);
     } catch (e) {
       throw Exception('Failed to accept invitation: $e');
     }
@@ -189,8 +193,7 @@ class CollaborationService {
     try {
       await _supabase
           .from('collaborators')
-          .update({'role': newRole})
-          .eq('id', collaboratorId);
+          .update({'role': newRole}).eq('id', collaboratorId);
     } catch (e) {
       throw Exception('Failed to update collaborator role: $e');
     }

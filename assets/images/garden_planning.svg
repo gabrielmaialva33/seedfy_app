@@ -1,56 +1,57 @@
-<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#E0F6FF;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  
-  <!-- Sky background -->
-  <rect width="200" height="100" fill="url(#skyGradient)"/>
-  
-  <!-- Ground -->
-  <rect y="100" width="200" height="100" fill="#8D6E63"/>
-  
-  <!-- Garden beds -->
-  <rect x="20" y="120" width="40" height="60" fill="url(#greenGradient)" rx="5"/>
-  <rect x="80" y="120" width="40" height="60" fill="url(#greenGradient)" rx="5"/>
-  <rect x="140" y="120" width="40" height="60" fill="url(#greenGradient)" rx="5"/>
-  
-  <!-- Plants -->
-  <g transform="translate(40, 130)">
-    <circle r="3" fill="#388E3C"/>
-    <circle cx="0" cy="10" r="2" fill="#4CAF50"/>
-    <circle cx="0" cy="20" r="2.5" fill="#66BB6A"/>
-  </g>
-  
-  <g transform="translate(100, 130)">
-    <circle r="3" fill="#388E3C"/>
-    <circle cx="0" cy="10" r="2" fill="#4CAF50"/>
-    <circle cx="0" cy="20" r="2.5" fill="#66BB6A"/>
-  </g>
-  
-  <g transform="translate(160, 130)">
-    <circle r="3" fill="#388E3C"/>
-    <circle cx="0" cy="10" r="2" fill="#4CAF50"/>
-    <circle cx="0" cy="20" r="2.5" fill="#66BB6A"/>
-  </g>
-  
-  <!-- Sun -->
-  <circle cx="160" cy="40" r="20" fill="#FFC107"/>
-  <g transform="translate(160, 40)">
-    <line x1="-30" y1="0" x2="-25" y2="0" stroke="#FFC107" stroke-width="3"/>
-    <line x1="25" y1="0" x2="30" y2="0" stroke="#FFC107" stroke-width="3"/>
-    <line x1="0" y1="-30" x2="0" y2="-25" stroke="#FFC107" stroke-width="3"/>
-    <line x1="0" y1="25" x2="0" y2="30" stroke="#FFC107" stroke-width="3"/>
-  </g>
-  
-  <!-- Title text -->
-  <text x="100" y="30" text-anchor="middle" fill="#2E7D32" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
-    Planeje sua Horta
-  </text>
+<svg height="200" viewBox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="greenGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+            <stop style="stop-color:#4CAF50;stop-opacity:1" offset="0%" />
+            <stop style="stop-color:#2E7D32;stop-opacity:1" offset="100%" />
+        </linearGradient>
+        <linearGradient id="skyGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+            <stop style="stop-color:#87CEEB;stop-opacity:1" offset="0%" />
+            <stop style="stop-color:#E0F6FF;stop-opacity:1" offset="100%" />
+        </linearGradient>
+    </defs>
+
+    <!-- Sky background -->
+    <rect fill="url(#skyGradient)" height="100" width="200" />
+
+    <!-- Ground -->
+    <rect fill="#8D6E63" height="100" width="200" y="100" />
+
+    <!-- Garden beds -->
+    <rect fill="url(#greenGradient)" height="60" rx="5" width="40" x="20" y="120" />
+    <rect fill="url(#greenGradient)" height="60" rx="5" width="40" x="80" y="120" />
+    <rect fill="url(#greenGradient)" height="60" rx="5" width="40" x="140" y="120" />
+
+    <!-- Plants -->
+    <g transform="translate(40, 130)">
+        <circle fill="#388E3C" r="3" />
+        <circle cx="0" cy="10" fill="#4CAF50" r="2" />
+        <circle cx="0" cy="20" fill="#66BB6A" r="2.5" />
+    </g>
+
+    <g transform="translate(100, 130)">
+        <circle fill="#388E3C" r="3" />
+        <circle cx="0" cy="10" fill="#4CAF50" r="2" />
+        <circle cx="0" cy="20" fill="#66BB6A" r="2.5" />
+    </g>
+
+    <g transform="translate(160, 130)">
+        <circle fill="#388E3C" r="3" />
+        <circle cx="0" cy="10" fill="#4CAF50" r="2" />
+        <circle cx="0" cy="20" fill="#66BB6A" r="2.5" />
+    </g>
+
+    <!-- Sun -->
+    <circle cx="160" cy="40" fill="#FFC107" r="20" />
+    <g transform="translate(160, 40)">
+        <line stroke="#FFC107" stroke-width="3" x1="-30" x2="-25" y1="0" y2="0" />
+        <line stroke="#FFC107" stroke-width="3" x1="25" x2="30" y1="0" y2="0" />
+        <line stroke="#FFC107" stroke-width="3" x1="0" x2="0" y1="-30" y2="-25" />
+        <line stroke="#FFC107" stroke-width="3" x1="0" x2="0" y1="25" y2="30" />
+    </g>
+
+    <!-- Title text -->
+    <text fill="#2E7D32" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle"
+        x="100" y="30">
+        Planeje sua Horta
+    </text>
 </svg>

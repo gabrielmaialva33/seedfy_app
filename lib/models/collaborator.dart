@@ -42,5 +42,6 @@ class Collaborator {
   }
 
   bool get isEditor => role == 'editor';
+
   bool get isViewer => role == 'viewer';
 }

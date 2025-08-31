@@ -2,7 +2,7 @@ name: Build Signed APK
 
 on:
   release:
-    types: [published]
+    types: [ published ]
   workflow_dispatch:
     inputs:
       version:
@@ -20,125 +20,125 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.27.0'
-        channel: 'stable'
-        cache: true
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.0'
+          channel: 'stable'
+          cache: true
 
-    - name: Cache Flutter dependencies
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.pub-cache
-          .dart_tool
-        key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-flutter-
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
 
-    - name: Get Flutter dependencies
-      run: flutter pub get
+      - name: Get Flutter dependencies
+        run: flutter pub get
 
-    - name: Run tests
-      run: flutter test
+      - name: Run tests
+        run: flutter test
 
-    - name: Setup Firebase config
-      env:
-        GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
-      run: |
-        if [ ! -z "$GOOGLE_SERVICES_JSON_BASE64" ]; then
-          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -d > android/app/google-services.json
-        fi
+      - name: Setup Firebase config
+        env:
+          GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
+        run: |
+          if [ ! -z "$GOOGLE_SERVICES_JSON_BASE64" ]; then
+            echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -d > android/app/google-services.json
+          fi
 
-    - name: Decode and setup keystore
-      env:
-        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-      run: |
-        if [ -z "$KEYSTORE_BASE64" ]; then
-          echo "Error: KEYSTORE_BASE64 secret is required for signed builds"
-          exit 1
-        fi
-        
-        # Decode keystore
-        echo $KEYSTORE_BASE64 | base64 -d > android/app/keystore.jks
-        
-        # Create key.properties file
-        cat > android/key.properties << EOF
-        storePassword=$STORE_PASSWORD
-        keyPassword=$KEY_PASSWORD
-        keyAlias=$KEY_ALIAS
-        storeFile=keystore.jks
-        EOF
+      - name: Decode and setup keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "Error: KEYSTORE_BASE64 secret is required for signed builds"
+            exit 1
+          fi
+          
+          # Decode keystore
+          echo $KEYSTORE_BASE64 | base64 -d > android/app/keystore.jks
+          
+          # Create key.properties file
+          cat > android/key.properties << EOF
+          storePassword=$STORE_PASSWORD
+          keyPassword=$KEY_PASSWORD
+          keyAlias=$KEY_ALIAS
+          storeFile=keystore.jks
+          EOF
 
-    - name: Update version
-      if: github.event.inputs.version != ''
-      run: |
-        # Update pubspec.yaml with new version
-        sed -i "s/version: .*/version: ${{ github.event.inputs.version }}+${{ github.run_number }}/" pubspec.yaml
-        echo "Updated version to: ${{ github.event.inputs.version }}+${{ github.run_number }}"
+      - name: Update version
+        if: github.event.inputs.version != ''
+        run: |
+          # Update pubspec.yaml with new version
+          sed -i "s/version: .*/version: ${{ github.event.inputs.version }}+${{ github.run_number }}/" pubspec.yaml
+          echo "Updated version to: ${{ github.event.inputs.version }}+${{ github.run_number }}"
 
-    - name: Build signed APK
-      run: flutter build apk --release --target-platform android-arm64,android-arm,android-x64
+      - name: Build signed APK
+        run: flutter build apk --release --target-platform android-arm64,android-arm,android-x64
 
-    - name: Build App Bundle (AAB) for Play Store
-      run: flutter build appbundle --release --target-platform android-arm64,android-arm,android-x64
+      - name: Build App Bundle (AAB) for Play Store
+        run: flutter build appbundle --release --target-platform android-arm64,android-arm,android-x64
 
-    - name: Sign APK with apksigner (additional verification)
-      run: |
-        # Verify APK is properly signed
-        $ANDROID_HOME/build-tools/33.0.0/aapt dump badging build/app/outputs/flutter-apk/app-release.apk | grep "package:"
-        echo "APK signed successfully!"
+      - name: Sign APK with apksigner (additional verification)
+        run: |
+          # Verify APK is properly signed
+          $ANDROID_HOME/build-tools/33.0.0/aapt dump badging build/app/outputs/flutter-apk/app-release.apk | grep "package:"
+          echo "APK signed successfully!"
 
-    - name: Upload Signed APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: seedfy-signed-apk-${{ github.run_number }}
-        path: build/app/outputs/flutter-apk/app-release.apk
-        retention-days: 365
+      - name: Upload Signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: seedfy-signed-apk-${{ github.run_number }}
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 365
 
-    - name: Upload App Bundle
-      uses: actions/upload-artifact@v4
-      with:
-        name: seedfy-app-bundle-${{ github.run_number }}
-        path: build/app/outputs/bundle/release/app-release.aab
-        retention-days: 365
+      - name: Upload App Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: seedfy-app-bundle-${{ github.run_number }}
+          path: build/app/outputs/bundle/release/app-release.aab
+          retention-days: 365
 
-    - name: Deploy to Google Play Store
-      if: github.event.inputs.deploy_to_play_store == 'true'
-      uses: r0adkll/upload-google-play@v1.1.3
-      with:
-        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-        packageName: com.seedfy.seedfy_app
-        releaseFiles: build/app/outputs/bundle/release/app-release.aab
-        track: internal
-        status: completed
-        changesNotSentForReview: true
+      - name: Deploy to Google Play Store
+        if: github.event.inputs.deploy_to_play_store == 'true'
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.seedfy.seedfy_app
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: internal
+          status: completed
+          changesNotSentForReview: true
 
-    - name: Generate build summary
-      run: |
-        echo "## 📱 Build Summary" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Version:** ${{ github.event.inputs.version || 'Auto' }}+${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Build Date:** $(date)" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📦 Artifacts Generated:" >> $GITHUB_STEP_SUMMARY
-        echo "- ✅ Signed APK: $(ls -lh build/app/outputs/flutter-apk/app-release.apk | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
-        echo "- ✅ App Bundle (AAB): $(ls -lh build/app/outputs/bundle/release/app-release.aab | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        if [ "${{ github.event.inputs.deploy_to_play_store }}" == "true" ]; then
-          echo "- 🚀 Deployed to Google Play Store (Internal Track)" >> $GITHUB_STEP_SUMMARY
-        fi
+      - name: Generate build summary
+        run: |
+          echo "## 📱 Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ github.event.inputs.version || 'Auto' }}+${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Date:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Artifacts Generated:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Signed APK: $(ls -lh build/app/outputs/flutter-apk/app-release.apk | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ App Bundle (AAB): $(ls -lh build/app/outputs/bundle/release/app-release.aab | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ github.event.inputs.deploy_to_play_store }}" == "true" ]; then
+            echo "- 🚀 Deployed to Google Play Store (Internal Track)" >> $GITHUB_STEP_SUMMARY
+          fi

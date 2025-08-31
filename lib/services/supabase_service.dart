@@ -22,11 +22,8 @@ class SupabaseService {
 
   static Future<Farm?> getFarmById(String farmId) async {
     try {
-      final response = await client
-          .from('farms')
-          .select('*')
-          .eq('id', farmId)
-          .maybeSingle();
+      final response =
+          await client.from('farms').select('*').eq('id', farmId).maybeSingle();
 
       if (response == null) return null;
       return Farm.fromJson(response);
