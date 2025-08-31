@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'core/di/injection_container.dart' as di;
 import 'core/providers/locale_provider.dart';
 import 'core/theme/app_theme.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/ai_camera/screens/ai_camera_screen.dart';
 import 'features/ai_chat/screens/ai_chat_screen.dart';
 import 'features/analytics/screens/analytics_screen.dart';
