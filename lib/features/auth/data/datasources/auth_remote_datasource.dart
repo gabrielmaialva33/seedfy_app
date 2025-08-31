@@ -79,12 +79,26 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw app_exceptions.AuthException('Signup failed');
       }
 
-      // Wait a bit for the trigger to create the profile
-      await Future.delayed(const Duration(seconds: 1));
+      // Wait for the trigger to create the profile
+      await Future.delayed(const Duration(seconds: 2));
 
-      // Fetch the created profile
-      final profileData = await _getProfile(response.user!.id);
-      return UserDto.fromJson(profileData);
+      // Try to fetch the created profile, or create basic DTO from auth data
+      try {
+        final profileData = await _getProfile(response.user!.id);
+        return UserDto.fromJson(profileData);
+      } catch (_) {
+        // If profile not found yet, return basic user data
+        return UserDto(
+          id: response.user!.id,
+          email: response.user!.email!,
+          name: name,
+          phone: phone,
+          city: city,
+          state: state,
+          locale: locale,
+          createdAt: DateTime.now(),
+        );
+      }
     } catch (e) {
       throw app_exceptions.AuthException(e.toString());
     }
