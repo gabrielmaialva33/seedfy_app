@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/exceptions.dart' as core_exceptions;
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../features/auth/domain/entities/user_entity.dart';
