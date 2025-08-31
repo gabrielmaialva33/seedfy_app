@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -153,7 +152,7 @@ void main() {
         await $.pumpAndSettle();
 
         // Test screen reader support
-        final semantics = $.tester.binding.pipelineOwner.rootPipelineOwner.semanticsOwner;
+        final semantics = $.tester.binding.pipelineOwner.semanticsOwner;
         expect(semantics, isNotNull);
         
         // Verify semantic tree is built
