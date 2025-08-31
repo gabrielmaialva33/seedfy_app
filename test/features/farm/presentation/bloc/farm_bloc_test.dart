@@ -278,7 +278,7 @@ void main() {
         'handles invalid farm ID gracefully',
         build: () {
           when(() => mockGetFarmDetails(const GetFarmDetailsParams(farmId: 'invalid')))
-              .thenAnswer((_) async => const Left(NotFoundFailure('Farm not found')));
+              .thenAnswer((_) async => const Left(ServerFailure('Farm not found')));
           return farmBloc;
         },
         act: (bloc) => bloc.add(const FarmEvent.getFarmDetails('invalid')),
