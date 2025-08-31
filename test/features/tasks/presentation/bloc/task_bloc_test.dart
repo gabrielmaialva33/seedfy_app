@@ -409,13 +409,25 @@ void main() {
               .thenAnswer((_) async => Right([taskWithNulls]));
           return taskBloc;
         },
-        act: (bloc) => bloc.add(TaskEvent.createTask(taskWithNulls)),
-        expect: () => [
-          const TaskState.loading(),
-          TaskState.taskCreated(taskWithNulls),
-          const TaskState.loading(),
-          TaskState.tasksLoaded([taskWithNulls]),
-        ],
+        act: (bloc) {
+          final taskWithNulls = testTask.copyWith(
+            description: null,
+            estimatedMinutes: null,
+          );
+          return bloc.add(TaskEvent.createTask(taskWithNulls));
+        },
+        expect: () {
+          final taskWithNulls = testTask.copyWith(
+            description: null,
+            estimatedMinutes: null,
+          );
+          return [
+            const TaskState.loading(),
+            TaskState.taskCreated(taskWithNulls),
+            const TaskState.loading(),
+            TaskState.tasksLoaded([taskWithNulls]),
+          ];
+        },
       );
     });
 
