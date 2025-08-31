@@ -101,7 +101,7 @@ class _ManageCollaboratorsScreenState extends State<ManageCollaboratorsScreen> {
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: selectedRole,
+                initialValue: selectedRole,
                 decoration: InputDecoration(
                   labelText: isPortuguese ? 'Permissão' : 'Permission',
                   prefixIcon: const Icon(Icons.security),
