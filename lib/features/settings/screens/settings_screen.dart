@@ -345,8 +345,10 @@ $tasksCsv
 
       // Save and share the file
       await SharePlus.instance.share(
-        combinedData,
-        subject: isPortuguese ? 'Dados do Seedfy' : 'Seedfy Data',
+        ShareParams(
+          text: combinedData,
+          subject: isPortuguese ? 'Dados do Seedfy' : 'Seedfy Data',
+        ),
       );
 
       if (mounted) {
