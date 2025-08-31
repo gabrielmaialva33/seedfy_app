@@ -5,6 +5,8 @@ import '../../../../core/errors/exceptions.dart' as core_exceptions;
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../features/auth/domain/entities/user_entity.dart';
+import '../../../../features/auth/data/dto/user_dto.dart';
+import '../../../../features/auth/data/mappers/user_mapper.dart';
 import '../../domain/repositories/profile_repository.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
