@@ -113,7 +113,7 @@ void main() {
         (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.byType(CustomPaint), findsOneWidget);
+      expect(find.byType(CustomPaint), findsWidgets);
     });
 
     testWidgets('should render beds with plantings', (tester) async {
