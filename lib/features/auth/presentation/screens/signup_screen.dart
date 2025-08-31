@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/providers/locale_provider.dart';
+import '../bloc/auth_bloc.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
