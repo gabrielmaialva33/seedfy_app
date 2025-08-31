@@ -371,6 +371,16 @@ class _MapScreenState extends State<MapScreen> {
                 ),
               ),
               PopupMenuItem(
+                value: 'ai-recommendations',
+                child: Row(
+                  children: [
+                    const Icon(Icons.auto_awesome),
+                    const SizedBox(width: 8),
+                    Text(isPortuguese ? 'Recomendações IA' : 'AI Recommendations'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
                 value: 'export',
                 child: Row(
                   children: [
@@ -409,6 +419,9 @@ class _MapScreenState extends State<MapScreen> {
                     MaterialPageRoute(
                         builder: (context) => const TasksScreen()),
                   );
+                  break;
+                case 'ai-recommendations':
+                  Navigator.pushNamed(context, '/ai-recommendations');
                   break;
                 case 'export':
                   _exportToCsv();
