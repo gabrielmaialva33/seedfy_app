@@ -191,9 +191,12 @@ ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.beds (
   id,
   plot_id,
-  name,
-  length_m,
+  x,
+  y,
   width_m,
+  height_m,
+  soil_type,
+  notes,
   created_at
 ) VALUES
   -- Maria's beds
