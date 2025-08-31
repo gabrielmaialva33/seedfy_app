@@ -144,7 +144,7 @@ class FarmRepositoryImpl implements FarmRepository {
   Future<Either<Failure, List<Bed>>> getFarmBeds(String farmId) async {
     try {
       if (await networkInfo.isConnected) {
-      try {
+        try {
         final beds = await remoteDataSource.getFarmBeds(farmId);
         return Right(beds);
       } on AuthException catch (e) {
@@ -167,7 +167,7 @@ class FarmRepositoryImpl implements FarmRepository {
       String farmId) async {
     try {
       if (await networkInfo.isConnected) {
-      try {
+        try {
         final plantings = await remoteDataSource.getFarmPlantings(farmId);
         return Right(plantings);
       } on AuthException catch (e) {
