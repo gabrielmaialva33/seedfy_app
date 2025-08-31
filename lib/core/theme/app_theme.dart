@@ -1,36 +1,68 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Cores inspiradas no Nubank + Instagram + iFood
-  static const primaryPurple = Color(0xFF8B5CF6);
-  static const primaryGreen = Color(0xFF10B981);
-  static const accentOrange = Color(0xFFFF6B35);
-  static const backgroundLight = Color(0xFFFAFAFA);
-  static const cardWhite = Colors.white;
-  static const textDark = Color(0xFF1A1A1A);
-  static const textGray = Color(0xFF6B7280);
-  static const successGreen = Color(0xFF22C55E);
-  static const warningYellow = Color(0xFFFBBF24);
-  static const errorRed = Color(0xFFEF4444);
+  // 🌱 Paleta Seedfy - Inspirada na natureza e agricultura sustentável
+  
+  // Cores Principais
+  static const seedfyGreen = Color(0xFF22C55E);      // Verde vibrante principal
+  static const earthGreen = Color(0xFF059669);       // Verde terra mais escuro
+  static const soilBrown = Color(0xFFA16207);        // Marrom terra fértil
+  static const sunGold = Color(0xFFEAB308);          // Dourado do sol
+  static const blossomPink = Color(0xFFEC4899);      // Rosa floração
+  
+  // Sistema de Status (Semafórico para plantações)
+  static const healthyGreen = Color(0xFF22C55E);     // Saudável (>7 dias)
+  static const warningYellow = Color(0xFFF59E0B);    // Atenção (3-7 dias)
+  static const criticalRed = Color(0xFFEF4444);      // Crítico (<3 dias)
+  static const emptyGray = Color(0xFF6B7280);        // Canteiros vazios
+  
+  // Cores Complementares
+  static const softGreen = Color(0xFFDCFCE7);        // Background suave
+  static const stoneGray = Color(0xFFF3F4F6);        // Cards e neutrals
+  static const darkText = Color(0xFF1F2937);         // Textos principais
+  static const lightText = Color(0xFF6B7280);        // Textos secundários
+  static const pureWhite = Color(0xFFFFFFFF);        // Branco puro
+  
+  // Manter compatibilidade com código existente
+  static const primaryPurple = seedfyGreen;          // Compatibilidade
+  static const primaryGreen = earthGreen;            // Compatibilidade
+  static const accentOrange = sunGold;               // Compatibilidade
+  static const backgroundLight = softGreen;          // Compatibilidade
+  static const cardWhite = pureWhite;                // Compatibilidade
+  static const textDark = darkText;                  // Compatibilidade
+  static const textGray = lightText;                 // Compatibilidade
+  static const successGreen = healthyGreen;          // Compatibilidade
+  static const errorRed = criticalRed;               // Compatibilidade
 
-  // Gradientes modernos
-  static const primaryGradient = LinearGradient(
+  // Gradientes inspirados na natureza
+  static const seedfyGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primaryPurple, primaryGreen],
+    colors: [seedfyGreen, earthGreen],
   );
-
-  static const cardGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color(0xFFFFFFFF), Color(0xFFF8FAFC)],
-  );
-
-  static const backgroundGradient = LinearGradient(
+  
+  static const sunsetGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [backgroundLight, Color(0xFFF1F5F9)],
+    colors: [sunGold, soilBrown],
   );
+  
+  static const gardenGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [softGreen, pureWhite],
+  );
+
+  static const earthGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [softGreen, stoneGray],
+  );
+  
+  // Manter compatibilidade
+  static const primaryGradient = seedfyGradient;
+  static const cardGradient = gardenGradient;
+  static const backgroundGradient = earthGradient;
 
   // Sombras modernas (estilo Nubank)
   static const cardShadow = [
@@ -107,16 +139,19 @@ class AppTheme {
       fontFamily: 'Inter',
       // Fonte moderna
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryPurple,
+        seedColor: seedfyGreen,
         brightness: Brightness.light,
-        primary: primaryPurple,
-        secondary: primaryGreen,
-        surface: cardWhite,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onSurface: textDark,
+        primary: seedfyGreen,
+        secondary: earthGreen,
+        tertiary: sunGold,
+        surface: pureWhite,
+        surfaceContainer: softGreen,
+        onPrimary: pureWhite,
+        onSecondary: pureWhite,
+        onSurface: darkText,
+        onSurfaceVariant: lightText,
       ),
-      scaffoldBackgroundColor: backgroundLight,
+      scaffoldBackgroundColor: softGreen,
       appBarTheme: const AppBarTheme(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -132,8 +167,8 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: primaryPurple,
-          foregroundColor: Colors.white,
+          backgroundColor: seedfyGreen,
+          foregroundColor: pureWhite,
           shape: const RoundedRectangleBorder(borderRadius: buttonRadius),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           textStyle: const TextStyle(
@@ -144,8 +179,8 @@ class AppTheme {
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         elevation: 8,
-        backgroundColor: primaryPurple,
-        foregroundColor: Colors.white,
+        backgroundColor: seedfyGreen,
+        foregroundColor: pureWhite,
       ),
     );
   }
