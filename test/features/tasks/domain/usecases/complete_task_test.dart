@@ -307,7 +307,7 @@ void main() {
         const taskId = 'task123';
         const zeroMinutes = 0;
         final taskWithZeroMinutes = testTask.copyWith(
-          status: TaskStatus.completed,
+          status: entities.TaskStatus.completed,
           actualMinutes: zeroMinutes,
         );
 
@@ -332,7 +332,7 @@ void main() {
         const taskId = 'task123';
         const emptyNotes = '';
         final taskWithEmptyNotes = testTask.copyWith(
-          status: TaskStatus.completed,
+          status: entities.TaskStatus.completed,
           completionNotes: emptyNotes,
         );
 
