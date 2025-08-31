@@ -74,7 +74,7 @@ void main() {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
-            .thenThrow(const AuthException('User not authenticated'));
+            .thenThrow(AuthException('User not authenticated'));
 
         // Act
         final result = await repository.getUserFarms();
@@ -90,7 +90,7 @@ void main() {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
-            .thenThrow(const ServerException('Server error'));
+            .thenThrow(ServerException('Server error'));
 
         // Act
         final result = await repository.getUserFarms();
