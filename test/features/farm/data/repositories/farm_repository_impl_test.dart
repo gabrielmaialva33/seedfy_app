@@ -106,7 +106,7 @@ void main() {
         // Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.getUserFarms())
-            .thenThrow(const ServerException());
+            .thenThrow(ServerException());
 
         // Act
         final result = await repository.getUserFarms();
