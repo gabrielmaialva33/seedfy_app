@@ -253,9 +253,10 @@ class FarmRemoteDataSourceImpl implements FarmRemoteDataSource {
                 plots!inner(farm_id)
               )
             )
-          ''', const FetchOptions(count: CountOption.exact))
+          ''')
           .eq('plantings.beds.plots.farm_id', farmId)
-          .eq('done', false);
+          .eq('done', false)
+          .count(CountOption.exact);
 
       return {
         'plots_count': plotsCount.count ?? 0,
