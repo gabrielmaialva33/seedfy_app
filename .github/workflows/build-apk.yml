@@ -19,7 +19,7 @@ on:
           - release
 
 jobs:
-  build:
+  android-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -115,3 +115,49 @@ jobs:
           name: seedfy-${{ steps.build_type.outputs.type }}-apk-${{ github.run_number }}
           path: build/app/outputs/flutter-apk/app-${{ steps.build_type.outputs.type }}.apk
           retention-days: ${{ steps.build_type.outputs.type == 'release' && 90 || 30 }}
+
+  web-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.1'
+          channel: 'stable'
+          cache: true
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            build
+          key: ${{ runner.os }}-flutter-web-${{ hashFiles('**/pubspec.lock') }}-${{ hashFiles('**/*.dart') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-web-${{ hashFiles('**/pubspec.lock') }}-
+            ${{ runner.os }}-flutter-web-
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Analyze code
+        run: flutter analyze --fatal-infos
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build Flutter Web
+        run: flutter build web --release
+
+      - name: Upload Web Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: seedfy-web-${{ github.run_number }}
+          path: build/web/
+          retention-days: 30
