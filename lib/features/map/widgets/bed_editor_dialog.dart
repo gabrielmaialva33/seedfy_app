@@ -558,7 +558,7 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                               ..._availableCrops.map((crop) => DropdownMenuItem(
                                     value: crop,
                                     child: Text(crop.getName(
-                                        localeProvider.locale.languageCode)),
+                                        isPortuguese ? 'pt' : 'en')),
                                   )),
                             ],
                             onChanged: (crop) {
@@ -622,9 +622,7 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
                                   onPressed: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) {
-                                        final localeProvider = context.read<LocaleProvider>();
-                                        final isPortuguese = localeProvider.locale.languageCode == 'pt';
+                                      builder: (dialogContext) {
                                         return _buildCycleCustomizationDialog(isPortuguese);
                                       },
                                     );

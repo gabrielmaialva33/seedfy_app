@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/widgets/responsive_builder.dart';
-import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../shared/data/datasources/supabase_service.dart';
 import '../../../shared/domain/entities/bed.dart';
 import '../../../shared/domain/entities/crop.dart';
@@ -174,108 +173,6 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  BedStatus _getBedStatus(BedWithPlanting bedWithPlanting) {
-    if (bedWithPlanting.planting == null || bedWithPlanting.crop == null) {
-      return BedStatus.empty;
-    }
-
-    final now = DateTime.now();
-    final harvestDate = bedWithPlanting.planting!.harvestEstimate;
-    final daysUntilHarvest = harvestDate.difference(now).inDays;
-
-    if (daysUntilHarvest < 0) {
-      return BedStatus.critical; // Overdue
-    } else if (daysUntilHarvest <= 7) {
-      return BedStatus.warning; // Soon to harvest
-    } else {
-      return BedStatus.healthy; // Growing well
-    }
-  }
-
-  void _exportToCsv() async {
-    try {
-      final localeProvider = context.read<LocaleProvider>();
-      final isPortuguese = localeProvider.locale.languageCode == 'pt';
-
-      final csvData = StringBuffer();
-
-      // CSV Header
-      if (isPortuguese) {
-        csvData.writeln(
-            'Canteiro,Posição X,Posição Y,Largura (m),Altura (m),Área (m²),Cultura,Data Plantio,Previsão Colheita,Status');
-      } else {
-        csvData.writeln(
-            'Bed,Position X,Position Y,Width (m),Height (m),Area (m²),Crop,Planting Date,Harvest Date,Status');
-      }
-
-      // CSV Data
-      for (final bedWithPlanting in _beds) {
-        final bed = bedWithPlanting.bed;
-        final planting = bedWithPlanting.planting;
-        final crop = bedWithPlanting.crop;
-
-        csvData.writeln([
-          bed.id,
-          bed.x,
-          bed.y,
-          bed.widthM,
-          bed.heightM,
-          (bed.widthM * bed.heightM).toStringAsFixed(2),
-          crop?.getName(localeProvider.locale.languageCode) ??
-              (isPortuguese ? 'Vazio' : 'Empty'),
-          planting?.sowingDate.toIso8601String().split('T')[0] ?? '',
-          planting?.harvestEstimate.toIso8601String().split('T')[0] ?? '',
-          _getStatusText(_getBedStatus(bedWithPlanting), isPortuguese),
-        ].join(','));
-      }
-
-      // Show CSV preview
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(isPortuguese ? 'Dados CSV' : 'CSV Data'),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: 300,
-            child: SingleChildScrollView(
-              child: SelectableText(
-                csvData.toString(),
-                style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(isPortuguese ? 'Fechar' : 'Close'),
-            ),
-          ],
-        ),
-      );
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Erro ao exportar CSV: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
-  String _getStatusText(BedStatus status, bool isPortuguese) {
-    switch (status) {
-      case BedStatus.healthy:
-        return isPortuguese ? 'Saudável' : 'Healthy';
-      case BedStatus.warning:
-        return isPortuguese ? 'Atenção' : 'Warning';
-      case BedStatus.critical:
-        return isPortuguese ? 'Crítico' : 'Critical';
-      case BedStatus.empty:
-        return isPortuguese ? 'Vazio' : 'Empty';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -338,77 +235,31 @@ class _MapScreenState extends State<MapScreen> {
                 ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
                 : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
           ),
-          PopupMenuButton(
+          PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert),
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'camera',
-                child: Row(
-                  children: [
-                    const Icon(Icons.camera_alt),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition'),
-                  ],
+                child: ListTile(
+                  leading: const Icon(Icons.camera_alt),
+                  title: Text(isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
               PopupMenuItem(
                 value: 'chat',
-                child: Row(
-                  children: [
-                    const Icon(Icons.chat),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Assistente IA' : 'AI Assistant'),
-                  ],
+                child: ListTile(
+                  leading: const Icon(Icons.chat),
+                  title: Text(isPortuguese ? 'Assistente IA' : 'AI Assistant'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
               PopupMenuItem(
                 value: 'tasks',
-                child: Row(
-                  children: [
-                    const Icon(Icons.task_alt),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Tarefas' : 'Tasks'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'ai-recommendations',
-                child: Row(
-                  children: [
-                    const Icon(Icons.auto_awesome),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Recomendações IA' : 'AI Recommendations'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'export',
-                child: Row(
-                  children: [
-                    const Icon(Icons.download),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Exportar CSV' : 'Export CSV'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'refresh',
-                child: Row(
-                  children: [
-                    const Icon(Icons.refresh),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Atualizar' : 'Refresh'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'logout',
-                child: Row(
-                  children: [
-                    const Icon(Icons.logout),
-                    const SizedBox(width: 8),
-                    Text(isPortuguese ? 'Sair' : 'Logout'),
-                  ],
+                child: ListTile(
+                  leading: const Icon(Icons.task_alt),
+                  title: Text(isPortuguese ? 'Tarefas' : 'Tasks'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
             ],
@@ -429,23 +280,8 @@ class _MapScreenState extends State<MapScreen> {
                 case 'tasks':
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const TasksScreen()),
+                    MaterialPageRoute(builder: (context) => const TasksScreen()),
                   );
-                  break;
-                case 'ai-recommendations':
-                  Navigator.pushNamed(context, '/ai-recommendations');
-                  break;
-                case 'export':
-                  _exportToCsv();
-                  break;
-                case 'refresh':
-                  _refreshData();
-                  break;
-                case 'logout':
-                  context
-                      .read<AuthBloc>()
-                      .add(const AuthEvent.logoutRequested());
                   break;
               }
             },
@@ -482,260 +318,14 @@ class _MapScreenState extends State<MapScreen> {
                 ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
                 : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
           ),
-          PopupMenuButton(
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (context) => [
-                IconButton(
-                  icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
-                  onPressed: () {
-                    setState(() {
-                      _useInteractiveEditor = !_useInteractiveEditor;
-                    });
-                  },
-                  tooltip: _useInteractiveEditor 
-                      ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
-                      : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
-                ),
-                PopupMenuButton(
-                  icon: const Icon(Icons.more_vert),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'camera',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.camera_alt),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'chat',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.chat),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Assistente IA' : 'AI Assistant'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'tasks',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.task_alt),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Tarefas' : 'Tasks'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'ai-recommendations',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.auto_awesome),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Recomendações IA' : 'AI Recommendations'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'export',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.download),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Exportar CSV' : 'Export CSV'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'refresh',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.refresh),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Atualizar' : 'Refresh'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'logout',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.logout),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Sair' : 'Logout'),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) {
-                    switch (value) {
-                      case 'camera':
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AICameraScreen()),
-                        );
-                        break;
-                      case 'chat':
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AIChatScreen()),
-                        );
-                        break;
-                      case 'tasks':
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TasksScreen()),
-                        );
-                        break;
-                      case 'ai-recommendations':
-                        Navigator.pushNamed(context, '/ai-recommendations');
-                        break;
-                      case 'export':
-                        _exportToCsv();
-                        break;
-                      case 'refresh':
-                        _refreshData();
-                        break;
-                      case 'logout':
-                        context
-                            .read<AuthBloc>()
-                            .add(const AuthEvent.logoutRequested());
-                        break;
-                    }
-                  },
-                ),
-              ];
-            } else {
-              // On tablet/desktop, show all buttons individually
-              return [
-                IconButton(
-                  icon: const Icon(Icons.camera_alt),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AICameraScreen()),
-                    );
-                  },
-                  tooltip: isPortuguese ? 'Reconhecer Planta' : 'Plant Recognition',
-                ),
-                IconButton(
-                  icon: const Icon(Icons.chat),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AIChatScreen()),
-                    );
-                  },
-                  tooltip: isPortuguese ? 'Assistente IA' : 'AI Assistant',
-                ),
-                IconButton(
-                  icon: Icon(_useInteractiveEditor ? Icons.edit : Icons.grid_view),
-                  onPressed: () {
-                    setState(() {
-                      _useInteractiveEditor = !_useInteractiveEditor;
-                    });
-                  },
-                  tooltip: _useInteractiveEditor 
-                      ? (isPortuguese ? 'Modo Visualização' : 'View Mode')
-                      : (isPortuguese ? 'Modo Edição' : 'Edit Mode'),
-                ),
-                PopupMenuButton(
-                  icon: const Icon(Icons.more_vert),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'tasks',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.task_alt),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Tarefas' : 'Tasks'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'ai-recommendations',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.auto_awesome),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Recomendações IA' : 'AI Recommendations'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'export',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.download),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Exportar CSV' : 'Export CSV'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'refresh',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.refresh),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Atualizar' : 'Refresh'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'logout',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.logout),
-                          const SizedBox(width: 8),
-                          Text(isPortuguese ? 'Sair' : 'Logout'),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) {
-                    switch (value) {
-                      case 'tasks':
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TasksScreen()),
-                        );
-                        break;
-                      case 'ai-recommendations':
-                        Navigator.pushNamed(context, '/ai-recommendations');
-                        break;
-                      case 'export':
-                        _exportToCsv();
-                        break;
-                      case 'refresh':
-                        _refreshData();
-                        break;
-                      case 'logout':
-                        context
-                            .read<AuthBloc>()
-                            .add(const AuthEvent.logoutRequested());
-                        break;
-                    }
-                  },
-                ),
-              ];
-            }
-          },
-        ),
+        ],
       ),
       body: Column(
         children: [
           // Status legend - responsive layout
           ResponsiveBuilder(
             builder: (context, screenSize) {
-              return Container(
-                padding: context.responsivePadding,
-                color: Theme.of(context).colorScheme.surfaceContainer,
+              return MobileOptimizedCard(
                 child: screenSize == ScreenSize.mobile
                     ? Column(
                         children: [
@@ -809,8 +399,8 @@ class _MapScreenState extends State<MapScreen> {
           if (screenSize == ScreenSize.mobile) {
             return FloatingActionButton(
               onPressed: () => _handleAddBed(const Offset(100, 100)),
-              child: const Icon(Icons.add),
               tooltip: isPortuguese ? 'Adicionar Canteiro' : 'Add Bed',
+              child: const Icon(Icons.add),
             );
           } else {
             return FloatingActionButton.extended(

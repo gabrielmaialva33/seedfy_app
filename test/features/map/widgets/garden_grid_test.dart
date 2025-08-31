@@ -23,6 +23,7 @@ void main() {
         label: 'Test Garden Plot',
         lengthM: 10.0,
         widthM: 8.0,
+        pathGapM: 0.5,
         createdAt: DateTime.now(),
       );
 
@@ -30,22 +31,18 @@ void main() {
         id: 'test-crop-1',
         namePt: 'Tomate',
         nameEn: 'Tomato',
-        scientificName: 'Solanum lycopersicum',
-        family: 'Solanaceae',
+        imageUrl: 'https://example.com/tomato.jpg',
         cycleDays: 90,
         plantSpacingM: 0.5,
         rowSpacingM: 0.8,
-        sowingMonths: [3, 4, 5],
-        harvestMonths: [7, 8, 9],
-        wateringFrequencyDays: 2,
-        createdAt: DateTime.now(),
+        yieldPerM2: 5.0,
       );
 
       final testBed = Bed(
         id: 'test-bed-1',
         plotId: 'test-plot-1',
-        x: 2.0,
-        y: 1.0,
+        x: 2,
+        y: 1,
         widthM: 1.2,
         heightM: 2.0,
         createdAt: DateTime.now(),
@@ -59,7 +56,6 @@ void main() {
         harvestEstimate: DateTime.now().add(const Duration(days: 60)),
         quantity: 4,
         customCycleDays: null,
-        createdAt: DateTime.now(),
       );
 
       testBeds = [
@@ -180,7 +176,7 @@ void main() {
       );
 
       final warningBed = BedWithPlanting(
-        bed: testBeds.first.bed.copyWith(id: 'bed-2', x: 4.0),
+        bed: testBeds.first.bed.copyWith(id: 'bed-2', x: 4),
         planting: testBeds.first.planting!.copyWith(
           id: 'planting-2',
           harvestEstimate: now.add(const Duration(days: 5)), // 5 days = warning
@@ -189,7 +185,7 @@ void main() {
       );
 
       final criticalBed = BedWithPlanting(
-        bed: testBeds.first.bed.copyWith(id: 'bed-3', x: 6.0),
+        bed: testBeds.first.bed.copyWith(id: 'bed-3', x: 6),
         planting: testBeds.first.planting!.copyWith(
           id: 'planting-3',
           harvestEstimate: now.subtract(const Duration(days: 2)), // Past due = critical
@@ -198,7 +194,7 @@ void main() {
       );
 
       final emptyBed = BedWithPlanting(
-        bed: testBeds.first.bed.copyWith(id: 'bed-4', x: 8.0),
+        bed: testBeds.first.bed.copyWith(id: 'bed-4', x: 8),
         planting: null,
         crop: null,
       );
@@ -305,6 +301,7 @@ void main() {
         label: 'Test Plot',
         lengthM: 5.0,
         widthM: 4.0,
+        pathGapM: 0.5,
         createdAt: DateTime.now(),
       );
 

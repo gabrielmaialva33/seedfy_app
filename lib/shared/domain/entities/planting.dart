@@ -82,4 +82,32 @@ class Planting {
       'notes': notes,
     };
   }
+
+  Planting copyWith({
+    String? id,
+    String? bedId,
+    String? cropId,
+    int? customCycleDays,
+    double? customRowSpacingM,
+    double? customPlantSpacingM,
+    DateTime? sowingDate,
+    DateTime? harvestEstimate,
+    int? quantity,
+    String? intercropOf,
+    String? notes,
+  }) {
+    return Planting(
+      id: id ?? this.id,
+      bedId: bedId ?? this.bedId,
+      cropId: cropId ?? this.cropId,
+      customCycleDays: customCycleDays ?? this.customCycleDays,
+      customRowSpacingM: customRowSpacingM ?? this.customRowSpacingM,
+      customPlantSpacingM: customPlantSpacingM ?? this.customPlantSpacingM,
+      sowingDate: sowingDate ?? this.sowingDate,
+      harvestEstimate: harvestEstimate ?? this.harvestEstimate,
+      quantity: quantity ?? this.quantity,
+      intercropOf: intercropOf ?? this.intercropOf,
+      notes: notes ?? this.notes,
+    );
+  }
 }

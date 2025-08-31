@@ -12,18 +12,6 @@ class MockFile extends Mock implements File {}
 
 void main() {
   group('NvidiaAIService', () {
-    late NvidiaAIService service;
-    late MockDio mockDio;
-    late MockFile mockFile;
-
-    setUp(() {
-      mockDio = MockDio();
-      mockFile = MockFile();
-      service = NvidiaAIService();
-      
-      // Replace the dio instance with our mock
-      // Note: In a real implementation, we'd need to make dio injectable
-    });
 
     group('PlantAnalysisResult', () {
       test('should create PlantAnalysisResult from valid JSON', () {
