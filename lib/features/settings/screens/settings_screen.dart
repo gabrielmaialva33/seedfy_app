@@ -344,7 +344,7 @@ $tasksCsv
 ''';
 
       // Save and share the file
-      await Share.share(
+      await SharePlus.instance.share(
         combinedData,
         subject: isPortuguese ? 'Dados do Seedfy' : 'Seedfy Data',
       );
