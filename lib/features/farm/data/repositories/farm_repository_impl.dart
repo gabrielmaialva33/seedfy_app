@@ -203,5 +203,8 @@ class FarmRepositoryImpl implements FarmRepository {
     } else {
       return const Left(NetworkFailure('No internet connection'));
     }
+    } catch (e) {
+      return Left(ServerFailure('Network check failed: ${e.toString()}'));
+    }
   }
 }
