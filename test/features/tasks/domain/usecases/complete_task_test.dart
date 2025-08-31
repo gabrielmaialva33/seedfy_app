@@ -357,7 +357,7 @@ void main() {
         const specialTaskId = 'task-123_@#\$%';
         final taskWithSpecialId = testTask.copyWith(
           id: specialTaskId,
-          status: TaskStatus.completed,
+          status: entities.TaskStatus.completed,
         );
 
         when(() => mockTaskRepository.completeTask(
