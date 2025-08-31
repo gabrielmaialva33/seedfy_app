@@ -48,6 +48,10 @@ dependencies:
   
   # Code Generation
   freezed_annotation: ^3.1.0
+  
+  # Input masks and validation
+  mask_text_input_formatter: ^2.9.0
+  brasil_fields: ^1.14.1
   json_annotation: ^4.8.1
   
   # Functional Programming

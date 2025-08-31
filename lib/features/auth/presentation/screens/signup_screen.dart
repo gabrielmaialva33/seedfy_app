@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 import '../../../../core/providers/locale_provider.dart';
+import '../../../../shared/widgets/masked_text_field.dart';
+import '../../../../shared/utils/validators.dart';
 import '../bloc/auth_bloc.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -18,45 +21,19 @@ class _SignupScreenState extends State<SignupScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _cpfController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
+  final _cepController = TextEditingController();
 
   bool _isLoading = false;
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
-  // Brazilian states for dropdown
-  final List<String> _brazilianStates = [
-    'AC',
-    'AL',
-    'AP',
-    'AM',
-    'BA',
-    'CE',
-    'DF',
-    'ES',
-    'GO',
-    'MA',
-    'MT',
-    'MS',
-    'MG',
-    'PA',
-    'PB',
-    'PR',
-    'PE',
-    'PI',
-    'RJ',
-    'RN',
-    'RS',
-    'RO',
-    'RR',
-    'SC',
-    'SP',
-    'SE',
-    'TO'
-  ];
+  // Brazilian states from brasil_fields
+  final List<String> _brazilianStates = Estados.listaEstadosSigla;
 
   String? _selectedState;
 
@@ -65,10 +42,12 @@ class _SignupScreenState extends State<SignupScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _cpfController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     _cityController.dispose();
     _stateController.dispose();
+    _cepController.dispose();
     super.dispose();
   }
 
@@ -154,19 +133,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return isPortuguese
-                          ? 'Digite seu nome'
-                          : 'Enter your name';
-                    }
-                    if (value.trim().length < 2) {
-                      return isPortuguese
-                          ? 'Nome muito curto'
-                          : 'Name too short';
-                    }
-                    return null;
-                  },
+                  validator: Validators.validateName,
                 ),
 
                 const SizedBox(height: 16),
@@ -183,51 +150,33 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return isPortuguese
-                          ? 'Digite seu email'
-                          : 'Enter your email';
-                    }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value)) {
-                      return isPortuguese ? 'Email inválido' : 'Invalid email';
-                    }
-                    return null;
-                  },
+                  validator: Validators.validateEmail,
                 ),
 
                 const SizedBox(height: 16),
 
-                // Phone Field
-                TextFormField(
+                // Phone Field with Mask
+                MaskedTextField(
                   controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: isPortuguese ? 'Telefone' : 'Phone',
-                    hintText:
-                        isPortuguese ? '(11) 99999-9999' : '+1 (555) 123-4567',
-                    prefixIcon: const Icon(Icons.phone_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return isPortuguese
-                          ? 'Digite seu telefone'
-                          : 'Enter your phone';
-                    }
-                    if (value.length < 10) {
-                      return isPortuguese
-                          ? 'Telefone inválido'
-                          : 'Invalid phone';
-                    }
-                    return null;
-                  },
+                  label: isPortuguese ? 'Telefone' : 'Phone',
+                  maskType: MaskType.phone,
+                  prefixIcon: const Icon(Icons.phone_outlined),
+                  validator: Validators.validatePhone,
                 ),
 
                 const SizedBox(height: 16),
+
+                // CPF Field (only for Portuguese)
+                if (isPortuguese) ...[                  
+                  MaskedTextField(
+                    controller: _cpfController,
+                    label: 'CPF',
+                    maskType: MaskType.cpf,
+                    prefixIcon: const Icon(Icons.badge_outlined),
+                    validator: Validators.validateCPF,
+                  ),
+                  const SizedBox(height: 16),
+                ],
 
                 // Location Section Header
                 Padding(
@@ -241,6 +190,18 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
 
+                // CEP Field (only for Portuguese)
+                if (isPortuguese) ...[                  
+                  MaskedTextField(
+                    controller: _cepController,
+                    label: 'CEP',
+                    maskType: MaskType.cep,
+                    prefixIcon: const Icon(Icons.location_on_outlined),
+                    validator: Validators.validateCEP,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
                 // City Field
                 TextFormField(
                   controller: _cityController,
@@ -253,14 +214,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return isPortuguese
-                          ? 'Digite sua cidade'
-                          : 'Enter your city';
-                    }
-                    return null;
-                  },
+                  validator: (value) => Validators.validateRequired(value, fieldName: isPortuguese ? 'Cidade' : 'City'),
                 ),
 
                 const SizedBox(height: 16),
@@ -324,8 +278,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   decoration: InputDecoration(
                     labelText: isPortuguese ? 'Senha' : 'Password',
                     hintText: isPortuguese
-                        ? 'Mínimo 6 caracteres'
-                        : 'Minimum 6 characters',
+                        ? 'Mínimo 8 caracteres, com maiúscula, número e símbolo'
+                        : 'Min 8 chars, with uppercase, number and symbol',
                     prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -343,19 +297,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return isPortuguese
-                          ? 'Digite sua senha'
-                          : 'Enter your password';
-                    }
-                    if (value.length < 6) {
-                      return isPortuguese
-                          ? 'Senha deve ter pelo menos 6 caracteres'
-                          : 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
+                  validator: Validators.validatePassword,
                 ),
 
                 const SizedBox(height: 16),
@@ -388,19 +330,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return isPortuguese
-                          ? 'Confirme sua senha'
-                          : 'Confirm your password';
-                    }
-                    if (value != _passwordController.text) {
-                      return isPortuguese
-                          ? 'Senhas não coincidem'
-                          : 'Passwords do not match';
-                    }
-                    return null;
-                  },
+                  validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
                 ),
 
                 const SizedBox(height: 32),
