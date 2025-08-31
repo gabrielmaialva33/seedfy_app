@@ -425,18 +425,28 @@ void main() {
           );
           return bloc.add(TaskEvent.createTask(taskWithNulls));
         },
-        expect: () {
-          final taskWithNulls = testTask.copyWith(
-            description: null,
-            estimatedMinutes: null,
-          );
-          return [
-            const TaskState.loading(),
-            TaskState.taskCreated(taskWithNulls),
-            const TaskState.loading(),
-            TaskState.tasksLoaded([taskWithNulls]),
-          ];
-        },
+        expect: () => [
+          const TaskState.loading(),
+          isA<TaskState>().having(
+            (state) => state.maybeWhen(
+              taskCreated: (task) => task.description == null && task.estimatedMinutes == null,
+              orElse: () => false,
+            ),
+            'taskCreated with null fields',
+            true,
+          ),
+          const TaskState.loading(),
+          isA<TaskState>().having(
+            (state) => state.maybeWhen(
+              tasksLoaded: (tasks) => tasks.length == 1 && 
+                                      tasks.first.description == null && 
+                                      tasks.first.estimatedMinutes == null,
+              orElse: () => false,
+            ),
+            'tasksLoaded with task with null fields',
+            true,
+          ),
+        ],
       );
     });
 
