@@ -157,12 +157,16 @@ class FarmRepositoryImpl implements FarmRepository {
     } else {
       return const Left(NetworkFailure('No internet connection'));
     }
+    } catch (e) {
+      return Left(ServerFailure('Network check failed: ${e.toString()}'));
+    }
   }
 
   @override
   Future<Either<Failure, List<Planting>>> getFarmPlantings(
       String farmId) async {
-    if (await networkInfo.isConnected) {
+    try {
+      if (await networkInfo.isConnected) {
       try {
         final plantings = await remoteDataSource.getFarmPlantings(farmId);
         return Right(plantings);
@@ -176,12 +180,16 @@ class FarmRepositoryImpl implements FarmRepository {
     } else {
       return const Left(NetworkFailure('No internet connection'));
     }
+    } catch (e) {
+      return Left(ServerFailure('Network check failed: ${e.toString()}'));
+    }
   }
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> getFarmStats(
       String farmId) async {
-    if (await networkInfo.isConnected) {
+    try {
+      if (await networkInfo.isConnected) {
       try {
         final stats = await remoteDataSource.getFarmStats(farmId);
         return Right(stats);
