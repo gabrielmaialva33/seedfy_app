@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_dto.freezed.dart';
-part 'user_dto.g.dart';
 
 @freezed
 class UserDto with _$UserDto {
@@ -31,6 +30,7 @@ class UserDto with _$UserDto {
         : null,
   );
 
+  @override
   Map<String, dynamic> toJson() => {
     'id': id,
     'email': email,
