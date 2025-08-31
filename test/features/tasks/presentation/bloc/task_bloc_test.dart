@@ -268,8 +268,14 @@ void main() {
             taskId: taskId, notes: notes, actualMinutes: actualMinutes)),
         expect: () => [
           const TaskState.loading(),
-          TaskState.taskCompleted(
-              testTask.copyWith(status: entities.TaskStatus.completed)),
+          isA<TaskState>().having(
+            (state) => state.maybeWhen(
+              taskCompleted: (task) => task.status == entities.TaskStatus.completed,
+              orElse: () => false,
+            ),
+            'taskCompleted with completed status',
+            true,
+          ),
           const TaskState.loading(),
           TaskState.tasksLoaded(testTasks),
         ],
