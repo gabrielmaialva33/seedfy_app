@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
+import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../shared/domain/entities/bed.dart';
 import '../../../shared/domain/entities/crop.dart';
 import '../../../shared/domain/entities/farm.dart';
