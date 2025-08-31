@@ -42,8 +42,6 @@ void main() {
     final testFarm = Farm(
       id: '1',
       name: 'Test Farm',
-      description: 'Test Description',
-      location: 'Test Location',
       ownerId: 'user123',
       createdAt: DateTime(2023, 1, 1),
     );
