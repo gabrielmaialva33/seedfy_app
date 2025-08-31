@@ -18,21 +18,21 @@ void main() {
   });
 
   group('CompleteTask UseCase', () {
-    final testTask = Task(
+    final testTask = entities.Task(
       id: 'task123',
       title: 'Water plants',
       description: 'Water all vegetables',
       dueDate: DateTime(2023, 1, 15),
-      priority: TaskPriority.high,
-      category: TaskCategory.watering,
+      priority: entities.TaskPriority.high,
+      category: entities.TaskCategory.watering,
       farmId: 'farm1',
-      status: TaskStatus.pending,
+      status: entities.TaskStatus.pending,
       createdAt: DateTime(2023, 1, 1),
       estimatedMinutes: 30,
     );
 
     final completedTask = testTask.copyWith(
-      status: TaskStatus.completed,
+      status: entities.TaskStatus.completed,
       completedAt: DateTime(2023, 1, 15),
       actualMinutes: 45,
       completionNotes: 'Task completed successfully',
@@ -72,7 +72,7 @@ void main() {
         // Arrange
         const taskId = 'task123';
         final basicCompletedTask =
-            testTask.copyWith(status: TaskStatus.completed);
+            testTask.copyWith(status: entities.TaskStatus.completed);
 
         when(() => mockTaskRepository.completeTask(
               taskId,
@@ -98,7 +98,7 @@ void main() {
         const taskId = 'task123';
         const notes = 'Completed with no issues';
         final taskWithNotes = testTask.copyWith(
-          status: TaskStatus.completed,
+          status: entities.TaskStatus.completed,
           completionNotes: notes,
         );
 
