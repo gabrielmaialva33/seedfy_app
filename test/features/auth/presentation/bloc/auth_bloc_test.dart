@@ -16,6 +16,21 @@ void main() {
   late MockLoginUsecase mockLoginUsecase;
   late MockSignupUsecase mockSignupUsecase;
 
+  setUpAll(() {
+    registerFallbackValue(const LoginParams(
+      email: 'test@example.com',
+      password: 'password',
+    ));
+    registerFallbackValue(const SignupParams(
+      email: 'test@example.com',
+      password: 'password',
+      name: 'Test',
+      phone: '123',
+      city: 'City',
+      state: 'State',
+    ));
+  });
+
   setUp(() {
     mockAuthRepository = MockAuthRepository();
     mockLoginUsecase = MockLoginUsecase();
