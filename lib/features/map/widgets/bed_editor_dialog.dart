@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/widgets/responsive_builder.dart';
 import '../../../shared/data/datasources/supabase_service.dart';
 import '../../../shared/domain/entities/crop.dart';
 import '../../../shared/domain/entities/planting.dart';
@@ -308,39 +309,73 @@ class _BedEditorDialogState extends State<BedEditorDialog> {
     final isPortuguese = localeProvider.locale.languageCode == 'pt';
     final isNewBed = widget.bedWithPlanting.bed.id.isEmpty;
 
-    return AlertDialog(
-      title: Text(isNewBed
-          ? (isPortuguese ? 'Novo Canteiro' : 'New Bed')
-          : (isPortuguese ? 'Editar Canteiro' : 'Edit Bed')),
-      content: _isLoadingCrops
-          ? const SizedBox(
-              width: 300,
-              height: 200,
-              child: Center(child: CircularProgressIndicator()),
-            )
-          : _error != null
-              ? SizedBox(
-                  width: 300,
-                  height: 200,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.error, color: Colors.red, size: 48),
-                      const SizedBox(height: 16),
-                      Text(
-                        isPortuguese
-                            ? 'Erro ao carregar dados'
-                            : 'Error loading data',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(_error!, textAlign: TextAlign.center),
-                    ],
-                  ),
-                )
-              : SizedBox(
-                  width: 400,
-                  child: Form(
+    return ResponsiveBuilder(
+      builder: (context, screenSize) {
+        if (screenSize == ScreenSize.mobile) {
+          // Use full screen dialog on mobile
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(isNewBed
+                  ? (isPortuguese ? 'Novo Canteiro' : 'New Bed')
+                  : (isPortuguese ? 'Editar Canteiro' : 'Edit Bed')),
+              leading: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            body: _buildContent(context, isPortuguese, isNewBed, screenSize),
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.all(context.responsiveValue(mobile: 16, tablet: 12, desktop: 8)),
+              color: Theme.of(context).colorScheme.surface,
+              child: _buildActions(context, isPortuguese, isNewBed),
+            ),
+          );
+        } else {
+          // Use regular dialog on tablet/desktop
+          return AlertDialog(
+            title: Text(isNewBed
+                ? (isPortuguese ? 'Novo Canteiro' : 'New Bed')
+                : (isPortuguese ? 'Editar Canteiro' : 'Edit Bed')),
+            content: _buildContent(context, isPortuguese, isNewBed, screenSize),
+            actions: _buildDialogActions(context, isPortuguese, isNewBed),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildContent(BuildContext context, bool isPortuguese, bool isNewBed, ScreenSize screenSize) {
+    if (_isLoadingCrops) {
+      return SizedBox(
+        width: screenSize == ScreenSize.mobile ? double.infinity : 300,
+        height: 200,
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_error != null) {
+      return SizedBox(
+        width: screenSize == ScreenSize.mobile ? double.infinity : 300,
+        height: 200,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error, color: Colors.red, size: 48),
+            const SizedBox(height: 16),
+            Text(
+              isPortuguese ? 'Erro ao carregar dados' : 'Error loading data',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(_error!, textAlign: TextAlign.center),
+          ],
+        ),
+      );
+    }
+
+    return SizedBox(
+      width: screenSize == ScreenSize.mobile ? double.infinity : 400,
+      child: Form(
                     key: _formKey,
                     child: SingleChildScrollView(
                       child: Column(
