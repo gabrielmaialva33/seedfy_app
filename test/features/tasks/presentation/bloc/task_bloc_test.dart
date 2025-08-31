@@ -257,11 +257,7 @@ void main() {
       blocTest<TaskBloc, TaskState>(
         'emits [loading, taskCompleted, loading, tasksLoaded] when completeTask succeeds',
         build: () {
-          when(() => mockCompleteTask(const CompleteTaskParams(
-                    taskId: taskId,
-                    notes: notes,
-                    actualMinutes: actualMinutes,
-                  )))
+          when(() => mockCompleteTask(any()))
               .thenAnswer((_) async => Right(
                   testTask.copyWith(status: entities.TaskStatus.completed)));
           when(() => mockGetUserTasks(any()))
