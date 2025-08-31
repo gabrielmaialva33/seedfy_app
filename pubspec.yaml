@@ -82,9 +82,9 @@ dependencies:
   # 🚀 AI & Camera Features for Hackathon
   # HTTP & API for NVIDIA NIM
   http: ^1.2.2
-  share_plus: ^10.0.0
+  share_plus: ^11.1.0
   csv: ^6.0.0
-  fl_chart: ^0.69.0
+  fl_chart: ^1.1.0
   dio: ^5.7.0
   
   # Camera & Image Processing
