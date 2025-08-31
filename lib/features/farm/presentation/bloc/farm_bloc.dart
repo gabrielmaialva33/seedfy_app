@@ -19,14 +19,20 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
     required this.createFarm,
     required this.getFarmDetails,
   }) : super(const FarmState.initial()) {
-    on<_GetUserFarms>(_onGetUserFarms);
-    on<_GetFarmDetails>(_onGetFarmDetails);
-    on<_CreateFarm>(_onCreateFarm);
-    on<_RefreshFarms>(_onRefreshFarms);
+    on<FarmEvent>((event, emit) {
+      event.when(
+        getUserFarms: () => _onGetUserFarms(event, emit),
+        getFarmDetails: (farmId) => _onGetFarmDetails(event, emit),
+        createFarm: (farm) => _onCreateFarm(event, emit),
+        updateFarm: (farm) => _onUpdateFarm(event, emit),
+        deleteFarm: (farmId) => _onDeleteFarm(event, emit),
+        refreshFarms: () => _onRefreshFarms(event, emit),
+      );
+    });
   }
 
   Future<void> _onGetUserFarms(
-    _GetUserFarms event,
+    FarmEvent event,
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
@@ -40,7 +46,7 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
   }
 
   Future<void> _onGetFarmDetails(
-    _GetFarmDetails event,
+    FarmEvent event,
     Emitter<FarmState> emit,
   ) async {
     emit(const FarmState.loading());
